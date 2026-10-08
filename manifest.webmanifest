@@ -1,0 +1,10 @@
+{
+  "name": "Präsentationen",
+  "short_name": "Präsis",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#1a1230",
+  "theme_color": "#1a1230"
+}
