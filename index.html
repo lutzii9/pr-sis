@@ -12,7 +12,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <title>Präsentationen</title>
 <style>
-  /* Aufbau wie die iOS-Einstellungen: großer Titel, gruppierte Listen mit Symbol, Untertitel und Pfeil */
+  /* Aufbau wie die iOS-Einstellungen: Übersicht → Präsentation → Fassung, mit Einschub-Animation */
   :root {
     --bg: #f2f2f7;
     --cell: #ffffff;
@@ -21,9 +21,11 @@
     --secondary: rgba(60, 60, 67, .6);
     --separator: rgba(60, 60, 67, .29);
     --chevron: rgba(60, 60, 67, .3);
+    --bar: rgba(242, 242, 247, .8);
     --gray: #8e8e93;
     --blue: #007aff;
     --indigo: #5856d6;
+    --orange: #ff9500;
     --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     color-scheme: light;
   }
@@ -36,18 +38,21 @@
       --secondary: rgba(235, 235, 245, .6);
       --separator: rgba(84, 84, 88, .65);
       --chevron: rgba(235, 235, 245, .3);
+      --bar: rgba(0, 0, 0, .8);
       --gray: #8e8e93;
       --blue: #0a84ff;
       --indigo: #5e5ce6;
+      --orange: #ff9f0a;
       color-scheme: dark;
     }
   }
 
   * { box-sizing: border-box; }
+  html, body { height: 100%; }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
-    min-height: 100vh;
+    overflow: hidden;
     background: var(--bg);
     color: var(--label);
     font: 17px/1.29 var(--font);
@@ -55,7 +60,21 @@
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: transparent;
   }
-  main {
+
+  /* Bildschirme: liegen übereinander, der Unterbildschirm schiebt sich von rechts herein */
+  .screen {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--bg);
+    transition: transform .42s cubic-bezier(.32, .72, 0, 1);
+  }
+  .screen.sub { transform: translateX(100%); box-shadow: -1px 0 12px rgba(0, 0, 0, .08); }
+  body.pushed .screen.sub { transform: none; }
+  body.pushed .screen.root { transform: translateX(-30%); }
+
+  .content {
     max-width: 40rem;
     margin: 0 auto;
     padding:
@@ -65,12 +84,51 @@
       max(16px, env(safe-area-inset-left, 0px));
   }
 
+  /* Navigationsleiste mit Zurück-Knopf */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: var(--bar);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  .navbar-inner {
+    max-width: 40rem;
+    height: 44px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 max(8px, env(safe-area-inset-right, 0px)) 0 max(8px, env(safe-area-inset-left, 0px));
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px;
+    border: 0;
+    background: none;
+    color: var(--blue);
+    font: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+  }
+  .back svg { width: 12px; height: 21px; }
+  .back:active { opacity: .4; }
+  .back:focus-visible { outline: 2px solid var(--blue); border-radius: 8px; }
+  .sub .content { padding-top: 4px; }
+
   h1 {
     margin: 0 0 22px 4px;
     font-size: 34px;
     line-height: 41px;
     font-weight: 700;
     letter-spacing: .37px;
+  }
+  .lead {
+    margin: -14px 4px 26px;
+    color: var(--secondary);
   }
 
   section + section { margin-top: 35px; }
@@ -113,14 +171,22 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    width: 100%;
     min-height: 60px;
     padding: 9px 16px;
+    border: 0;
+    background: none;
     color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: left;
     text-decoration: none;
+    cursor: pointer;
     transition: background-color .15s;
   }
-  a.row:active { background: var(--cell-pressed); transition: none; }
-  a.row:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; border-radius: 10px; }
+  .row:is(a, button):active { background: var(--cell-pressed); transition: none; }
+  .row:is(a, button):focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; border-radius: 10px; }
+  .info .row { min-height: 44px; cursor: default; }
 
   .icon {
     flex: none;
@@ -135,6 +201,7 @@
   .icon svg { width: 18px; height: 18px; }
   .icon.blue { background: var(--blue); }
   .icon.indigo { background: var(--indigo); }
+  .icon.orange { background: var(--orange); }
 
   .text { flex: 1; min-width: 0; }
   .title { display: block; }
@@ -153,71 +220,133 @@
   }
   .chevron { flex: none; width: 8px; height: 14px; color: var(--chevron); }
 
-  .info .row { min-height: 44px; }
-
-  @media (prefers-reduced-motion: reduce) { .row { transition: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .screen, .row { transition: none; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <h1>Präsentationen</h1>
 
-  <section aria-labelledby="asml">
-    <h2 id="asml">ASML · Die Maschine hinter jedem Chip</h2>
-    <ul>
-      <li>
-        <a class="row" href="asml/">
-          <span class="icon blue" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg>
-          </span>
-          <span class="text">
-            <span class="title">Fassung 1</span>
-            <span class="subtitle">Kompakt, große Zahlen</span>
-          </span>
-          <span class="value">9 Folien</span>
-          <svg class="chevron" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="row" href="asml-guizang/">
-          <span class="icon indigo" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 12l3-3 3 2 4-4"/><path d="M12 16v4M8 20h8"/></svg>
-          </span>
-          <span class="text">
-            <span class="title">Fassung 2</span>
-            <span class="subtitle">Ausführlich</span>
-          </span>
-          <span class="value">11 Folien</span>
-          <svg class="chevron" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>
-        </a>
-      </li>
-    </ul>
-    <p class="footnote">Halte das iPhone quer, dann füllen die Folien den ganzen Bildschirm.</p>
-  </section>
+<div class="screen root" id="uebersicht">
+  <div class="content">
+    <h1>Präsentationen</h1>
+    <section aria-labelledby="alle">
+      <h2 id="alle">Alle</h2>
+      <ul>
+        <li>
+          <a class="row" href="#asml">
+            <span class="icon orange" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+            </span>
+            <span class="text">
+              <span class="title">ASML</span>
+              <span class="subtitle">Die Maschine hinter jedem Chip</span>
+            </span>
+            <span class="value">2 Fassungen</span>
+            <svg class="chevron" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
 
-  <section aria-labelledby="bedienung">
-    <h2 id="bedienung">Bedienung</h2>
-    <ul class="info">
-      <li>
-        <div class="row">
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </span>
-          <span class="text"><span class="title">Weiter</span></span>
-          <span class="value">Nach links wischen</span>
-        </div>
-      </li>
-      <li>
-        <div class="row">
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
-          </span>
-          <span class="text"><span class="title">Zurück</span></span>
-          <span class="value">Nach rechts wischen</span>
-        </div>
-      </li>
-    </ul>
-  </section>
-</main>
+<div class="screen sub" id="asml" aria-hidden="true">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <button class="back" type="button" id="zurueck">
+        <svg viewBox="0 0 12 21" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2L2 10.5 10 19"/></svg>
+        Präsentationen
+      </button>
+    </div>
+  </div>
+  <div class="content">
+    <h1>ASML</h1>
+    <p class="lead">Die Maschine hinter jedem Chip</p>
+
+    <section aria-labelledby="fassungen">
+      <h2 id="fassungen">Fassung wählen</h2>
+      <ul>
+        <li>
+          <a class="row" href="asml/">
+            <span class="icon blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg>
+            </span>
+            <span class="text">
+              <span class="title">Fassung 1</span>
+              <span class="subtitle">Kompakt, große Zahlen</span>
+            </span>
+            <span class="value">9 Folien</span>
+            <svg class="chevron" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="asml-guizang/">
+            <span class="icon indigo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 12l3-3 3 2 4-4"/><path d="M12 16v4M8 20h8"/></svg>
+            </span>
+            <span class="text">
+              <span class="title">Fassung 2</span>
+              <span class="subtitle">Ausführlich</span>
+            </span>
+            <span class="value">11 Folien</span>
+            <svg class="chevron" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>
+          </a>
+        </li>
+      </ul>
+      <p class="footnote">Halte das iPhone quer, dann füllen die Folien den ganzen Bildschirm.</p>
+    </section>
+
+    <section aria-labelledby="bedienung">
+      <h2 id="bedienung">Bedienung</h2>
+      <ul class="info">
+        <li>
+          <div class="row">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <span class="text"><span class="title">Weiter</span></span>
+            <span class="value">Nach links wischen</span>
+          </div>
+        </li>
+        <li>
+          <div class="row">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+            </span>
+            <span class="text"><span class="title">Zurück</span></span>
+            <span class="value">Nach rechts wischen</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<script>
+  // Unterseite über den Anker (#asml) steuern, damit auch die Zurück-Geste des Browsers funktioniert
+  const root = document.getElementById('uebersicht');
+  const sub = document.getElementById('asml');
+  function zeigen() {
+    const offen = location.hash === '#asml';
+    document.body.classList.toggle('pushed', offen);
+    sub.setAttribute('aria-hidden', String(!offen));
+    root.setAttribute('aria-hidden', String(offen));
+    root.inert = offen;
+    sub.inert = !offen;
+  }
+  document.getElementById('zurueck').addEventListener('click', () => {
+    if (history.state && history.state.vonUebersicht) history.back();
+    else history.replaceState(null, '', location.pathname), zeigen();
+  });
+  document.querySelector('a[href="#asml"]').addEventListener('click', e => {
+    e.preventDefault();
+    history.pushState({ vonUebersicht: true }, '', '#asml');
+    zeigen();
+  });
+  addEventListener('popstate', zeigen);
+  addEventListener('hashchange', zeigen);
+  zeigen();
+</script>
 </body>
 </html>
