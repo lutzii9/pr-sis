@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASML · Die Maschine hinter jedem Chip</title>
+
+<!-- Schriften: Big Shoulders Display (Überschriften, Zahlen) + Instrument Sans (Text) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Instrument+Sans:wght@400;500;600&display=swap">
+
+<style>
+/* ===========================================
+   FARBEN UND GRÖSSEN
+   Idee: In Chipfabriken sind die Belichtungsräume gelb beleuchtet,
+   weil der Fotolack kein blaues oder UV-Licht verträgt.
+   Gelb = Reinraum, Violett = EUV-Licht, Dunkel = Vakuumkammer.
+   Hier ändern, um das ganze Design umzufärben.
+   =========================================== */
+:root {
+    --gelb: #F5B800;
+    --gelb-tief: #DB9C00;
+    --dunkel: #1A0F2E;
+    --dunkel-2: #2A1A47;
+    --uv: #7A3CFF;
+    --uv-hell: #B79BFF;
+    --hell: #FFF4CC;
+
+    --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+    --font-body: 'Instrument Sans', 'Segoe UI', sans-serif;
+
+    --rand: 110px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+    --stage-bg: #0d0718;
+    --slide-bg: var(--gelb);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FESTE 16:9-BÜHNE (viewport-base.css, vollständig)
+   Folien sind auf 1920×1080 gebaut und werden als Ganzes skaliert.
+   =========================================== */
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--slide-bg, #fff); }
+.slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: block; visibility: hidden; opacity: 0; pointer-events: none; background: var(--slide-bg, #fff); }
+.slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+.deck-controls { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1000; }
+@media print {
+    html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+    .deck-viewport { position: static; overflow: visible; background: #fff; }
+    .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+    .slide { position: relative; display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px; height: 1080px; break-after: page; page-break-after: always; }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .deck-controls, .fortschritt, .zaehler, .edit-toggle, .edit-hotzone { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* ===========================================
+   GRUNDTYPOGRAFIE
+   =========================================== */
+body { font-family: var(--font-body); color: var(--dunkel); }
+.slide { padding: var(--rand); font-size: 30px; line-height: 1.45; transition: opacity .5s ease; }
+.slide.dunkel { background: var(--dunkel); color: var(--hell); }
+.slide.gelb { background: var(--gelb); color: var(--dunkel); }
+
+.kopf { font-weight: 600; font-size: 26px; margin-bottom: 18px; opacity: .75; }
+h1, h2 { font-family: var(--font-display); font-weight: 900; line-height: .92; letter-spacing: -.005em; }
+h1 { font-size: 230px; }
+h2 { font-size: 120px; }
+.zahl { font-family: var(--font-display); font-weight: 900; line-height: .85; font-variant-numeric: tabular-nums; }
+.klein { font-size: 24px; opacity: .78; }
+
+/* ===========================================
+   ANIMATIONEN
+   Jedes Element mit .rein blendet ein, sobald die Folie sichtbar wird.
+   --d legt die Verzögerung fest (in Sekunden).
+   =========================================== */
+.rein { opacity: 0; transform: translateY(46px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: 0s; }
+.rein.links { transform: translateX(-90px); }
+.rein.rechts { transform: translateX(90px); }
+.rein.gross { transform: scale(.82); }
+.slide.visible .rein { opacity: 1; transform: none; transition-delay: calc(var(--d, 0) * 1s); }
+
+/* Wörter der Titelzeile fahren einzeln hoch */
+.wort { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .06em; }
+.wort > span { display: inline-block; transform: translateY(110%); transition: transform 1s var(--ease); }
+.slide.visible .wort > span { transform: none; transition-delay: calc(var(--d, 0) * 1s); }
+
+/* ===========================================
+   FOLIE 1 · TITEL mit rotierendem Wafer
+   =========================================== */
+.titel { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; position: relative; z-index: 2; }
+.titel p { max-width: 900px; font-size: 34px; margin-top: 34px; }
+.wafer { position: absolute; right: -360px; top: -200px; width: 1050px; height: 1050px; z-index: 1; }
+.titel h1 { font-size: 196px; }
+.wafer svg { width: 100%; height: 100%; animation: drehen 80s linear infinite; }
+@keyframes drehen { to { transform: rotate(360deg); } }
+/* Lichtstreifen, der über den Wafer fährt */
+.scan { position: absolute; right: 0; top: 0; width: 1050px; height: 1080px; overflow: hidden; z-index: 1; pointer-events: none; }
+.scan::after { content: ""; position: absolute; top: -10%; left: -30%; width: 150px; height: 120%; background: linear-gradient(90deg, transparent, rgba(122,60,255,.55), rgba(255,255,255,.7), rgba(122,60,255,.55), transparent); transform: skewX(-14deg); filter: blur(6px); mix-blend-mode: multiply; }
+.slide.visible .scan::after { animation: scannen 5s ease-in-out infinite 1s; }
+@keyframes scannen { 0% { left: -30%; } 60%, 100% { left: 115%; } }
+
+/* ===========================================
+   FOLIE 2 · 100 %
+   =========================================== */
+.spalten { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; height: 100%; align-items: center; }
+.riesig { font-size: 520px; color: var(--gelb); }
+.riesig small { font-size: .32em; margin-left: .05em; }
+.fakten { display: grid; grid-template-columns: repeat(3, auto); gap: 60px; margin-top: 60px; padding-top: 34px; border-top: 3px solid rgba(255,244,204,.25); }
+.fakten b { display: block; font-family: var(--font-display); font-weight: 800; font-size: 58px; line-height: 1; color: var(--gelb); }
+
+/* ===========================================
+   FOLIE 3 · ZEITSTRAHL
+   =========================================== */
+.zeit { position: relative; margin-top: 150px; height: 420px; }
+.zeit .linie { position: absolute; left: 0; right: 0; top: 60px; height: 8px; background: var(--dunkel); transform: scaleX(0); transform-origin: left; transition: transform 1.6s var(--ease) .3s; }
+.slide.visible .zeit .linie { transform: scaleX(1); }
+.zeit .punkte { display: grid; grid-template-columns: repeat(5, 1fr); position: relative; }
+.zeit .punkt { position: relative; padding-top: 110px; padding-right: 30px; }
+.zeit .punkt::before { content: ""; position: absolute; left: 0; top: 38px; width: 52px; height: 52px; border-radius: 50%; background: var(--dunkel); transform: scale(0); transition: transform .6s var(--ease); }
+.slide.visible .zeit .punkt::before { transform: scale(1); transition-delay: calc(var(--d, 0) * 1s); }
+.zeit .punkt.jetzt::before { background: var(--uv); box-shadow: 0 0 0 12px rgba(122,60,255,.25); }
+.zeit .jahr { font-family: var(--font-display); font-weight: 900; font-size: 92px; line-height: 1; }
+.zeit h3 { font-size: 32px; font-weight: 600; margin: 6px 0 8px; }
+.zeit p { font-size: 25px; line-height: 1.35; opacity: .8; }
+
+/* ===========================================
+   FOLIE 4 · GRÖSSENVERGLEICH
+   =========================================== */
+.groessen { margin-top: 70px; display: grid; gap: 34px; }
+.zeile { display: grid; grid-template-columns: 420px 1fr 300px; gap: 40px; align-items: center; }
+.zeile .name { font-weight: 600; font-size: 34px; }
+.zeile .balken { height: 64px; background: rgba(255,244,204,.1); position: relative; }
+.zeile .balken i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--hell); transition: width 1.5s var(--ease); }
+.slide.visible .zeile .balken i { width: var(--w); transition-delay: calc(var(--d, 0) * 1s); }
+.zeile.euv .balken i { background: var(--uv); box-shadow: 0 0 40px var(--uv); min-width: 10px; }
+.zeile .wert { font-family: var(--font-display); font-weight: 800; font-size: 62px; text-align: right; line-height: 1; }
+.zeile.euv .wert, .zeile.euv .name { color: var(--uv-hell); }
+
+/* ===========================================
+   FOLIE 5 · SO FUNKTIONIERT EUV (animierte Zeichnung)
+   =========================================== */
+.euv-bild { position: absolute; left: var(--rand); right: var(--rand); top: 290px; height: 520px; }
+.euv-bild svg { width: 100%; height: 100%; overflow: visible; }
+.euv-bild text { font-family: var(--font-body); font-size: 24px; fill: var(--hell); opacity: .85; }
+.tropfen { fill: #cfd6e6; }
+.slide.visible .tropfen { animation: fliegen 1.6s linear infinite; animation-delay: calc(var(--t) * -1s); }
+@keyframes fliegen { from { transform: translateX(0); opacity: 1; } 92% { opacity: 1; } to { transform: translateX(330px); opacity: 0; } }
+.laser { stroke: #ff5a3c; stroke-width: 7; opacity: 0; }
+.slide.visible .laser { animation: blitzen .32s steps(1) infinite; }
+@keyframes blitzen { 0% { opacity: 1; } 35% { opacity: 0; } }
+.plasma { transform-origin: 470px 250px; transform-box: view-box; }
+.slide.visible .plasma { animation: pulsieren .32s ease-out infinite; }
+@keyframes pulsieren { 0% { transform: scale(1.35); opacity: 1; } 100% { transform: scale(.8); opacity: .65; } }
+.strahl { fill: none; stroke: var(--uv); stroke-width: 9; stroke-linejoin: round; stroke-dasharray: 2400; stroke-dashoffset: 2400; filter: drop-shadow(0 0 14px var(--uv)); }
+.slide.visible .strahl { animation: zeichnen 2.4s var(--ease) 1.2s forwards; }
+@keyframes zeichnen { to { stroke-dashoffset: 0; } }
+.spiegel { stroke: var(--gelb); stroke-width: 12; stroke-linecap: round; }
+.schritte { position: absolute; left: var(--rand); right: var(--rand); bottom: 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; }
+.schritte b { font-family: var(--font-display); font-weight: 800; font-size: 44px; color: var(--gelb); display: block; line-height: 1.05; margin-bottom: 6px; }
+.schritte p { font-size: 25px; line-height: 1.35; opacity: .85; }
+
+/* ===========================================
+   FOLIE 6 · SECHS ZAHLEN
+   =========================================== */
+.kacheln { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 56px; }
+.kachel { background: var(--dunkel); color: var(--hell); padding: 34px 38px 32px; min-height: 290px; display: flex; flex-direction: column; justify-content: space-between; }
+.kachel svg { width: 54px; height: 54px; stroke: var(--gelb); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.kachel .zahl { font-size: 112px; color: var(--gelb); margin: 14px 0 12px; white-space: nowrap; }
+.kachel .zahl small { font-size: .42em; margin-left: .12em; }
+.kachel p { font-size: 25px; line-height: 1.3; opacity: .85; }
+.kachel.betont { background: var(--uv); }
+.kachel.betont .zahl, .kachel.betont svg { color: #fff; stroke: #fff; }
+
+/* ===========================================
+   FOLIE 7 · UMSATZ (Säulen wachsen)
+   =========================================== */
+.diagramm { position: absolute; left: 820px; right: var(--rand); bottom: 120px; height: 700px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 34px; align-items: end; border-bottom: 6px solid var(--hell); }
+.saeule { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; position: relative; }
+.saeule .wert { font-family: var(--font-display); font-weight: 800; font-size: 60px; line-height: 1; margin-bottom: 12px; }
+.saeule .koerper { width: 100%; height: 0; background: var(--hell); transition: height 1.4s var(--ease); }
+.slide.visible .saeule .koerper { height: var(--h); transition-delay: calc(var(--d, 0) * 1s); }
+.saeule.betont .koerper { background: var(--gelb); }
+.saeule.betont .wert { color: var(--gelb); }
+.saeule .jahr { position: absolute; bottom: -62px; font-weight: 600; font-size: 30px; }
+.umsatz-text { width: 620px; }
+.umsatz-text .zahl { font-size: 250px; color: var(--gelb); margin: 40px 0 10px; }
+.umsatz-text .zahl small { font-size: .3em; margin-left: .1em; }
+
+/* ===========================================
+   FOLIE 8 · STÄRKE UND RISIKO (zwei Hälften schieben sich zusammen)
+   =========================================== */
+.slide.geteilt { padding: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.haelfte { padding: var(--rand); display: flex; flex-direction: column; justify-content: center; transition: transform 1.1s var(--ease); }
+.haelfte.a { background: var(--gelb); color: var(--dunkel); transform: translateX(-100%); }
+.haelfte.b { background: var(--dunkel); color: var(--hell); transform: translateX(100%); }
+.slide.visible .haelfte { transform: none; }
+.haelfte h2 { font-size: 170px; margin-bottom: 30px; }
+.haelfte ul { list-style: none; margin-top: 40px; display: grid; gap: 22px; }
+.haelfte li { font-size: 31px; padding-left: 58px; position: relative; line-height: 1.3; }
+.haelfte li::before { content: ""; position: absolute; left: 0; top: .5em; width: 36px; height: 6px; background: currentColor; }
+.haelfte.b h2 { color: var(--uv-hell); }
+
+/* ===========================================
+   FOLIE 9 · FAZIT
+   =========================================== */
+.fazit { display: grid; grid-template-columns: 1.15fr 1fr; gap: 90px; height: 100%; align-items: center; position: relative; z-index: 2; }
+.fazit h2 { font-size: 190px; }
+.punkte-liste { display: grid; gap: 34px; }
+.punkte-liste div { display: grid; grid-template-columns: 110px 1fr; gap: 20px; align-items: start; padding-top: 28px; border-top: 4px solid var(--dunkel); }
+.punkte-liste b { font-family: var(--font-display); font-weight: 900; font-size: 96px; line-height: .8; }
+.punkte-liste h3 { font-size: 36px; font-weight: 600; line-height: 1.15; margin-bottom: 6px; }
+.punkte-liste p { font-size: 26px; line-height: 1.35; opacity: .82; }
+.quelle { position: absolute; left: var(--rand); bottom: 46px; font-size: 20px; opacity: .6; }
+
+/* ===========================================
+   BEDIENELEMENTE (außerhalb der Bühne)
+   =========================================== */
+.fortschritt { position: fixed; left: 0; top: 0; height: 5px; background: var(--uv); z-index: 1000; transition: width .5s var(--ease); }
+.zaehler { position: fixed; right: 20px; bottom: 14px; z-index: 1000; font: 500 14px var(--font-body); color: rgba(255,255,255,.55); mix-blend-mode: difference; }
+.edit-hotzone { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 10000; cursor: pointer; }
+.edit-toggle { position: fixed; top: 16px; left: 16px; opacity: 0; pointer-events: none; transition: opacity .3s ease; z-index: 10001; font: 600 15px var(--font-body); padding: 10px 14px; border: 0; background: var(--uv); color: #fff; cursor: pointer; }
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+body.bearbeiten [contenteditable]:hover { outline: 2px dashed var(--uv); outline-offset: 6px; }
+body.bearbeiten [contenteditable]:focus { outline: 3px solid var(--uv); outline-offset: 6px; }
+</style>
+</head>
+<body>
+
+<div class="fortschritt" id="fortschritt"></div>
+<div class="zaehler" id="zaehler"></div>
+<div class="edit-hotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Text bearbeiten (E)">Bearbeiten</button>
+
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+    <!-- === FOLIE 1 · TITEL === -->
+    <section class="slide gelb active">
+        <div class="wafer" aria-hidden="true">
+            <svg viewBox="0 0 400 400">
+                <defs>
+                    <pattern id="chips" width="22" height="22" patternUnits="userSpaceOnUse">
+                        <rect x="1.5" y="1.5" width="19" height="19" fill="#1A0F2E"/>
+                        <rect x="5" y="5" width="12" height="12" fill="none" stroke="#DB9C00" stroke-width="1"/>
+                    </pattern>
+                    <clipPath id="rund"><circle cx="200" cy="200" r="190"/></clipPath>
+                </defs>
+                <circle cx="200" cy="200" r="196" fill="#DB9C00"/>
+                <rect x="0" y="0" width="400" height="400" fill="url(#chips)" clip-path="url(#rund)"/>
+                <circle cx="200" cy="200" r="190" fill="none" stroke="#1A0F2E" stroke-width="5"/>
+            </svg>
+        </div>
+        <div class="scan" aria-hidden="true"></div>
+        <div class="titel">
+            <div class="kopf rein" style="--d:.1">ASML · Veldhoven, Niederlande</div>
+            <h1>
+                <span class="wort" style="--d:.25"><span>Die Maschine</span></span><br>
+                <span class="wort" style="--d:.4"><span>hinter jedem</span></span><br>
+                <span class="wort" style="--d:.55"><span>Chip</span></span>
+            </h1>
+            <p class="rein" style="--d:1">Warum ein Unternehmen aus einer niederländischen Kleinstadt bestimmt, wie schnell Computer, Handys und KI werden.</p>
+        </div>
+    </section>
+
+    <!-- === FOLIE 2 · WAS IST ASML === -->
+    <section class="slide dunkel">
+        <div class="spalten">
+            <div>
+                <div class="kopf rein" style="--d:.1">Marktanteil bei EUV-Belichtung</div>
+                <div class="zahl riesig rein gross" style="--d:.2"><span data-zahl="100">0</span><small>%</small></div>
+            </div>
+            <div>
+                <h2 class="rein rechts" style="--d:.5;font-size:104px">ASML baut keine Chips. ASML baut die Maschinen, die Chips drucken.</h2>
+                <div class="fakten rein" style="--d:.9">
+                    <div><b>1984</b>gegründet</div>
+                    <div><b>44.000+</b>Beschäftigte</div>
+                    <div><b>TSMC, Samsung, Intel</b>wichtigste Kunden</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === FOLIE 3 · GESCHICHTE === -->
+    <section class="slide gelb">
+        <div class="kopf rein" style="--d:.1">Geschichte</div>
+        <h2 class="rein" style="--d:.2">Vom Holzschuppen zum Monopol</h2>
+        <div class="zeit">
+            <div class="linie"></div>
+            <div class="punkte">
+                <div class="punkt rein" style="--d:.5"><div class="jahr">1984</div><h3>Gründung</h3><p>Philips und ASM International starten das Gemeinschaftsunternehmen</p></div>
+                <div class="punkt rein" style="--d:.75"><div class="jahr">1995</div><h3>Börsengang</h3><p>Aktie in Amsterdam und an der Nasdaq</p></div>
+                <div class="punkt rein" style="--d:1"><div class="jahr">2010</div><h3>Erste EUV-Anlage</h3><p>Ein Vorseriengerät geht an einen Kunden</p></div>
+                <div class="punkt rein" style="--d:1.25"><div class="jahr">2019</div><h3>Serienfertigung</h3><p>Erste Chips mit EUV stecken in Handys</p></div>
+                <div class="punkt jetzt rein" style="--d:1.5"><div class="jahr">2023</div><h3>High-NA</h3><p>Erste Anlage der nächsten Generation wird ausgeliefert</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === FOLIE 4 · GRÖSSENVERGLEICH === -->
+    <section class="slide dunkel">
+        <div class="kopf rein" style="--d:.1">Wie klein ist das?</div>
+        <h2 class="rein" style="--d:.2">5.000-mal dünner als ein Haar</h2>
+        <div class="groessen">
+            <div class="zeile rein" style="--d:.5"><div class="name">Menschliches Haar</div><div class="balken"><i style="--w:100%;--d:.7"></i></div><div class="wert">70.000 nm</div></div>
+            <div class="zeile rein" style="--d:.7"><div class="name">Rotes Blutkörperchen</div><div class="balken"><i style="--w:73%;--d:.9"></i></div><div class="wert">7.000 nm</div></div>
+            <div class="zeile rein" style="--d:.9"><div class="name">Grippevirus</div><div class="balken"><i style="--w:24%;--d:1.1"></i></div><div class="wert">100 nm</div></div>
+            <div class="zeile euv rein" style="--d:1.1"><div class="name">EUV-Lichtwelle</div><div class="balken"><i style="--w:1.2%;--d:1.5"></i></div><div class="wert">13,5 nm</div></div>
+        </div>
+        <p class="klein rein" style="--d:1.6;margin-top:44px;max-width:1300px">Die Balken sind gestaucht dargestellt, sonst wäre der unterste unsichtbar. Je kürzer die Lichtwelle, desto feinere Schaltungen lassen sich zeichnen.</p>
+    </section>
+
+    <!-- === FOLIE 5 · SO FUNKTIONIERT EUV === -->
+    <section class="slide dunkel">
+        <div class="kopf rein" style="--d:.1">Technik</div>
+        <h2 class="rein" style="--d:.2">So entsteht EUV-Licht</h2>
+        <div class="euv-bild rein" style="--d:.4">
+            <svg viewBox="0 0 1700 520">
+                <defs>
+                    <radialGradient id="glut"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#B79BFF"/><stop offset="1" stop-color="#7A3CFF" stop-opacity="0"/></radialGradient>
+                </defs>
+                <!-- Tropfenquelle -->
+                <rect x="20" y="215" width="110" height="70" fill="#2A1A47" stroke="#FFF4CC" stroke-width="3"/>
+                <text x="20" y="195">Zinn-Tropfen</text>
+                <circle class="tropfen" cx="140" cy="250" r="7" style="--t:0"/>
+                <circle class="tropfen" cx="140" cy="250" r="7" style="--t:.32"/>
+                <circle class="tropfen" cx="140" cy="250" r="7" style="--t:.64"/>
+                <circle class="tropfen" cx="140" cy="250" r="7" style="--t:.96"/>
+                <circle class="tropfen" cx="140" cy="250" r="7" style="--t:1.28"/>
+                <!-- Laser von unten -->
+                <line class="laser" x1="470" y1="500" x2="470" y2="262"/>
+                <rect x="425" y="470" width="90" height="46" fill="#2A1A47" stroke="#ff5a3c" stroke-width="3"/>
+                <text x="530" y="502">Laser</text>
+                <!-- Plasma -->
+                <circle class="plasma" cx="470" cy="250" r="78" fill="url(#glut)"/>
+                <text x="395" y="150">Plasma, 220.000 °C</text>
+                <!-- Lichtweg über die Spiegel -->
+                <polyline class="strahl" points="470,250 800,70 1040,430 1290,70 1600,462"/>
+                <line class="spiegel" x1="745" y1="52" x2="855" y2="52"/>
+                <line class="spiegel" x1="985" y1="448" x2="1095" y2="448"/>
+                <line class="spiegel" x1="1235" y1="52" x2="1345" y2="52"/>
+                <text x="745" y="30">Spiegel</text>
+                <text x="1205" y="30">Maske mit Schaltplan</text>
+                <!-- Wafer -->
+                <ellipse cx="1600" cy="482" rx="100" ry="22" fill="#DB9C00" stroke="#FFF4CC" stroke-width="3"/>
+                <text x="1420" y="508">Wafer</text>
+            </svg>
+        </div>
+        <div class="schritte">
+            <div class="rein" style="--d:.8"><b>1 · Tropfen</b><p>50.000 winzige Zinn-Tropfen pro Sekunde fliegen durch ein Vakuum.</p></div>
+            <div class="rein" style="--d:1.4"><b>2 · Laser</b><p>Ein Laser trifft jeden Tropfen. Das Plasma strahlt EUV-Licht ab.</p></div>
+            <div class="rein" style="--d:2.4"><b>3 · Spiegel</b><p>Linsen würden das Licht verschlucken, also lenken Spiegel es auf den Wafer.</p></div>
+        </div>
+    </section>
+
+    <!-- === FOLIE 6 · SECHS ZAHLEN === -->
+    <section class="slide gelb">
+        <div class="kopf rein" style="--d:.1">Die Anlage</div>
+        <h2 class="rein" style="--d:.2;font-size:112px">Die komplizierteste Maschine der Welt</h2>
+        <div class="kacheln">
+            <div class="kachel rein" style="--d:.4"><svg viewBox="0 0 24 24"><path d="M3 12h18M7 8v8M12 6v12M17 8v8"/></svg><div><div class="zahl"><span data-zahl="13.5" data-komma="1">0</span><small>nm</small></div><p>Wellenlänge des Lichts</p></div></div>
+            <div class="kachel rein" style="--d:.5"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg><div><div class="zahl"><span data-zahl="50000">0</span></div><p>Zinn-Tropfen pro Sekunde</p></div></div>
+            <div class="kachel rein" style="--d:.6"><svg viewBox="0 0 24 24"><path d="M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0z"/></svg><div><div class="zahl"><span data-zahl="220000">0</span><small>°C</small></div><p>Plasma, 40-mal heißer als die Sonnenoberfläche</p></div></div>
+            <div class="kachel rein" style="--d:.7"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><div><div class="zahl"><span data-zahl="100000">0</span><small>+</small></div><p>Einzelteile von Hunderten Zulieferern</p></div></div>
+            <div class="kachel rein" style="--d:.8"><svg viewBox="0 0 24 24"><path d="M5 9h14l2 11H3z"/><path d="M9 9a3 3 0 0 1 6 0"/></svg><div><div class="zahl"><span data-zahl="180">0</span><small>t</small></div><p>Gewicht, Transport in mehreren Frachtflugzeugen</p></div></div>
+            <div class="kachel betont rein" style="--d:.9"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12"/><circle cx="12" cy="12" r="3"/></svg><div><div class="zahl"><span data-zahl="200">0</span><small>Mio. €</small></div><p>ungefährer Preis einer Anlage</p></div></div>
+        </div>
+    </section>
+
+    <!-- === FOLIE 7 · UMSATZ === -->
+    <section class="slide dunkel">
+        <div class="umsatz-text">
+            <div class="kopf rein" style="--d:.1">Umsatz in Milliarden Euro</div>
+            <h2 class="rein" style="--d:.2;font-size:104px">Fast verdoppelt in vier Jahren</h2>
+            <div class="zahl rein gross" style="--d:1.6"><span data-zahl="9.6" data-komma="1">0</span><small>Mrd. €</small></div>
+            <p class="rein" style="--d:1.8">Gewinn im Jahr 2025. Nur 48 verkaufte EUV-Anlagen brachten allein 11,6 Mrd. € Umsatz.</p>
+        </div>
+        <div class="diagramm">
+            <div class="saeule"><div class="wert rein" style="--d:.9">18,6</div><div class="koerper" style="--h:318px;--d:.4"></div><div class="jahr">2021</div></div>
+            <div class="saeule"><div class="wert rein" style="--d:1.05">21,2</div><div class="koerper" style="--h:363px;--d:.55"></div><div class="jahr">2022</div></div>
+            <div class="saeule"><div class="wert rein" style="--d:1.2">27,6</div><div class="koerper" style="--h:473px;--d:.7"></div><div class="jahr">2023</div></div>
+            <div class="saeule"><div class="wert rein" style="--d:1.35">28,3</div><div class="koerper" style="--h:485px;--d:.85"></div><div class="jahr">2024</div></div>
+            <div class="saeule betont"><div class="wert rein" style="--d:1.5">32,7</div><div class="koerper" style="--h:560px;--d:1"></div><div class="jahr">2025</div></div>
+        </div>
+    </section>
+
+    <!-- === FOLIE 8 · STÄRKE UND RISIKO === -->
+    <section class="slide geteilt">
+        <div class="haelfte a">
+            <div class="kopf rein" style="--d:.7">Stärke</div>
+            <h2 class="rein" style="--d:.8">Monopol</h2>
+            <p class="rein" style="--d:.95">Wer die schnellsten Chips bauen will, muss bei ASML kaufen. Ein Konkurrent bräuchte Jahrzehnte, um aufzuholen.</p>
+            <ul>
+                <li class="rein" style="--d:1.1">Einziger Hersteller von EUV-Anlagen</li>
+                <li class="rein" style="--d:1.2">Über 50 % Bruttomarge</li>
+                <li class="rein" style="--d:1.3">KI-Boom treibt die Nachfrage</li>
+            </ul>
+        </div>
+        <div class="haelfte b">
+            <div class="kopf rein" style="--d:.7">Risiko</div>
+            <h2 class="rein" style="--d:.8">Geopolitik</h2>
+            <p class="rein" style="--d:.95">Weil die Maschinen so wichtig sind, entscheiden Regierungen mit, wer sie kaufen darf.</p>
+            <ul>
+                <li class="rein" style="--d:1.1">Keine EUV-Anlagen für China</li>
+                <li class="rein" style="--d:1.2">Wenige Großkunden bestimmen den Umsatz</li>
+                <li class="rein" style="--d:1.3">Abhängig von Zulieferern wie Zeiss und Trumpf</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- === FOLIE 9 · FAZIT === -->
+    <section class="slide gelb">
+        <div class="fazit">
+            <div>
+                <div class="kopf rein" style="--d:.1">Fazit</div>
+                <h2>
+                    <span class="wort" style="--d:.2"><span>Ohne ASML</span></span><br>
+                    <span class="wort" style="--d:.35"><span>kein Fortschritt</span></span><br>
+                    <span class="wort" style="--d:.5"><span>bei Chips.</span></span>
+                </h2>
+            </div>
+            <div class="punkte-liste">
+                <div class="rein rechts" style="--d:.8"><b>1</b><span><h3>Maschinenbauer, kein Chiphersteller</h3><p>ASML liefert die Anlagen, mit denen andere produzieren.</p></span></div>
+                <div class="rein rechts" style="--d:1"><b>2</b><span><h3>EUV ist der Schlüssel</h3><p>Licht mit 13,5 nm macht die feinsten Schaltungen möglich.</p></span></div>
+                <div class="rein rechts" style="--d:1.2"><b>3</b><span><h3>Technik wird zu Politik</h3><p>Ein Monopol bei einer Schlüsseltechnik zieht Regierungen an.</p></span></div>
+            </div>
+        </div>
+        <div class="quelle">Quellen: ASML Geschäftsberichte 2021 bis 2025, asml.com</div>
+    </section>
+
+</main>
+</div>
+
+<script>
+/* ===========================================
+   STEUERUNG DER PRÄSENTATION
+   Pfeiltasten, Leertaste, Mausrad, Wischen und Antippen (iPad).
+   =========================================== */
+class SlidePresentation {
+    constructor() {
+        this.slides = [...document.querySelectorAll('.slide')];
+        this.stage = document.getElementById('deckStage');
+        this.current = 0;
+        this.editing = false;
+        this.scaleStage();
+        addEventListener('resize', () => this.scaleStage());
+        this.keyboard();
+        this.touch();
+        this.wheel();
+        const start = parseInt(location.hash.slice(1), 10);
+        this.show(Number.isFinite(start) ? start - 1 : 0);
+    }
+
+    /* Bühne als Ganzes auf das Fenster skalieren */
+    scaleStage() {
+        const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+        const x = (innerWidth - 1920 * f) / 2;
+        const y = (innerHeight - 1080 * f) / 2;
+        this.stage.style.transform = `translate(${x}px, ${y}px) scale(${f})`;
+    }
+
+    show(i) {
+        this.current = Math.max(0, Math.min(i, this.slides.length - 1));
+        this.slides.forEach((s, n) => {
+            const on = n === this.current;
+            s.classList.toggle('active', on);
+            s.classList.toggle('visible', on);
+        });
+        document.getElementById('fortschritt').style.width = ((this.current + 1) / this.slides.length * 100) + '%';
+        document.getElementById('zaehler').textContent = (this.current + 1) + ' / ' + this.slides.length;
+        history.replaceState(null, '', '#' + (this.current + 1));
+        this.countUp(this.slides[this.current]);
+    }
+    next() { this.show(this.current + 1); }
+    prev() { this.show(this.current - 1); }
+
+    /* Zahlen hochzählen: <span data-zahl="32.7" data-komma="1"> */
+    countUp(slide) {
+        slide.querySelectorAll('[data-zahl]').forEach(el => {
+            const target = parseFloat(el.dataset.zahl);
+            const dec = parseInt(el.dataset.komma || '0', 10);
+            const fmt = v => v.toLocaleString('de-DE', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = fmt(target); return; }
+            const t0 = performance.now() + 350, dur = 1500;
+            cancelAnimationFrame(el._raf);
+            const tick = now => {
+                const p = Math.max(0, Math.min(1, (now - t0) / dur));
+                el.textContent = fmt(target * (1 - Math.pow(1 - p, 4)));
+                if (p < 1) el._raf = requestAnimationFrame(tick);
+            };
+            el.textContent = fmt(0);
+            el._raf = requestAnimationFrame(tick);
+        });
+    }
+
+    keyboard() {
+        addEventListener('keydown', e => {
+            if (this.editing) return;
+            if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); this.next(); }
+            if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.prev(); }
+            if (e.key === 'Home') this.show(0);
+            if (e.key === 'End') this.show(this.slides.length - 1);
+            if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+        });
+    }
+
+    /* Wischen oder Antippen: rechte zwei Drittel = weiter, linkes Drittel = zurück */
+    touch() {
+        let x0 = null;
+        const view = document.querySelector('.deck-viewport');
+        view.addEventListener('pointerdown', e => { x0 = e.clientX; });
+        view.addEventListener('pointerup', e => {
+            if (this.editing || x0 === null) return;
+            const dx = e.clientX - x0; x0 = null;
+            if (Math.abs(dx) > 50) { dx < 0 ? this.next() : this.prev(); return; }
+            e.clientX > innerWidth / 3 ? this.next() : this.prev();
+        });
+    }
+
+    wheel() {
+        let locked = false;
+        addEventListener('wheel', e => {
+            if (this.editing || locked || Math.abs(e.deltaY) < 20) return;
+            locked = true; setTimeout(() => locked = false, 700);
+            e.deltaY > 0 ? this.next() : this.prev();
+        }, { passive: true });
+    }
+}
+const deck = new SlidePresentation();
+
+/* ===========================================
+   TEXT DIREKT IM BROWSER BEARBEITEN
+   Taste E oder Ecke oben links. Strg+S speichert die geänderte Datei.
+   =========================================== */
+const editor = {
+    isActive: false,
+    targets: 'h1 .wort > span, h2, h3, p, li, .kopf, .fakten div, .jahr, .name, .wert',
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        deck.editing = this.isActive;
+        document.body.classList.toggle('bearbeiten', this.isActive);
+        document.querySelectorAll(this.targets).forEach(el => {
+            if (el.querySelector('.wort')) return;
+            this.isActive ? el.setAttribute('contenteditable', 'true') : el.removeAttribute('contenteditable');
+        });
+        const btn = document.getElementById('editToggle');
+        btn.classList.toggle('active', this.isActive);
+        btn.textContent = this.isActive ? 'Fertig (Strg+S speichert)' : 'Bearbeiten';
+    },
+    save() {
+        const wasActive = this.isActive;
+        if (wasActive) this.toggleEditMode();
+        const blob = new Blob(['<!DOCTYPE html>\n' + document.documentElement.outerHTML], { type: 'text/html' });
+        const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'asml-praesentation.html' });
+        a.click(); URL.revokeObjectURL(a.href);
+        if (wasActive) this.toggleEditMode();
+    }
+};
+const editToggle = document.getElementById('editToggle');
+const hotzone = document.querySelector('.edit-hotzone');
+let hideTimeout = null;
+const hideLater = () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); };
+editToggle.addEventListener('click', e => { e.stopPropagation(); editor.toggleEditMode(); });
+hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
+hotzone.addEventListener('mouseleave', hideLater);
+editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+editToggle.addEventListener('mouseleave', hideLater);
+hotzone.addEventListener('click', () => editor.toggleEditMode());
+document.addEventListener('keydown', e => {
+    if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable') && !e.ctrlKey && !e.metaKey) editor.toggleEditMode();
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); editor.save(); }
+    if (e.key === 'Escape' && editor.isActive) editor.toggleEditMode();
+});
+</script>
+</body>
+</html>
