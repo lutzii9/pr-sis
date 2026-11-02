@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Die 2 % Frage">
+<link rel="manifest" href="../manifest.webmanifest">
+<title>Die 2-Prozent-Frage · Q1-SW2</title>
+
+<!-- Schriften: Syne (Display/Headings) · IBM Plex Mono (Zahlen/Daten) · DM Sans (Fließtext) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN-SYSTEM: KONJUNKTUR-TERMINAL
+   Aesthetic: Bloomberg-Terminal trifft Datenjournalismus
+   Palette: Tiefes Dunkel + Ökonomie-Gold + Daten-Grün/Rot
+   ============================================================ */
+:root {
+    /* Farben — hier ändern um alles umzufärben */
+    --bg:         #08090D;
+    --bg-2:       #0F1119;
+    --bg-card:    rgba(255,255,255,0.04);
+    --border:     rgba(255,255,255,0.08);
+
+    --gold:       #EAB308;
+    --gold-dim:   rgba(234,179,8,0.14);
+    --gold-glow:  rgba(234,179,8,0.28);
+
+    --gruen:      #22C55E;
+    --gruen-dim:  rgba(34,197,94,0.12);
+    --rot:        #EF4444;
+    --rot-dim:    rgba(239,68,68,0.12);
+    --amber:      #F97316;
+    --amber-dim:  rgba(249,115,22,0.12);
+    --cyan:       #22D3EE;
+    --cyan-dim:   rgba(34,211,238,0.12);
+
+    --t1: #F1F5F9;
+    --t2: #94A3B8;
+    --t3: #475569;
+
+    /* Typografie */
+    --ff-d: 'Syne', sans-serif;
+    --ff-m: 'IBM Plex Mono', monospace;
+    --ff-b: 'DM Sans', sans-serif;
+
+    /* Animation */
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Stage */
+    --stage-bg: #03040A;
+    --slide-bg: var(--bg);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ============================================================
+   VIEWPORT-BASE (viewport-base.css — vollständig eingebettet)
+   Folien sind auf 1920×1080 gebaut und werden als Ganzes skaliert.
+   ============================================================ */
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--stage-bg); }
+
+.deck-viewport {
+    position: fixed; inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg);
+}
+.deck-stage {
+    position: absolute; left: 0; top: 0;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg);
+}
+.slide {
+    position: absolute; inset: 0;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden; opacity: 0; pointer-events: none;
+    background: var(--slide-bg);
+}
+.slide.active, .slide.visible {
+    visibility: visible; opacity: 1; pointer-events: auto; z-index: 1;
+}
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+.deck-controls {
+    position: fixed; left: 50%; bottom: 22px;
+    transform: translateX(-50%); z-index: 1000;
+}
+@media print {
+    html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+    .deck-viewport { position: static; overflow: visible; background: #fff; }
+    .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+    .slide { position: relative; display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px; height: 1080px; break-after: page; page-break-after: always; }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .deck-controls, .fortschritt, .zaehler, .edit-toggle, .edit-hotzone { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* ============================================================
+   GITTER-HINTERGRUND (dezentes Struktur-Element auf allen Folien)
+   ============================================================ */
+.slide::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+}
+.slide > * { position: relative; z-index: 1; }
+
+/* ============================================================
+   EINGANGS-ANIMATIONEN
+   Klasse .visible (via JS) löst alle Übergänge aus.
+   ============================================================ */
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(1) { transition-delay: 0.05s; }
+.reveal:nth-child(2) { transition-delay: 0.18s; }
+.reveal:nth-child(3) { transition-delay: 0.30s; }
+.reveal:nth-child(4) { transition-delay: 0.42s; }
+.reveal:nth-child(5) { transition-delay: 0.54s; }
+
+.reveal-l {
+    opacity: 0;
+    transform: translateX(-36px);
+    transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+}
+.slide.visible .reveal-l { opacity: 1; transform: translateX(0); }
+.reveal-l:nth-child(1) { transition-delay: 0.08s; }
+.reveal-l:nth-child(2) { transition-delay: 0.20s; }
+.reveal-l:nth-child(3) { transition-delay: 0.32s; }
+.reveal-l:nth-child(4) { transition-delay: 0.44s; }
+.reveal-l:nth-child(5) { transition-delay: 0.56s; }
+
+.reveal-s {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.slide.visible .reveal-s { opacity: 1; transform: scale(1); }
+
+/* ============================================================
+   TYPOGRAFIE-UTILITIES
+   ============================================================ */
+body { font-family: var(--ff-b); color: var(--t1); }
+.label {
+    font-family: var(--ff-m);
+    font-size: 21px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--t3);
+}
+.label-gold { color: var(--gold); }
+.divider { width: 48px; height: 2px; background: var(--gold); margin: 22px 0; }
+
+/* ============================================================
+   FOLIE 1 · TITEL
+   ============================================================ */
+.s-titel {
+    display: grid;
+    grid-template-columns: 660px 1fr;
+    height: 1080px;
+    position: relative;
+}
+.s-titel-l {
+    padding: 96px 80px 80px 110px;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+    gap: 0;
+}
+.s-titel-kurs {
+    font-family: var(--ff-m);
+    font-size: 19px;
+    color: var(--t3);
+    letter-spacing: 0.09em;
+    margin-bottom: 40px;
+}
+.s-titel-l h1 {
+    font-family: var(--ff-d);
+    font-size: 90px;
+    font-weight: 800;
+    line-height: 0.95;
+    color: var(--t1);
+    margin-bottom: 32px;
+}
+.s-titel-l .sub {
+    font-size: 29px;
+    font-weight: 300;
+    color: var(--t2);
+    line-height: 1.55;
+    max-width: 460px;
+}
+.s-titel-r {
+    display: flex;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+}
+/* Hintergründiges Glühen hinter der Zahl */
+.s-titel-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(234,179,8,0.18) 0%, transparent 65%);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: pulsate 3s ease-in-out infinite;
+}
+@keyframes pulsate {
+    0%, 100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+    50%       { opacity: 1;   transform: translate(-50%,-50%) scale(1.06); }
+}
+/* Große Geisterzahl im Hintergrund */
+.s-titel-ghost {
+    font-family: var(--ff-d);
+    font-weight: 800;
+    font-size: 580px;
+    line-height: 0.85;
+    color: var(--gold);
+    opacity: 0.07;
+    position: absolute;
+    right: -50px; bottom: -70px;
+    pointer-events: none;
+    user-select: none;
+}
+.s-titel-zahl {
+    position: relative; z-index: 2;
+    text-align: center;
+}
+.s-titel-zahl-gross {
+    font-family: var(--ff-d);
+    font-weight: 800;
+    font-size: 300px;
+    line-height: 0.88;
+    color: var(--gold);
+    display: block;
+}
+.s-titel-zahl-hint {
+    font-family: var(--ff-m);
+    font-size: 22px;
+    color: var(--t2);
+    letter-spacing: 0.1em;
+    margin-top: 20px;
+    display: block;
+    text-transform: uppercase;
+}
+/* Meta-Zeile unten links */
+.s-titel-meta {
+    position: absolute; bottom: 56px; left: 110px;
+    display: flex; gap: 36px; align-items: center;
+}
+.meta-i { font-family: var(--ff-m); font-size: 19px; color: var(--t3); }
+.meta-sep { width: 1px; height: 18px; background: var(--t3); opacity: 0.35; }
+
+/* ============================================================
+   FOLIE 2 · DIE THESE
+   ============================================================ */
+.s-these {
+    padding: 76px 110px 76px 110px;
+    display: flex; flex-direction: column;
+    gap: 52px;
+}
+.s-these-header { display: flex; align-items: center; gap: 24px; }
+.s-these-quote {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    padding: 48px 60px;
+    border-radius: 0 4px 4px 0;
+}
+.s-these-quote blockquote {
+    font-family: var(--ff-b);
+    font-size: 41px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--t1);
+    line-height: 1.45;
+}
+.s-these-quote blockquote strong {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--gold);
+}
+.s-these-quote .src {
+    font-family: var(--ff-m); font-size: 19px; color: var(--t3);
+    margin-top: 20px;
+}
+/* Schwellen-Diagramm */
+.s-these-diag {
+    display: flex; align-items: stretch;
+    height: 195px; border-radius: 4px; overflow: hidden;
+}
+.diag-z {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px; flex: 1; padding: 28px 40px;
+}
+.diag-z.d-rot   { background: var(--rot-dim);   border: 1px solid rgba(239,68,68,0.22); }
+.diag-z.d-grau  { background: rgba(71,85,105,0.1); border-top: 1px solid rgba(71,85,105,0.2); border-bottom: 1px solid rgba(71,85,105,0.2); }
+.diag-z.d-gruen { background: var(--gruen-dim); border: 1px solid rgba(34,197,94,0.22); }
+.diag-z-tag { font-family: var(--ff-m); font-size: 17px; letter-spacing: 0.09em; text-transform: uppercase; }
+.d-rot   .diag-z-tag { color: var(--rot); }
+.d-grau  .diag-z-tag { color: var(--t3); }
+.d-gruen .diag-z-tag { color: var(--gruen); }
+.diag-z-txt { font-size: 26px; font-weight: 500; color: var(--t1); text-align: center; line-height: 1.4; }
+.diag-schwelle {
+    width: 5px; background: var(--gold);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative;
+}
+.diag-schwelle::before {
+    content: '2 %';
+    font-family: var(--ff-m); font-size: 17px; color: var(--gold);
+    position: absolute; top: 12px;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+.s-these-foot { font-size: 24px; color: var(--t3); font-style: italic; }
+
+/* ============================================================
+   FOLIE 3 · OKUN'SCHES GESETZ
+   ============================================================ */
+.s-okun {
+    display: grid; grid-template-columns: 700px 1fr;
+    height: 1080px;
+}
+.s-okun-l {
+    padding: 90px 80px 90px 110px;
+    display: flex; flex-direction: column; gap: 36px;
+    border-right: 1px solid var(--border);
+    justify-content: center;
+}
+.s-okun-l h2 {
+    font-family: var(--ff-d);
+    font-size: 76px; font-weight: 800; line-height: 0.98;
+    color: var(--t1);
+}
+.s-okun-l .erlaeuterung {
+    font-size: 28px; color: var(--t2); line-height: 1.6;
+}
+.kette {
+    display: flex; flex-direction: column;
+}
+.kette-item {
+    display: flex; align-items: center; gap: 18px;
+    padding: 18px 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    font-size: 26px; font-weight: 500; color: var(--t1);
+}
+.kette-item:not(:last-child) { border-bottom: none; }
+.kette-item:first-child { border-radius: 4px 4px 0 0; }
+.kette-item:last-child  { border-radius: 0 0 4px 4px; }
+.kette-arr { color: var(--gold); font-size: 18px; flex-shrink: 0; }
+.s-okun-r {
+    padding: 72px 80px;
+    display: flex; flex-direction: column; gap: 36px;
+    align-items: stretch; justify-content: center;
+}
+.formel-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 44px 56px;
+    text-align: center;
+}
+.formel-box .fl { font-family: var(--ff-m); font-size: 17px; color: var(--t3); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 22px; }
+.formel-box .formel { font-family: var(--ff-m); font-size: 48px; color: var(--gold); font-style: italic; }
+.formel-legend {
+    font-family: var(--ff-m); font-size: 21px; color: var(--t2);
+    line-height: 1.8; text-align: center;
+}
+.koeff-row { display: flex; gap: 28px; }
+.koeff-card {
+    flex: 1;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px;
+    padding: 28px 24px; text-align: center;
+}
+.koeff-card .kz { font-family: var(--ff-m); font-size: 50px; color: var(--gold); line-height: 1; }
+.koeff-card .ke { font-family: var(--ff-m); font-size: 15px; color: var(--t3); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px; }
+.koeff-card .kb { font-size: 20px; color: var(--t2); margin-top: 10px; line-height: 1.4; }
+
+/* ============================================================
+   FOLIE 4 · DATEN DEUTSCHLAND
+   ============================================================ */
+.s-daten {
+    display: grid; grid-template-columns: 430px 1fr;
+    height: 1080px;
+}
+.s-daten-l {
+    padding: 90px 56px 90px 110px;
+    display: flex; flex-direction: column; gap: 32px;
+    border-right: 1px solid var(--border);
+}
+.s-daten-l h2 {
+    font-family: var(--ff-d);
+    font-size: 66px; font-weight: 800; line-height: 1.02;
+    color: var(--t1);
+}
+.s-daten-quelle { font-family: var(--ff-m); font-size: 18px; color: var(--t3); }
+.legende { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+.leg { display: flex; align-items: center; gap: 14px; font-size: 21px; color: var(--t2); }
+.leg-dot { width: 13px; height: 13px; border-radius: 2px; flex-shrink: 0; }
+.daten-hint {
+    margin-top: auto;
+    padding: 22px 26px;
+    background: var(--gold-dim); border: 1px solid rgba(234,179,8,0.18);
+    border-radius: 4px;
+    font-size: 20px; color: var(--t2); line-height: 1.55;
+}
+.daten-hint strong { color: var(--gold); font-weight: 600; }
+.s-daten-r {
+    padding: 50px 72px 56px 52px;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* ============================================================
+   FOLIE 5 · FAZIT
+   ============================================================ */
+.s-fazit {
+    display: grid; grid-template-columns: 1fr 460px;
+    height: 1080px;
+}
+.s-fazit-l {
+    padding: 84px 72px 84px 110px;
+    display: flex; flex-direction: column; gap: 44px;
+    border-right: 1px solid var(--border);
+}
+.s-fazit-l h2 {
+    font-family: var(--ff-d);
+    font-size: 96px; font-weight: 800; line-height: 0.94;
+    color: var(--t1);
+}
+.s-fazit-l h2 .ak { color: var(--gold); }
+.fazit-p {
+    display: flex; flex-direction: column; gap: 20px;
+}
+.fazit-item {
+    display: flex; align-items: flex-start; gap: 22px;
+    padding: 24px 30px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 4px;
+}
+.fazit-ico { font-size: 26px; flex-shrink: 0; margin-top: 3px; }
+.fazit-txt { font-size: 25px; color: var(--t1); line-height: 1.5; }
+.fazit-txt strong { color: var(--gold); font-weight: 600; }
+.s-fazit-r {
+    padding: 72px 56px 72px 48px;
+    display: flex; flex-direction: column; gap: 28px;
+    justify-content: center;
+}
+.stat-card {
+    text-align: center; padding: 30px 20px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 4px;
+}
+.stat-card.gruen { border-color: rgba(34,197,94,0.32); background: var(--gruen-dim); }
+.stat-card.amber { border-color: rgba(249,115,22,0.32); background: var(--amber-dim); }
+.stat-card.rot   { border-color: rgba(239,68,68,0.32);  background: var(--rot-dim); }
+.stat-n { font-family: var(--ff-m); font-size: 76px; line-height: 1; }
+.stat-card.gruen .stat-n { color: var(--gruen); }
+.stat-card.amber .stat-n { color: var(--amber); }
+.stat-card.rot   .stat-n { color: var(--rot); }
+.stat-t { font-size: 20px; color: var(--t2); margin-top: 10px; line-height: 1.45; }
+
+/* ============================================================
+   FORTSCHRITT & ZÄHLER
+   ============================================================ */
+.fortschritt {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 3px; background: rgba(255,255,255,0.06);
+    z-index: 2000;
+}
+.fortschritt-bar { height: 100%; background: var(--gold); transition: width 0.4s var(--ease); }
+.zaehler {
+    position: fixed; bottom: 18px; right: 30px;
+    font-family: var(--ff-m); font-size: 18px; color: var(--t3);
+    z-index: 2000;
+}
+
+/* ============================================================
+   INLINE-EDITOR (hover oben-links oder Taste E)
+   ============================================================ */
+.edit-hotzone {
+    position: fixed; top: 0; left: 0;
+    width: 80px; height: 80px;
+    z-index: 10000; cursor: pointer;
+}
+.edit-toggle {
+    position: fixed; top: 16px; left: 16px;
+    background: rgba(8,9,13,0.9); border: 1px solid var(--border);
+    color: var(--t2); padding: 8px 16px; border-radius: 4px;
+    font-family: var(--ff-m); font-size: 14px;
+    cursor: pointer; z-index: 10001;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toggle.active { background: var(--gold-dim); color: var(--gold); border-color: rgba(234,179,8,0.4); }
+[contenteditable="true"] { outline: 2px dashed rgba(234,179,8,0.5); border-radius: 2px; min-width: 8px; }
+</style>
+</head>
+<body>
+
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- ============================================================
+     FOLIE 1 · TITEL
+     ============================================================ -->
+<section class="slide s-titel">
+  <div class="s-titel-l">
+    <div class="s-titel-kurs reveal">Q1-SW2 · Sozialwissenschaften · Gruppe 2</div>
+    <div class="divider reveal"></div>
+    <h1 class="reveal">Die 2-Prozent-Frage</h1>
+    <p class="sub reveal">Wächst die Wirtschaft —<br>sinkt die Arbeitslosigkeit?</p>
+  </div>
+
+  <div class="s-titel-r">
+    <div class="s-titel-glow"></div>
+    <div class="s-titel-zahl reveal-s">
+      <span class="s-titel-zahl-gross">2 %</span>
+      <span class="s-titel-zahl-hint">BIP-Wachstum als Schwellenwert</span>
+    </div>
+    <div class="s-titel-ghost" aria-hidden="true">2</div>
+  </div>
+
+  <div class="s-titel-meta">
+    <span class="meta-i">Aufgabe 2c</span>
+    <div class="meta-sep"></div>
+    <span class="meta-i">Konjunktur &amp; Arbeitslosigkeit</span>
+    <div class="meta-sep"></div>
+    <span class="meta-i">12.10.2026</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOLIE 2 · DIE THESE
+     ============================================================ -->
+<section class="slide s-these">
+  <div class="s-these-header reveal">
+    <span class="label label-gold">Die Aussage</span>
+  </div>
+
+  <div class="s-these-quote reveal">
+    <blockquote>
+      „Arbeitslosigkeit geht erst ab einem jährlichen Wachstum des<br>
+      Bruttoinlandsproduktes von <strong>2 Prozent</strong> zurück."
+    </blockquote>
+    <p class="src">→ Aufgabenstellung Q1-SW2, Gruppe 2, Teilaufgabe c</p>
+  </div>
+
+  <div class="s-these-diag reveal">
+    <div class="diag-z d-rot">
+      <span class="diag-z-tag">BIP-Wachstum &lt; 2 %</span>
+      <span class="diag-z-txt">Arbeitslosigkeit<br>steigt oder bleibt</span>
+    </div>
+    <div class="diag-schwelle"></div>
+    <div class="diag-z d-gruen">
+      <span class="diag-z-tag">BIP-Wachstum ≥ 2 %</span>
+      <span class="diag-z-txt">Arbeitslosigkeit<br>geht zurück</span>
+    </div>
+  </div>
+
+  <p class="s-these-foot reveal">→ Überprüfung anhand realer Daten für Deutschland 2010–2022</p>
+</section>
+
+<!-- ============================================================
+     FOLIE 3 · OKUN'SCHES GESETZ
+     ============================================================ -->
+<section class="slide s-okun">
+  <div class="s-okun-l">
+    <span class="label label-gold reveal-l">Theoretischer Hintergrund</span>
+    <h2 class="reveal-l">Okun'sches<br>Gesetz (1962)</h2>
+    <p class="erlaeuterung reveal-l">
+      US-Ökonom Arthur Okun beschrieb den
+      statistischen Zusammenhang zwischen
+      Wirtschaftswachstum und Beschäftigung:
+    </p>
+    <div class="kette reveal-l">
+      <div class="kette-item"><span class="kette-arr">▶</span> Mehr Nachfrage &amp; Produktion</div>
+      <div class="kette-item"><span class="kette-arr">▶</span> Mehr Arbeitskräfte nötig</div>
+      <div class="kette-item"><span class="kette-arr">▶</span> Arbeitslosigkeit sinkt</div>
+    </div>
+  </div>
+
+  <div class="s-okun-r">
+    <div class="formel-box reveal-s">
+      <p class="fl">Okun-Beziehung</p>
+      <div class="formel">Δu = −β · (g − g*)</div>
+    </div>
+    <p class="formel-legend reveal">
+      Δu = Änderung Arbeitslosenquote &nbsp;·&nbsp; g = BIP-Wachstum<br>
+      g* = Potenzialwachstum &nbsp;·&nbsp; β = Okun-Koeffizient
+    </p>
+    <div class="koeff-row reveal">
+      <div class="koeff-card">
+        <div class="kz">~1,5 %</div>
+        <div class="ke">Schwellenwachstum</div>
+        <div class="kb">Ab hier sinkt Arbeitslosigkeit in Deutschland spürbar</div>
+      </div>
+      <div class="koeff-card">
+        <div class="kz">0,3–0,5</div>
+        <div class="ke">Okun-Koeffizient</div>
+        <div class="kb">Rückgang AL pro 1 % zusätzliches Wachstum</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOLIE 4 · DATEN DEUTSCHLAND (Balkendiagramm)
+     ============================================================ -->
+<section class="slide s-daten">
+  <div class="s-daten-l">
+    <span class="label label-gold reveal-l">Empirische Prüfung</span>
+    <h2 class="reveal-l">BIP-Wachstum<br>Deutschland<br>2010–2022</h2>
+    <p class="s-daten-quelle reveal-l">Destatis / OECD · reale Veränderung in %</p>
+
+    <div class="legende reveal-l">
+      <div class="leg">
+        <div class="leg-dot" style="background:var(--gruen)"></div>
+        ≥ 2 % Wachstum → AL sank ✓
+      </div>
+      <div class="leg">
+        <div class="leg-dot" style="background:var(--amber)"></div>
+        &lt; 2 % Wachstum → AL sank trotzdem
+      </div>
+      <div class="leg">
+        <div class="leg-dot" style="background:var(--t3)"></div>
+        Wachstum → AL blieb etwa gleich
+      </div>
+      <div class="leg">
+        <div class="leg-dot" style="background:var(--rot)"></div>
+        Rezession → AL stieg
+      </div>
+    </div>
+
+    <div class="daten-hint reveal-l">
+      <strong>Goldene Linie</strong> = 2 %-Schwelle der These.<br>
+      <strong style="color:var(--cyan)">Cyan gestrichelt</strong> = empirische Schwelle (~1,5 %).
+    </div>
+  </div>
+
+  <div class="s-daten-r">
+    <!-- SVG-Balkendiagramm: BIP-Wachstum Deutschland 2010–2022
+         Skala: 0 % → y=370, 1 % = 42px, viewBox 0 0 1050 760 -->
+    <svg viewBox="0 0 1050 760" xmlns="http://www.w3.org/2000/svg"
+         style="width:100%;height:auto;max-height:860px;" class="reveal-s"
+         aria-label="Balkendiagramm BIP-Wachstum Deutschland 2010 bis 2022">
+
+      <!-- Gitterlinien (horizontal) -->
+      <line x1="68" y1="118" x2="1010" y2="118" stroke="#334155" stroke-width="0.6" stroke-dasharray="4,5"/>
+      <line x1="68" y1="202" x2="1010" y2="202" stroke="#334155" stroke-width="0.6" stroke-dasharray="4,5"/>
+      <line x1="68" y1="286" x2="1010" y2="286" stroke="#334155" stroke-width="0.6" stroke-dasharray="4,5"/>
+      <line x1="68" y1="454" x2="1010" y2="454" stroke="#334155" stroke-width="0.6" stroke-dasharray="4,5"/>
+      <line x1="68" y1="538" x2="1010" y2="538" stroke="#334155" stroke-width="0.6" stroke-dasharray="4,5"/>
+
+      <!-- 0 %-Linie -->
+      <line x1="68" y1="370" x2="1010" y2="370" stroke="#94A3B8" stroke-width="1.5" opacity="0.55"/>
+
+      <!-- 2 %-Schwelle (die goldene Linie der These) -->
+      <line x1="68" y1="286" x2="1010" y2="286" stroke="#EAB308" stroke-width="2.5" stroke-dasharray="10,5"/>
+      <text x="1018" y="290" font-size="19" fill="#EAB308" font-family="'IBM Plex Mono', monospace" font-weight="500">2 %</text>
+
+      <!-- ~1,5 %-Schwelle (empirische Schwelle für Deutschland) -->
+      <line x1="68" y1="307" x2="1010" y2="307" stroke="#22D3EE" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.7"/>
+      <text x="1018" y="311" font-size="17" fill="#22D3EE" font-family="'IBM Plex Mono', monospace">~1,5 %</text>
+
+      <!-- Y-Achsen-Labels -->
+      <text x="56" y="122" font-size="18" fill="#475569" text-anchor="end" font-family="'IBM Plex Mono', monospace">+6 %</text>
+      <text x="56" y="206" font-size="18" fill="#475569" text-anchor="end" font-family="'IBM Plex Mono', monospace">+4 %</text>
+      <text x="56" y="290" font-size="18" fill="#475569" text-anchor="end" font-family="'IBM Plex Mono', monospace">+2 %</text>
+      <text x="56" y="374" font-size="18" fill="#94A3B8" text-anchor="end" font-family="'IBM Plex Mono', monospace">0 %</text>
+      <text x="56" y="458" font-size="18" fill="#475569" text-anchor="end" font-family="'IBM Plex Mono', monospace">−2 %</text>
+      <text x="56" y="542" font-size="18" fill="#475569" text-anchor="end" font-family="'IBM Plex Mono', monospace">−4 %</text>
+
+      <!-- Y-Achse -->
+      <line x1="68" y1="90" x2="68" y2="620" stroke="#475569" stroke-width="1.2" opacity="0.4"/>
+      <!-- X-Achse -->
+      <line x1="68" y1="620" x2="1010" y2="620" stroke="#475569" stroke-width="1" opacity="0.3"/>
+
+      <!--
+          BALKEN: x-start = 88, bar-width = 54, gap = 18 (stride = 72)
+          Jahr i: x = 88 + i*72
+          Skala: 0 % = y=370, 1 % = 42px
+          Positive Balken: y = 370 - h, height = h
+          Negative Balken: y = 370,      height = |h|
+      -->
+
+      <!-- 2010: +4,2 % → h=176,4 → y≈194 · GRÜN (≥2% & AL sank) -->
+      <rect x="88"  y="193" width="54" height="177" fill="#22C55E" rx="3" opacity="0.9"/>
+      <text x="115" y="186" font-size="17" fill="#22C55E" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+4,2</text>
+      <text x="115" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2010</text>
+
+      <!-- 2011: +3,9 % → h=163,8 → y≈206 · GRÜN -->
+      <rect x="160" y="206" width="54" height="164" fill="#22C55E" rx="3" opacity="0.9"/>
+      <text x="187" y="199" font-size="17" fill="#22C55E" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+3,9</text>
+      <text x="187" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2011</text>
+
+      <!-- 2012: +0,4 % → h=16,8 → y≈353 · GRAU (AL blieb) -->
+      <rect x="232" y="353" width="54" height="17" fill="#475569" rx="3" opacity="0.9"/>
+      <text x="259" y="347" font-size="17" fill="#475569" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+0,4</text>
+      <text x="259" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2012</text>
+
+      <!-- 2013: +0,4 % → GRAU -->
+      <rect x="304" y="353" width="54" height="17" fill="#475569" rx="3" opacity="0.9"/>
+      <text x="331" y="347" font-size="17" fill="#475569" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+0,4</text>
+      <text x="331" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2013</text>
+
+      <!-- 2014: +2,2 % → h=92,4 → y≈278 · GRÜN -->
+      <rect x="376" y="278" width="54" height="92" fill="#22C55E" rx="3" opacity="0.9"/>
+      <text x="403" y="271" font-size="17" fill="#22C55E" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+2,2</text>
+      <text x="403" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2014</text>
+
+      <!-- 2015: +1,7 % → h=71,4 → y≈299 · AMBER (unter 2 %, AL sank trotzdem!) -->
+      <rect x="448" y="299" width="54" height="71" fill="#F97316" rx="3" opacity="0.9"/>
+      <text x="475" y="292" font-size="17" fill="#F97316" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+1,7</text>
+      <text x="475" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2015</text>
+      <!-- Ausnahme-Marker -->
+      <text x="475" y="278" font-size="18" fill="#F97316" text-anchor="middle" font-weight="bold">!</text>
+
+      <!-- 2016: +2,2 % → GRÜN -->
+      <rect x="520" y="278" width="54" height="92" fill="#22C55E" rx="3" opacity="0.9"/>
+      <text x="547" y="271" font-size="17" fill="#22C55E" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+2,2</text>
+      <text x="547" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2016</text>
+
+      <!-- 2017: +2,9 % → h=121,8 → y≈248 · GRÜN -->
+      <rect x="592" y="248" width="54" height="122" fill="#22C55E" rx="3" opacity="0.9"/>
+      <text x="619" y="241" font-size="17" fill="#22C55E" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+2,9</text>
+      <text x="619" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2017</text>
+
+      <!-- 2018: +1,5 % → h=63 → y≈307 · AMBER (unter 2 %, AL sank trotzdem!) -->
+      <rect x="664" y="307" width="54" height="63" fill="#F97316" rx="3" opacity="0.9"/>
+      <text x="691" y="300" font-size="17" fill="#F97316" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+1,5</text>
+      <text x="691" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2018</text>
+      <text x="691" y="287" font-size="18" fill="#F97316" text-anchor="middle" font-weight="bold">!</text>
+
+      <!-- 2019: +1,1 % → h=46,2 → y≈324 · GRAU (AL blieb) -->
+      <rect x="736" y="324" width="54" height="46" fill="#475569" rx="3" opacity="0.9"/>
+      <text x="763" y="317" font-size="17" fill="#475569" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+1,1</text>
+      <text x="763" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2019</text>
+
+      <!-- 2020: −4,1 % → h=172,2 → y=370, h=172 · ROT (Rezession) -->
+      <rect x="808" y="370" width="54" height="172" fill="#EF4444" rx="3" opacity="0.9"/>
+      <text x="835" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2020</text>
+      <text x="835" y="420" font-size="17" fill="white" text-anchor="middle" font-family="'IBM Plex Mono', monospace" opacity="0.85">−4,1</text>
+      <text x="835" y="450" font-size="15" fill="white" text-anchor="middle" font-family="'DM Sans', sans-serif" opacity="0.75">COVID-19</text>
+      <text x="835" y="470" font-size="14" fill="white" text-anchor="middle" font-family="'DM Sans', sans-serif" opacity="0.65">Kurzarbeit</text>
+
+      <!-- 2021: +2,6 % → h=109,2 → y≈261 · GRÜN -->
+      <rect x="880" y="261" width="54" height="109" fill="#22C55E" rx="3" opacity="0.9"/>
+      <text x="907" y="254" font-size="17" fill="#22C55E" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+2,6</text>
+      <text x="907" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2021</text>
+
+      <!-- 2022: +1,8 % → h=75,6 → y≈294 · AMBER (unter 2 %, AL sank trotzdem!) -->
+      <rect x="952" y="294" width="54" height="76" fill="#F97316" rx="3" opacity="0.9"/>
+      <text x="979" y="287" font-size="17" fill="#F97316" text-anchor="middle" font-family="'IBM Plex Mono', monospace">+1,8</text>
+      <text x="979" y="650" font-size="17" fill="#64748B" text-anchor="middle" font-family="'IBM Plex Mono', monospace">2022</text>
+      <text x="979" y="270" font-size="18" fill="#F97316" text-anchor="middle" font-weight="bold">!</text>
+
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOLIE 5 · FAZIT
+     ============================================================ -->
+<section class="slide s-fazit">
+  <div class="s-fazit-l">
+    <span class="label label-gold reveal">Ergebnis der Überprüfung</span>
+    <h2 class="reveal">Größten-<br>teils <span class="ak">zutreffend</span></h2>
+
+    <div class="fazit-p">
+      <div class="fazit-item reveal">
+        <span class="fazit-ico" style="color:var(--gruen)">✓</span>
+        <span class="fazit-txt">
+          In <strong>6 von 13 Jahren</strong> wuchs das BIP um ≥ 2 % —
+          die Arbeitslosigkeit sank jedes Mal deutlich
+        </span>
+      </div>
+      <div class="fazit-item reveal">
+        <span class="fazit-ico" style="color:var(--amber)">!</span>
+        <span class="fazit-txt">
+          In <strong>3 weiteren Jahren</strong> (2015, 2018, 2022) sank die AL
+          auch bei Wachstum unter 2 % — die echte Schwelle liegt für
+          Deutschland eher bei <strong>~1,5 %</strong>
+        </span>
+      </div>
+      <div class="fazit-item reveal">
+        <span class="fazit-ico" style="color:var(--rot)">▶</span>
+        <span class="fazit-txt">
+          <strong>Sonderfall 2020:</strong> Trotz −4,1 % BIP stieg die AL kaum an —
+          das <strong>Kurzarbeitergeld</strong> verhinderte einen starken Anstieg
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="s-fazit-r">
+    <div class="stat-card gruen reveal">
+      <div class="stat-n">6×</div>
+      <div class="stat-t">These bestätigt<br>(≥ 2 % → AL sank)</div>
+    </div>
+    <div class="stat-card amber reveal">
+      <div class="stat-n">3×</div>
+      <div class="stat-t">Ausnahme<br>(&lt; 2 %, aber AL sank)</div>
+    </div>
+    <div class="stat-card rot reveal">
+      <div class="stat-n">1×</div>
+      <div class="stat-t">Sonderfall 2020<br>(Kurzarbeit dämpfte AL)</div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- Fortschrittsbalken und Seitenzähler -->
+<div class="fortschritt"><div class="fortschritt-bar" id="fortBar"></div></div>
+<div class="zaehler" id="zaehler">1 / 5</div>
+
+<!-- Inline-Edit-Trigger -->
+<div class="edit-hotzone" id="editHz"></div>
+<button class="edit-toggle" id="editBtn">✏ Bearbeiten</button>
+
+<script>
+/* ============================================================
+   PRÄSENTATIONS-CONTROLLER
+   Fixed-Stage-Skalierung + Tastatur + Touch + Mausrad
+   ============================================================ */
+class Deck {
+    constructor() {
+        this.slides   = document.querySelectorAll('.slide');
+        this.total    = this.slides.length;
+        this.current  = 0;
+        this.stage    = document.getElementById('deckStage');
+        this.bar      = document.getElementById('fortBar');
+        this.zaehler  = document.getElementById('zaehler');
+        this._scaling();
+        this._keys();
+        this._touch();
+        this._wheel();
+        /* Doppeltes rAF: erst nach initialem Paint animieren */
+        requestAnimationFrame(() => requestAnimationFrame(() => this.go(0)));
+    }
+
+    _scaling() {
+        const fit = () => {
+            const f = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const x = (window.innerWidth  - 1920 * f) / 2;
+            const y = (window.innerHeight - 1080 * f) / 2;
+            this.stage.style.transform = `translate(${x}px, ${y}px) scale(${f})`;
+        };
+        fit();
+        window.addEventListener('resize', fit);
+    }
+
+    go(n) {
+        this.current = Math.max(0, Math.min(n, this.total - 1));
+        this.slides.forEach((s, i) => {
+            s.classList.toggle('active',  i === this.current);
+            s.classList.toggle('visible', i === this.current);
+        });
+        const pct = this.total > 1
+            ? (this.current / (this.total - 1)) * 100
+            : 100;
+        this.bar.style.width = pct + '%';
+        this.zaehler.textContent = `${this.current + 1} / ${this.total}`;
+    }
+
+    next() { this.go(this.current + 1); }
+    prev() { this.go(this.current - 1); }
+
+    _keys() {
+        document.addEventListener('keydown', e => {
+            if (e.target.getAttribute('contenteditable')) return;
+            const m = {
+                ArrowRight: () => this.next(), ArrowDown: () => this.next(),
+                ArrowLeft:  () => this.prev(), ArrowUp:   () => this.prev(),
+                ' ':        () => this.next(),
+                PageDown:   () => this.next(), PageUp:   () => this.prev(),
+                Home:       () => this.go(0),  End:       () => this.go(this.total - 1),
+            };
+            if (m[e.key]) { e.preventDefault(); m[e.key](); }
+            if (e.key === 'f' || e.key === 'F') {
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+                else document.exitFullscreen().catch(() => {});
+            }
+            if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) editor.toggle();
+        });
+    }
+
+    _touch() {
+        let sx = 0, sy = 0;
+        document.addEventListener('touchstart', e => {
+            sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+        }, { passive: true });
+        document.addEventListener('touchend', e => {
+            const dx = e.changedTouches[0].clientX - sx;
+            const dy = e.changedTouches[0].clientY - sy;
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) dx < 0 ? this.next() : this.prev();
+        });
+    }
+
+    _wheel() {
+        let last = 0;
+        document.addEventListener('wheel', e => {
+            const now = Date.now();
+            if (now - last < 650) return;
+            last = now;
+            e.deltaY > 0 ? this.next() : this.prev();
+        }, { passive: true });
+    }
+}
+
+/* ============================================================
+   INLINE-EDITOR
+   Hover oben-links oder Taste E → Texte direkt bearbeitbar
+   ============================================================ */
+const editor = (() => {
+    const btn = document.getElementById('editBtn');
+    const hz  = document.getElementById('editHz');
+    let active = false, timer = null;
+
+    const editables = () => document.querySelectorAll(
+        '.slide h1, .slide h2, .slide p, .slide blockquote, .slide .fazit-txt, .slide .erlaeuterung'
+    );
+
+    hz.addEventListener('mouseenter', () => { clearTimeout(timer); btn.classList.add('show'); });
+    hz.addEventListener('mouseleave', () => { timer = setTimeout(() => { if (!active) btn.classList.remove('show'); }, 400); });
+    hz.addEventListener('click', toggle);
+    btn.addEventListener('mouseenter', () => clearTimeout(timer));
+    btn.addEventListener('mouseleave', () => { timer = setTimeout(() => { if (!active) btn.classList.remove('show'); }, 400); });
+    btn.addEventListener('click', toggle);
+
+    function toggle() {
+        active = !active;
+        btn.classList.toggle('active', active);
+        btn.textContent = active ? '✓ Fertig' : '✏ Bearbeiten';
+        editables().forEach(el => { el.contentEditable = active ? 'true' : 'false'; });
+        if (!active) {
+            try { localStorage.setItem('arbeitslos-praesi-v1', document.getElementById('deckStage').innerHTML); } catch (e) {}
+        }
+    }
+
+    try {
+        const saved = localStorage.getItem('arbeitslos-praesi-v1');
+        if (saved) document.getElementById('deckStage').innerHTML = saved;
+    } catch (e) {}
+
+    return { toggle, get isActive() { return active; } };
+})();
+
+const deck = new Deck();
+</script>
+</body>
+</html>

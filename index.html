@@ -71,7 +71,7 @@
     transition: transform .42s cubic-bezier(.32, .72, 0, 1);
   }
   .screen.sub { transform: translateX(100%); box-shadow: -1px 0 12px rgba(0, 0, 0, .08); }
-  body.pushed .screen.sub { transform: none; }
+  body.pushed .screen.sub.open { transform: none; }
   body.pushed .screen.root { transform: translateX(-30%); }
 
   .content {
@@ -246,15 +246,29 @@
             <svg class="chevron" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>
           </a>
         </li>
+        <li>
+          <a class="row" href="#arbeitslosigkeit">
+            <span class="icon indigo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
+            </span>
+            <span class="text">
+              <span class="title">Arbeitslosigkeit &amp; BIP</span>
+              <span class="subtitle">Die 2-Prozent-Frage</span>
+            </span>
+            <span class="value">1 Fassung</span>
+            <svg class="chevron" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>
+          </a>
+        </li>
       </ul>
     </section>
   </div>
 </div>
 
+<!-- Sub-Bildschirm: ASML -->
 <div class="screen sub" id="asml" aria-hidden="true">
   <div class="navbar">
     <div class="navbar-inner">
-      <button class="back" type="button" id="zurueck">
+      <button class="back" type="button">
         <svg viewBox="0 0 12 21" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2L2 10.5 10 19"/></svg>
         Präsentationen
       </button>
@@ -264,8 +278,8 @@
     <h1>ASML</h1>
     <p class="lead">Die Maschine hinter jedem Chip</p>
 
-    <section aria-labelledby="fassungen">
-      <h2 id="fassungen">Fassung wählen</h2>
+    <section aria-labelledby="fassungen-asml">
+      <h2 id="fassungen-asml">Fassung wählen</h2>
       <ul>
         <li>
           <a class="row" href="asml/">
@@ -297,8 +311,68 @@
       <p class="footnote">Halte das iPhone quer, dann füllen die Folien den ganzen Bildschirm.</p>
     </section>
 
-    <section aria-labelledby="bedienung">
-      <h2 id="bedienung">Bedienung</h2>
+    <section aria-labelledby="bedienung-asml">
+      <h2 id="bedienung-asml">Bedienung</h2>
+      <ul class="info">
+        <li>
+          <div class="row">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <span class="text"><span class="title">Weiter</span></span>
+            <span class="value">Nach links wischen</span>
+          </div>
+        </li>
+        <li>
+          <div class="row">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+            </span>
+            <span class="text"><span class="title">Zurück</span></span>
+            <span class="value">Nach rechts wischen</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<!-- Sub-Bildschirm: Arbeitslosigkeit & BIP -->
+<div class="screen sub" id="arbeitslosigkeit" aria-hidden="true">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <button class="back" type="button">
+        <svg viewBox="0 0 12 21" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2L2 10.5 10 19"/></svg>
+        Präsentationen
+      </button>
+    </div>
+  </div>
+  <div class="content">
+    <h1>Arbeitslosigkeit &amp; BIP</h1>
+    <p class="lead">Die 2-Prozent-Frage</p>
+
+    <section aria-labelledby="fassungen-al">
+      <h2 id="fassungen-al">Fassung wählen</h2>
+      <ul>
+        <li>
+          <a class="row" href="arbeitslosigkeit/">
+            <span class="icon blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg>
+            </span>
+            <span class="text">
+              <span class="title">frontend-slides</span>
+              <span class="subtitle">Dunkel, Bloomberg-Terminal-Stil</span>
+            </span>
+            <span class="value">5 Folien</span>
+            <svg class="chevron" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>
+          </a>
+        </li>
+      </ul>
+      <p class="footnote">Halte das iPhone quer, dann füllen die Folien den ganzen Bildschirm.</p>
+    </section>
+
+    <section aria-labelledby="bedienung-al">
+      <h2 id="bedienung-al">Bedienung</h2>
       <ul class="info">
         <li>
           <div class="row">
@@ -324,26 +398,45 @@
 </div>
 
 <script>
-  // Unterseite über den Anker (#asml) steuern, damit auch die Zurück-Geste des Browsers funktioniert
-  const root = document.getElementById('uebersicht');
-  const sub = document.getElementById('asml');
+  // Generalisierte Navigation für mehrere Unterbildschirme
+  const rootEl  = document.getElementById('uebersicht');
+  const subEls  = Array.from(document.querySelectorAll('.screen.sub'));
+  const subById = {};
+  subEls.forEach(s => { subById['#' + s.id] = s; });
+
   function zeigen() {
-    const offen = location.hash === '#asml';
-    document.body.classList.toggle('pushed', offen);
-    sub.setAttribute('aria-hidden', String(!offen));
-    root.setAttribute('aria-hidden', String(offen));
-    root.inert = offen;
-    sub.inert = !offen;
+    const hash  = location.hash;
+    const aktiv = subById[hash] || null;
+    const pushed = !!aktiv;
+    document.body.classList.toggle('pushed', pushed);
+    rootEl.setAttribute('aria-hidden', String(pushed));
+    rootEl.inert = pushed;
+    subEls.forEach(s => {
+      const offen = s === aktiv;
+      s.classList.toggle('open', offen);
+      s.setAttribute('aria-hidden', String(!offen));
+      s.inert = !offen;
+    });
   }
-  document.getElementById('zurueck').addEventListener('click', () => {
-    if (history.state && history.state.vonUebersicht) history.back();
-    else history.replaceState(null, '', location.pathname), zeigen();
+
+  document.querySelectorAll('.back').forEach(btn =>
+    btn.addEventListener('click', () => {
+      if (history.state && history.state.vonUebersicht) history.back();
+      else { history.replaceState(null, '', location.pathname); zeigen(); }
+    })
+  );
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    const target = a.getAttribute('href');
+    if (subById[target]) {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        history.pushState({ vonUebersicht: true }, '', target);
+        zeigen();
+      });
+    }
   });
-  document.querySelector('a[href="#asml"]').addEventListener('click', e => {
-    e.preventDefault();
-    history.pushState({ vonUebersicht: true }, '', '#asml');
-    zeigen();
-  });
+
   addEventListener('popstate', zeigen);
   addEventListener('hashchange', zeigen);
   zeigen();
