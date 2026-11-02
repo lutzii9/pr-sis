@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gran Torino – American Dream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,400&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14161a;--fg:#f2eee6;--acc:#2e7d4f;--red:#c83a2e;--mut:#a8a399;--box:#22252b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 7vw 6vh calc(7vw + 12px);
+  opacity:0;pointer-events:none;transform:translateX(40px);transition:opacity .5s ease,transform .5s ease}
+.slide.active{opacity:1;pointer-events:auto;transform:none}
+.slide.prev{transform:translateX(-40px)}
+body::before{content:"";position:fixed;left:0;top:0;bottom:0;width:12px;background:var(--acc);z-index:2}
+.kicker{color:var(--acc);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:clamp(12px,1.3vw,18px);margin-bottom:1.2vh}
+h1,h2{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.08}
+h1{font-size:clamp(36px,6.4vw,96px);max-width:14ch}
+h2{font-size:clamp(28px,3.8vw,58px);margin-bottom:4vh}
+.sub{color:var(--mut);font-size:clamp(16px,1.9vw,28px);margin-top:3vh}
+.quote{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:clamp(26px,3.6vw,54px);line-height:1.2;max-width:24ch}
+.grid{display:grid;grid-template-columns:1.7fr 1fr;gap:4vw;align-items:start}
+ul{list-style:none}
+li{font-size:clamp(16px,1.75vw,26px);line-height:1.4;padding:1vh 0 1vh 1.4em;position:relative;
+  opacity:0;transform:translateY(10px);transition:.4s ease}
+.active li{opacity:1;transform:none}
+.active li:nth-child(2){transition-delay:.08s}.active li:nth-child(3){transition-delay:.16s}
+.active li:nth-child(4){transition-delay:.24s}.active li:nth-child(5){transition-delay:.32s}
+li::before{content:"";position:absolute;left:0;top:1.05em;width:.6em;height:2px;background:var(--acc)}
+.note{background:var(--box);border-left:4px solid var(--acc);padding:3vh 2vw;font-family:Fraunces,Georgia,serif;font-style:italic;
+  font-size:clamp(18px,1.9vw,30px);line-height:1.3}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:4vw}
+.cols h3{font-size:clamp(18px,2vw,30px);letter-spacing:.08em;margin-bottom:1vh}
+.yes h3{color:var(--red)}.but h3{color:var(--acc)}
+.thanks{color:var(--acc);font-weight:600;font-size:clamp(20px,2.4vw,36px);margin-top:5vh}
+.num{position:fixed;right:3vw;bottom:3vh;color:var(--mut);font-size:14px;z-index:3;font-variant-numeric:tabular-nums}
+.progress{position:fixed;left:0;bottom:0;height:3px;background:var(--acc);transition:width .4s;z-index:3}
+.nav{position:fixed;bottom:2vh;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+.nav button{background:var(--box);color:var(--fg);border:1px solid #333;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer}
+.nav button:hover{border-color:var(--acc)}
+@media (max-width:760px){.grid,.cols{grid-template-columns:1fr;gap:3vh}.slide{overflow-y:auto;justify-content:flex-start;padding-top:8vh}}
+@media (prefers-reduced-motion:reduce){.slide,li{transition:none}}
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="kicker">Gran Torino (2008) · Clint Eastwood</div>
+  <h1>Is the American Dream for everyone?</h1>
+  <p class="sub">A look at Walt, Thao and the question of who gets a fair chance</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">The statement</div>
+  <p class="quote">“The American Dream is not equally accessible to everyone. Your background determines your chances of success.”</p>
+  <p class="sub">The American Dream: if you work hard, you can be successful in the USA – no matter where you come from.<br><br>
+  Question: Does <em>Gran Torino</em> show that this is true – or not?</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">Walt Kowalski</div>
+  <h2>Walt's life and his idea of success</h2>
+  <div class="grid"><ul>
+    <li>Korean War veteran, worked 50 years at Ford</li>
+    <li>Has a house, a lawn and his 1972 Gran Torino</li>
+    <li>For him, success = hard work, owning things, being independent</li>
+    <li>He is a white American – the system was open for him</li>
+    <li>But: he is lonely and his sons don't care about him</li>
+  </ul><div class="note">Walt reached the “old” American Dream – but he is not happy.</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Thao Vang Lor</div>
+  <h2>Thao's situation and his chances</h2>
+  <div class="grid"><ul>
+    <li>Young Hmong American, lives in a poor area of Detroit</li>
+    <li>No father, no male role model, no money</li>
+    <li>Gang pressure – his cousin Spider wants him to join</li>
+    <li>Shy, has no plan for his future at first</li>
+    <li>Walt helps him: work, tools, a job in construction</li>
+  </ul><div class="note">Thao has talent, but he needs someone who opens doors for him.</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Education, work and family</div>
+  <h2>What helps people to move up?</h2>
+  <div class="grid"><ul>
+    <li>Work: Thao learns to fix things and gets a real job</li>
+    <li>Education: Sue goes to college – she has better chances</li>
+    <li>Family: the Hmong family is close and supports each other</li>
+    <li>Walt's own family is broken, even though they have money</li>
+    <li>Contacts matter: without Walt, Thao gets no job</li>
+  </ul><div class="note">Hard work alone is not enough – you also need help and connections.</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Prejudice and racism</div>
+  <h2>Barriers because of background</h2>
+  <div class="grid"><ul>
+    <li>Walt uses racist words against his Hmong neighbours</li>
+    <li>Sue is attacked by a group of Black men – just for who she is</li>
+    <li>Gangs control the streets – violence instead of chances</li>
+    <li>Poor neighbourhood = bad schools, few jobs</li>
+    <li>Walt changes: he sees Thao and Sue as people, not as “foreigners”</li>
+  </ul><div class="note">Prejudice closes doors – but people can change.</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Money vs. happiness</div>
+  <h2>Is material success everything?</h2>
+  <div class="grid"><ul>
+    <li>Walt's sons have money, cars and nice houses – but no real relationships</li>
+    <li>The Hmong family has little money – but a strong community</li>
+    <li>Walt finds happiness through friendship with Thao and Sue</li>
+    <li>At the end he gives Thao his most valued thing: the Gran Torino</li>
+  </ul><div class="note">Real success = respect, friendship and doing the right thing.</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Conclusion</div>
+  <h2>I partly agree with the statement</h2>
+  <div class="cols">
+    <div class="yes"><h3>YES, because …</h3><ul>
+      <li>Thao starts with fewer chances than Walt</li>
+      <li>Racism, poverty and gangs block his way</li>
+      <li>Without help he would probably fail</li>
+    </ul></div>
+    <div class="but"><h3>BUT …</h3><ul>
+      <li>Background is not everything</li>
+      <li>Work, education and support can change a life</li>
+      <li>Thao gets a real chance at the end – the car is a symbol of that</li>
+    </ul></div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="quote">“The American Dream is possible – but not everyone starts at the same line.”</p>
+  <p class="thanks">Thank you! Any questions?</p>
+</section>
+
+<div class="nav"><button id="b" aria-label="Previous">‹</button><button id="f" aria-label="Next">›</button></div>
+<div class="num" id="num"></div>
+<div class="progress" id="bar"></div>
+
+<script>
+const s=[...document.querySelectorAll('.slide')];let i=0;
+function go(n){i=Math.max(0,Math.min(s.length-1,n));
+  s.forEach((el,k)=>{el.classList.toggle('active',k===i);el.classList.toggle('prev',k<i)});
+  num.textContent=String(i+1).padStart(2,'0')+' / '+String(s.length).padStart(2,'0');
+  bar.style.width=((i+1)/s.length*100)+'%';history.replaceState(null,'','#'+(i+1));}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' ','PageDown','Enter'].includes(e.key)){e.preventDefault();go(i+1)}
+  if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(i-1)}
+  if(e.key==='Home')go(0);if(e.key==='End')go(s.length-1);
+  if(e.key==='f')document.documentElement.requestFullscreen?.();});
+b.onclick=()=>go(i-1);f.onclick=()=>go(i+1);
+let x0=null;addEventListener('touchstart',e=>x0=e.touches[0].clientX);
+addEventListener('touchend',e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)go(i+(d<0?1:-1));x0=null});
+go((parseInt(location.hash.slice(1))||1)-1);
+</script>
+</body>
+</html>
