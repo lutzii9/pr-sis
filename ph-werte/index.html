@@ -95,6 +95,20 @@ sub, sup { font-size: .62em; line-height: 0; }
 .wsteps li { font-family: 'JetBrains Mono', monospace; font-size: 26px; }
 .wsteps li span { font-family: 'Poppins', sans-serif; color: var(--muted); font-size: 24px; display: block; }
 .warn { color: #C2410C; font-weight: 600; }
+/* === FOLIE 4: VERGLEICH === */
+.vs { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.vs .card h3 small { display: block; font-size: 24px; font-weight: 500; color: var(--muted); margin-top: 2px; }
+.vrow { display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 27px; color: var(--muted); }
+.vrow b { font-family: 'JetBrains Mono', monospace; font-size: 30px; color: var(--text); }
+.vrow b.hi { color: var(--accent); }
+.bars { margin-top: 22px; }
+.bars .lbl { font-size: 24px; color: var(--muted); margin-bottom: 10px; }
+.track { height: 44px; border-radius: 14px; background: #EFEBE4; overflow: hidden; }
+.fill { height: 100%; border-radius: 14px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.2,.8,.2,1) .8s; }
+.slide.visible .fill { transform: scaleX(1); }
+.fill.thin { min-width: 14px; }
+.take { margin-top: 24px; background: var(--accent); color: #fff; border-radius: 24px; padding: 26px 36px; font-size: 29px; line-height: 1.4; }
+.take b { font-weight: 700; }
 /* === STEUERUNG === */
 .deck-controls { display: flex; gap: 6px; align-items: center; left: auto; right: calc(10px + env(safe-area-inset-right, 0px)); transform: none; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); opacity: .5; }
 .deck-controls button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid #d5d0c7; background: rgba(255,255,255,.8); color: #1E2430; font-size: 18px; cursor: pointer; }
@@ -192,12 +206,39 @@ sub, sup { font-size: .62em; line-height: 0; }
     <div class="scale-strip"></div>
 </section>
 
+<!-- ========== FOLIE 4 · VERGLEICH SALZSÄURE / ESSIGSÄURE ========== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag r">4 · Vergleich</span>
+        <h2 class="r" style="--d:1">Gleicher pH, andere Konzentration</h2>
+        <p class="lead r" style="--d:2; margin-bottom: 30px">Zwei Lösungen, beide mit <b>pH 3</b>. Beide enthalten gleich viel H<sub>3</sub>O<sup>+</sup>, aber nicht gleich viel Säure.</p>
+        <div class="vs">
+            <div class="card r" style="--d:3">
+                <h3>Salzsäure (HCl)<small>starke Säure: jedes Molekül gibt sein Proton ab</small></h3>
+                <div class="vrow"><span>c(H<sub>3</sub>O<sup>+</sup>)</span> <b>10<sup>−3</sup> mol/L</b></div>
+                <div class="vrow"><span>Rechnung</span> <b>c<sub>0</sub> = c(H<sub>3</sub>O<sup>+</sup>)</b></div>
+                <div class="vrow"><span>Säure-Konzentration c<sub>0</sub></span> <b class="hi">0,001 mol/L</b></div>
+                <div class="bars"><div class="lbl">benötigte Säure</div><div class="track"><div class="fill thin" style="width: 1.7%"></div></div></div>
+            </div>
+            <div class="card r" style="--d:4">
+                <h3>Essigsäure<small>schwache Säure: nur ca. 1 von 58 gibt sein Proton ab</small></h3>
+                <div class="vrow"><span>c(H<sub>3</sub>O<sup>+</sup>)</span> <b>10<sup>−3</sup> mol/L</b></div>
+                <div class="vrow"><span>Rechnung</span> <b>c<sub>0</sub> = c(H<sub>3</sub>O<sup>+</sup>)² / K<sub>S</sub></b></div>
+                <div class="vrow"><span>Säure-Konzentration c<sub>0</sub></span> <b class="hi">0,058 mol/L</b></div>
+                <div class="bars"><div class="lbl">benötigte Säure: rund 58-mal so viel</div><div class="track"><div class="fill" style="width: 100%"></div></div></div>
+            </div>
+        </div>
+        <div class="take r" style="--d:5">Der pH-Wert verrät nur c(H<sub>3</sub>O<sup>+</sup>). Bei einer <b>starken Säure</b> ist das gleich c<sub>0</sub>. Bei einer <b>schwachen Säure</b> braucht man zusätzlich den <b>K<sub>S</sub>-Wert</b>.</div>
+    </div>
+    <div class="scale-strip"></div>
+</section>
+
 </main>
 </div>
 
 <nav class="deck-controls" aria-label="Folien">
     <button id="prevBtn" aria-label="Zurück">‹</button>
-    <span id="counter">1 / 3</span>
+    <span id="counter">1 / 4</span>
     <button id="nextBtn" aria-label="Weiter">›</button>
 </nav>
 
