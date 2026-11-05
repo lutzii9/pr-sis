@@ -56,6 +56,32 @@ p,li{font-size:30px;line-height:1.45;max-width:46ch}
 .zwei{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
 ul{padding-left:1.1em}li+li{margin-top:14px}
 .zaehler{position:absolute;right:120px;bottom:120px;font-size:20px;color:var(--leise);font-variant-numeric:tabular-nums}
+/* Handy im Hochformat: Folien untereinander als scrollbare Seite, keine Skalierung */
+@media (max-aspect-ratio:1/1){
+  html,body{height:auto}
+  body{display:block;overflow:auto;background:var(--grund)}
+  .buehne{width:auto;height:auto;transform:none!important}
+  .folie,.folie.aktiv{position:static;display:flex;padding:40px 22px 44px;border-bottom:1px solid var(--linie)}
+  h1{font-size:44px;max-width:none}
+  h2{font-size:32px;margin-bottom:24px;max-width:none}
+  p,li{font-size:18px;max-width:none}
+  .unter{font-size:19px!important;margin-top:20px}
+  .topf,.topf-text,.zaehler{display:none}
+  .gross-topf{height:56px;gap:3px;margin:4px 0 22px}
+  .legende{grid-template-columns:1fr;gap:10px}
+  .legende div{font-size:16px;gap:10px}
+  .legende i{width:16px;height:16px}
+  .firmen{grid-template-columns:1fr auto;grid-auto-flow:row dense}
+  .firmen>*{font-size:17px;padding:10px 0}
+  .firmen .name{font-size:22px;border-bottom:none;padding-bottom:2px}
+  .firmen .betrag{border-bottom:none;padding-bottom:2px;font-size:18px}
+  .firmen>div:nth-child(3n+2){grid-column:1 / -1;padding-top:0;color:var(--leise)}
+  .firmen>*:not(.betrag){padding-right:0}
+  .schritte{grid-template-columns:1fr;gap:26px}
+  .schritt .wann{font-size:24px}.schritt p,.schritt .betrag{font-size:17px}
+  .zwei{grid-template-columns:1fr;gap:20px}
+  .zahl{font-size:64px}
+}
 @media (prefers-reduced-motion:reduce){.aktiv .gross-topf div{animation:none}.topf span{transition:none}}
 </style>
 </head>
@@ -151,13 +177,14 @@ function zeigen(n){i=Math.max(0,Math.min(folien.length-1,n));folien.forEach((f,k
   document.getElementById('topftext').textContent=texte[folien[i].dataset.fokus]||'';
   document.getElementById('zaehler').textContent=(i+1)+' von '+folien.length;topf.style.visibility=i===1?'hidden':'visible';
   document.getElementById('topftext').style.visibility=i===1?'hidden':'visible';}
-function skalieren(){const s=Math.min(innerWidth/1600,innerHeight/900);b.style.transform='scale('+s+')';}
+const handy=matchMedia('(max-aspect-ratio:1/1)');
+function skalieren(){if(handy.matches){b.style.transform='';return}const s=Math.min(innerWidth/1600,innerHeight/900);b.style.transform='scale('+s+')';}
 addEventListener('resize',skalieren);skalieren();zeigen(0);
 addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();zeigen(i+1)}
   else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();zeigen(i-1)}
   else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});
-addEventListener('click',e=>zeigen(e.clientX<innerWidth/3?i-1:i+1));
-let tx=null;addEventListener('touchstart',e=>tx=e.touches[0].clientX);addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40)zeigen(i+(d<0?1:-1));tx=null});
+addEventListener('click',e=>{if(!handy.matches)zeigen(e.clientX<innerWidth/3?i-1:i+1)});
+let tx=null;addEventListener('touchstart',e=>tx=e.touches[0].clientX);addEventListener('touchend',e=>{if(tx===null||handy.matches)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>40)zeigen(i+(d<0?1:-1));tx=null});
 </script>
 </body>
 </html>
