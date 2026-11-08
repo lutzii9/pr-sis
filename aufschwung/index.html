@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  ERSTELLT VON: Claude (Anthropic, Claude Code)
+  Fassung: CLAUDE, nicht Codex
+  Stand: 2026-11-08 16:40 (Claude)
+  Sowi Q1 · Lut & Erik · Vortrag am Mo, 09.11.2026
+  Thema: Befindet sich Deutschland bereits im Aufschwung?
+  Bedienung: Pfeiltasten / Leertaste / Wischen · N = Sprechernotizen · E = Text bearbeiten
+  ============================================================
+-->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Erstellt von Claude (Anthropic) für Lut & Erik">
+<meta name="generator" content="Claude Code (Anthropic) – Fassung Claude">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Aufschwung?">
+<link rel="manifest" href="../manifest.webmanifest">
+<title>Wetterlage Deutschland · Sowi Q1 (Fassung Claude)</title>
+
+<!-- Schriften: Archivo (breite Achse, Wetterstudio-Titel) · Martian Mono (Messwerte) · Instrument Sans (Text) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Sans:wght@400;500;600&family=Martian+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN-SYSTEM: KONJUNKTUR-WETTERBERICHT
+   Idee: Die Wirtschaft wird wie das Wetter vorgestellt.
+   Isobaren im Hintergrund, Hoch/Tief-Marken, Barometer,
+   Wettersymbole je Indikator. Akzente Schwarz-Rot-Gold.
+   ============================================================ */
+:root {
+    --bg:        #0C0E12;
+    --bg-2:      #141820;
+    --panel:     rgba(255,255,255,0.045);
+    --line:      rgba(255,255,255,0.10);
+    --t1:        #F4EFE4;   /* Papierweiß */
+    --t2:        #A9A79F;
+    --t3:        #6B6A66;
+    --gold:      #F5B800;   /* Sonne / Aufschwung */
+    --gold-dim:  rgba(245,184,0,0.16);
+    --rot:       #E5392A;   /* Sturm / Warnung */
+    --rot-dim:   rgba(229,57,42,0.16);
+    --regen:     #5E8FE8;   /* Regen / Abkühlung */
+    --regen-dim: rgba(94,143,232,0.16);
+    --wolke:     #C9CCD3;
+
+    --ff-d: 'Archivo', sans-serif;
+    --ff-m: 'Martian Mono', monospace;
+    --ff-b: 'Instrument Sans', sans-serif;
+
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --stage-bg: #050608;
+    --slide-bg: transparent;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ============================================================
+   VIEWPORT-BASE (viewport-base.css, vollständig eingebettet)
+   ============================================================ */
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--slide-bg, #fff); }
+.slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: block; visibility: hidden; opacity: 0; pointer-events: none; background: var(--slide-bg, #fff); }
+.slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+.deck-controls { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1000; }
+@media print {
+    html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+    .deck-viewport { position: static; overflow: visible; background: #fff; }
+    .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+    .slide { position: relative; display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px; height: 1080px; break-after: page; page-break-after: always; }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .deck-controls { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* ============================================================
+   BÜHNE: Hintergrund mit Isobaren (Wetterkarte)
+   ============================================================ */
+.deck-stage { background: radial-gradient(1200px 800px at 80% 10%, #1A1F2A 0%, var(--bg) 60%); color: var(--t1); font-family: var(--ff-b); }
+.iso { position: absolute; inset: -60px; width: 2040px; height: 1200px; max-width: none; max-height: none; pointer-events: none; opacity: .55; animation: drift 40s ease-in-out infinite alternate; }
+.iso path { fill: none; stroke: rgba(244,239,228,0.07); stroke-width: 2; }
+.iso text { font-family: var(--ff-d); font-weight: 900; font-size: 64px; }
+@keyframes drift { from { transform: translate(0,0); } to { transform: translate(-40px, 20px); } }
+.slide { transition: opacity .5s ease, visibility .5s; }
+
+/* ============================================================
+   FOLIEN-RAHMEN: Kopfzeile, Quellenzeile, Seitenzahl
+   ============================================================ */
+.chrome-top { position: absolute; top: 44px; left: 96px; right: 96px; display: flex; justify-content: space-between; align-items: center; font-family: var(--ff-m); font-size: 17px; letter-spacing: .12em; color: var(--t3); text-transform: uppercase; }
+.chrome-top .live { display: inline-flex; gap: 12px; align-items: center; }
+.chrome-top .live::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--rot); animation: blink 1.6s infinite; }
+@keyframes blink { 50% { opacity: .2; } }
+.src { position: absolute; left: 96px; right: 96px; bottom: 40px; font-family: var(--ff-m); font-size: 15px; color: var(--t3); letter-spacing: .02em; }
+.flag { position: absolute; left: 0; top: 0; bottom: 0; width: 10px; display: flex; flex-direction: column; }
+.flag i { flex: 1; } .flag i:nth-child(1){background:#111} .flag i:nth-child(2){background:var(--rot)} .flag i:nth-child(3){background:var(--gold)}
+
+/* ============================================================
+   TYPOGRAFIE
+   ============================================================ */
+.kicker { font-family: var(--ff-m); font-size: 20px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.kicker.rot { color: var(--rot); } .kicker.regen { color: var(--regen); }
+h1, h2 { font-family: var(--ff-d); font-variation-settings: 'wdth' 118; font-weight: 850; letter-spacing: -0.01em; line-height: .95; }
+h1 { font-size: 176px; }
+h2 { font-size: 80px; margin-top: 14px; }
+h2 em, h1 em { font-style: normal; color: var(--gold); }
+.lead { font-size: 34px; color: var(--t2); line-height: 1.3; }
+.big { font-family: var(--ff-d); font-variation-settings: 'wdth' 125; font-weight: 900; line-height: .9; letter-spacing: -0.02em; }
+.mono { font-family: var(--ff-m); }
+.muted { color: var(--t2); }
+.head { position: absolute; left: 96px; top: 110px; right: 96px; }
+
+/* ============================================================
+   EINBLEND-ANIMATIONEN (.rv) – Verzögerung über --d
+   ============================================================ */
+.rv { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
+.slide.visible .rv { opacity: 1; transform: none; }
+.rv-l { opacity: 0; transform: translateX(-40px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
+.slide.visible .rv-l { opacity: 1; transform: none; }
+.pop { opacity: 0; transform: scale(.6); transition: opacity .6s var(--ease), transform .7s cubic-bezier(.34,1.56,.64,1); transition-delay: var(--d, 0s); }
+.slide.visible .pop { opacity: 1; transform: none; }
+
+/* ============================================================
+   DIAGRAMME (SVG, von JS gezeichnet)
+   ============================================================ */
+.chart { position: absolute; overflow: visible; max-width: none; max-height: none; }
+.chart text { font-family: var(--ff-m); fill: var(--t2); font-size: 18px; }
+.chart .axis { stroke: rgba(255,255,255,.14); stroke-width: 1.5; }
+.chart .grid { stroke: rgba(255,255,255,.06); stroke-width: 1; }
+.chart .zero { stroke: rgba(244,239,228,.45); stroke-width: 2; stroke-dasharray: 6 8; }
+.chart .val { font-size: 22px; font-weight: 700; fill: var(--t1); }
+.bar { transform: scaleY(0); transform-box: fill-box; transform-origin: 50% 100%; transition: transform 1s var(--ease); transition-delay: var(--d, 0s); }
+.bar.neg { transform-origin: 50% 0%; }
+.slide.visible .bar { transform: scaleY(1); }
+.hbar { transform: scaleX(0); transform-box: fill-box; transform-origin: 0 50%; transition: transform 1.4s var(--ease); transition-delay: var(--d, 0s); }
+.slide.visible .hbar { transform: scaleX(1); }
+.draw { transition: stroke-dashoffset 2s cubic-bezier(.45,0,.2,1); transition-delay: var(--d, .3s); }
+.slide.visible .draw { stroke-dashoffset: 0 !important; }
+.fade { opacity: 0; transition: opacity .6s ease; transition-delay: var(--d, 0s); }
+.slide.visible .fade { opacity: 1; }
+
+/* ============================================================
+   BAUSTEINE: Kacheln, Chips, Wettersymbole
+   ============================================================ */
+.tile { position: absolute; background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 34px 38px; }
+.chip { display: inline-flex; align-items: center; gap: 14px; padding: 14px 22px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); font-size: 26px; }
+.chip b { font-family: var(--ff-m); font-weight: 700; }
+.chip.up b { color: var(--gold); } .chip.down b { color: var(--rot); } .chip.cool b { color: var(--regen); }
+.wx { display: block; overflow: visible; }
+.stack { display: flex; flex-direction: column; gap: 18px; }
+
+/* Wettersymbol-Animationen (wirken in den <symbol>-Elementen) */
+.rays { animation: spin 18s linear infinite; transform-origin: 50px 50px; transform-box: view-box; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.drop { animation: fall 1.1s linear infinite; }
+.drop:nth-of-type(2) { animation-delay: .35s; } .drop:nth-of-type(3) { animation-delay: .7s; }
+@keyframes fall { 0% { transform: translateY(-6px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(14px); opacity: 0; } }
+.bolt { animation: flash 2.6s infinite; }
+@keyframes flash { 0%, 86%, 100% { opacity: 1; } 90% { opacity: .15; } 94% { opacity: 1; } 97% { opacity: .3; } }
+.cloudfloat { animation: float 5s ease-in-out infinite; }
+@keyframes float { 50% { transform: translateX(4px); } }
+
+/* ============================================================
+   FOLIE 1: TITEL mit Barometer
+   ============================================================ */
+.title-wrap { position: absolute; left: 96px; top: 200px; width: 1100px; }
+.title-wrap h1 { font-size: 138px; font-variation-settings: 'wdth' 96; }
+.title-wrap .lead { margin-top: 40px; font-size: 44px; color: var(--t1); font-family: var(--ff-d); font-variation-settings: 'wdth' 100; font-weight: 600; }
+.names { position: absolute; left: 96px; bottom: 110px; display: flex; gap: 56px; font-family: var(--ff-m); font-size: 24px; color: var(--t2); }
+.names b { color: var(--t1); font-weight: 600; }
+.baro { position: absolute; overflow: visible; max-width: none; max-height: none; }
+.baro .needle { transform: rotate(-82deg); transform-origin: 300px 300px; transform-box: view-box; transition: transform 2.6s cubic-bezier(.3,1.5,.45,1); transition-delay: .8s; }
+.slide.visible .baro .needle { transform: rotate(var(--to, 20deg)); }
+.baro text { font-family: var(--ff-m); font-size: 17px; letter-spacing: .1em; fill: var(--t2); }
+
+/* ============================================================
+   FOLIE 2: Konjunkturzyklus + Indikator-Arten
+   ============================================================ */
+.cyc-dot { animation: pulse 1.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pulse { 50% { transform: scale(1.5); opacity: .6; } }
+.kind { position: absolute; top: 700px; width: 540px; }
+.kind h3 { font-family: var(--ff-d); font-variation-settings: 'wdth' 110; font-size: 40px; font-weight: 800; margin: 14px 0 12px; }
+.kind p { font-size: 26px; color: var(--t2); line-height: 1.35; }
+.kind .tag { font-family: var(--ff-m); font-size: 18px; padding: 8px 14px; border-radius: 8px; display: inline-block; }
+
+/* ============================================================
+   FOLIE 8: Kette Energie-Schock
+   ============================================================ */
+.chain { position: absolute; left: 96px; right: 96px; top: 440px; display: flex; align-items: stretch; gap: 0; }
+.node { flex: 1 1 0; min-width: 0; position: relative; padding: 34px 26px 30px; border-radius: 22px; background: var(--panel); border: 1px solid var(--line); min-height: 380px;
+        opacity: .15; transform: translateY(20px); transition: all .7s var(--ease); transition-delay: var(--d); }
+.slide.visible .node { opacity: 1; transform: none; }
+.node .n { font-family: var(--ff-m); font-size: 18px; color: var(--t3); }
+.node .v { font-family: var(--ff-d); font-variation-settings: 'wdth' 100; font-weight: 900; font-size: 58px; white-space: nowrap; margin: 16px 0 10px; line-height: 1; }
+.node p { font-size: 25px; color: var(--t2); line-height: 1.3; }
+.arrow { width: 56px; flex: 0 0 56px; display: flex; align-items: center; justify-content: center; }
+.arrow svg { width: 50px; height: 30px; }
+.arrow path { stroke: var(--rot); stroke-width: 4; fill: none; stroke-dasharray: 6 6; animation: flow 1s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -24; } }
+
+/* ============================================================
+   FOLIE 13: Wetterbericht-Fazit (Raster)
+   ============================================================ */
+.wgrid { position: absolute; left: 96px; top: 330px; width: 1060px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.wcell { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 22px 24px; height: 268px; display: flex; flex-direction: column; justify-content: space-between; }
+.wcell .lbl { font-family: var(--ff-m); font-size: 17px; letter-spacing: .08em; color: var(--t3); text-transform: uppercase; }
+.wcell .nm { font-size: 30px; font-weight: 600; }
+.wcell .st { font-family: var(--ff-m); font-size: 20px; }
+
+/* ============================================================
+   FOLIE 14: Quellen
+   ============================================================ */
+.refs { position: absolute; left: 96px; right: 96px; top: 270px; columns: 2; column-gap: 72px; font-size: 21px; line-height: 1.38; color: var(--t2); }
+.refs li { break-inside: avoid; margin: 0 0 13px 24px; }
+.refs li b { color: var(--t1); font-weight: 600; }
+.refs .u { font-family: var(--ff-m); font-size: 15px; color: var(--t3); word-break: break-all; }
+
+/* ============================================================
+   STEUERUNG AUSSERHALB DER BÜHNE: Fortschritt, Notizen, Edit
+   ============================================================ */
+.progress { position: fixed; left: 0; bottom: 0; height: 4px; background: var(--gold); z-index: 1001; transition: width .4s var(--ease); }
+.notes { display: none; }
+.notes-panel { position: fixed; left: 16px; right: 16px; bottom: 16px; max-height: 40vh; overflow: auto; z-index: 1002; display: none;
+    background: rgba(12,14,18,.94); border: 1px solid rgba(255,255,255,.15); border-radius: 14px; padding: 16px 20px; color: #F4EFE4;
+    font: 17px/1.5 'Instrument Sans', sans-serif; backdrop-filter: blur(8px); }
+.notes-panel.show { display: block; }
+.notes-panel .who { font-family: 'Martian Mono', monospace; font-size: 12px; color: #F5B800; letter-spacing: .1em; margin-bottom: 6px; }
+.edit-hotzone { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 10000; cursor: pointer; }
+.edit-toggle { position: fixed; top: 16px; left: 16px; z-index: 10001; opacity: 0; pointer-events: none; transition: opacity .3s; background: #F5B800; color: #111; border: 0; border-radius: 10px; padding: 8px 12px; font: 600 14px 'Instrument Sans', sans-serif; cursor: pointer; }
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+body.editing [data-e] { outline: 2px dashed rgba(245,184,0,.6); outline-offset: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     WETTERSYMBOLE (einmal definiert, überall per <use> genutzt)
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="cloudP" d="M28 76 H72 A15 15 0 0 0 72 46 A21 21 0 0 0 32 40 A18 18 0 0 0 28 76 Z"/>
+    <symbol id="w-sun" viewBox="0 0 100 100">
+      <g class="rays" stroke="#F5B800" stroke-width="5" stroke-linecap="round">
+        <line x1="50" y1="8" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="92"/>
+        <line x1="8" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="92" y2="50"/>
+        <line x1="20" y1="20" x2="28" y2="28"/><line x1="72" y1="72" x2="80" y2="80"/>
+        <line x1="80" y1="20" x2="72" y2="28"/><line x1="20" y1="80" x2="28" y2="72"/>
+      </g>
+      <circle cx="50" cy="50" r="20" fill="#F5B800"/>
+    </symbol>
+    <symbol id="w-suncloud" viewBox="0 0 100 100">
+      <g transform="translate(-14,-16) scale(.8)">
+        <g class="rays" stroke="#F5B800" stroke-width="6" stroke-linecap="round">
+          <line x1="50" y1="8" x2="50" y2="20"/><line x1="8" y1="50" x2="20" y2="50"/>
+          <line x1="20" y1="20" x2="28" y2="28"/><line x1="80" y1="20" x2="72" y2="28"/>
+          <line x1="20" y1="80" x2="28" y2="72"/><line x1="80" y1="50" x2="92" y2="50"/>
+        </g>
+        <circle cx="50" cy="50" r="20" fill="#F5B800"/>
+      </g>
+      <g class="cloudfloat"><use href="#cloudP" fill="#E6E8EC" transform="translate(6,6)"/></g>
+    </symbol>
+    <symbol id="w-cloud" viewBox="0 0 100 100">
+      <use href="#cloudP" fill="#7C818B" transform="translate(-12,-10) scale(.8)"/>
+      <g class="cloudfloat"><use href="#cloudP" fill="#C9CCD3" transform="translate(4,4)"/></g>
+    </symbol>
+    <symbol id="w-rain" viewBox="0 0 100 100">
+      <use href="#cloudP" fill="#9AA0AA" transform="translate(0,-14)"/>
+      <g stroke="#5E8FE8" stroke-width="5" stroke-linecap="round">
+        <line class="drop" x1="38" y1="72" x2="34" y2="82"/>
+        <line class="drop" x1="54" y1="72" x2="50" y2="82"/>
+        <line class="drop" x1="70" y1="72" x2="66" y2="82"/>
+      </g>
+    </symbol>
+    <symbol id="w-storm" viewBox="0 0 100 100">
+      <use href="#cloudP" fill="#5B606A" transform="translate(0,-16)"/>
+      <path class="bolt" d="M54 58 L42 78 H52 L46 96 L66 70 H55 L61 58 Z" fill="#E5392A"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+  <!-- Isobaren-Hintergrund (Wetterkarte), liegt hinter allen Folien -->
+  <svg class="iso" viewBox="0 0 2040 1200" aria-hidden="true">
+    <path d="M-50 900 C 300 760, 600 980, 900 860 S 1500 640, 2100 760"/>
+    <path d="M-50 980 C 340 860, 640 1060, 940 950 S 1520 760, 2100 860"/>
+    <path d="M-50 1080 C 380 960, 680 1140, 980 1040 S 1540 880, 2100 960"/>
+    <path d="M1460 300 m-180 0 a180 130 0 1 0 360 0 a180 130 0 1 0 -360 0"/>
+    <path d="M1460 300 m-300 0 a300 220 0 1 0 600 0 a300 220 0 1 0 -600 0"/>
+    <path d="M1460 300 m-430 0 a430 320 0 1 0 860 0 a430 320 0 1 0 -860 0"/>
+    <path d="M360 260 m-120 0 a120 90 0 1 0 240 0 a120 90 0 1 0 -240 0"/>
+    <path d="M360 260 m-230 0 a230 170 0 1 0 460 0 a230 170 0 1 0 -460 0"/>
+    <text x="1438" y="322" fill="rgba(245,184,0,.22)">H</text>
+    <text x="340" y="282" fill="rgba(229,57,42,.22)">T</text>
+  </svg>
+
+  <!-- ==========================================================
+       FOLIE 1 · TITEL
+       ========================================================== -->
+  <section class="slide active" data-title="Titel">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Konjunktur-Wetterbericht</span><span>Sowi · Q1 · 09.11.2026</span></div>
+    <div class="title-wrap">
+      <div class="kicker rv" style="--d:.1s" data-e>Befindet sich Deutschland bereits im Aufschwung?</div>
+      <h1 class="rv" style="--d:.25s; margin-top:30px" data-e>Wetterlage<br><em>Deutschland</em></h1>
+      <p class="lead rv" style="--d:.45s" data-e>Kommt die Sonne raus – oder ist es nur ein kurzes Wolkenloch?</p>
+    </div>
+    <svg class="baro rv" style="--d:.5s; overflow:visible; left:1200px; top:300px; width:640px; height:390px; --to:22deg" viewBox="0 0 600 360" id="baro1"></svg>
+    <div class="names rv" style="--d:.7s"><span>Vortrag: <b>Lut</b> &amp; <b>Erik</b></span><span>Stand der Daten: 08.11.2026</span></div>
+    <aside class="notes">Begrüßung. Wir stellen die Frage unseres Themas: Befindet sich Deutschland schon im Aufschwung? Wir machen das wie einen Wetterbericht: Jeder Indikator bekommt ein Wettersymbol, am Ende lesen wir das Barometer ab. (ca. 20 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 2 · SO LIEST MAN DIE KONJUNKTUR (Einleitung)
+       ========================================================== -->
+  <section class="slide" data-title="Grundlagen">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Grundlagen</span><span>02</span></div>
+    <div class="head">
+      <div class="kicker rv">Erst kurz erklärt</div>
+      <h2 class="rv" style="--d:.1s" data-e>Wie liest man die <em>Konjunktur?</em></h2>
+    </div>
+    <svg class="chart" id="cycle" style="left:96px; top:300px; width:1728px; height:360px" viewBox="0 0 1728 360"></svg>
+    <div class="kind rv" style="left:96px; --d:1.6s">
+      <span class="tag" style="background:var(--gold-dim); color:var(--gold)">FRÜHINDIKATOREN</span>
+      <h3 data-e>zeigen voraus</h3>
+      <p data-e>ifo-Geschäftsklima, ZEW-Erwartungen, Auftragseingang</p>
+    </div>
+    <div class="kind rv" style="left:690px; --d:1.8s">
+      <span class="tag" style="background:rgba(255,255,255,.08); color:var(--t1)">PRÄSENZINDIKATOREN</span>
+      <h3 data-e>zeigen das Jetzt</h3>
+      <p data-e>Bruttoinlandsprodukt (BIP), Industrieproduktion</p>
+    </div>
+    <div class="kind rv" style="left:1284px; --d:2s">
+      <span class="tag" style="background:var(--regen-dim); color:var(--regen)">SPÄTINDIKATOREN</span>
+      <h3 data-e>kommen hinterher</h3>
+      <p data-e>Arbeitslosigkeit, Inflationsrate</p>
+    </div>
+    <aside class="notes">Kurze Wiederholung aus dem Unterricht: Die Konjunktur läuft in Phasen – Aufschwung, Boom, Abschwung, Tiefpunkt. Um zu wissen, wo wir stehen, nutzt man drei Arten von Indikatoren: Frühindikatoren wie ifo und ZEW zeigen, wohin es geht. Das BIP zeigt die aktuelle Lage. Arbeitslosigkeit und Inflation reagieren erst später. Der Punkt auf der Kurve ist unsere Frage: Sind wir schon rechts vom Tiefpunkt? (ca. 50 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 3 · RÜCKBLICK BIP-JAHRE
+       ========================================================== -->
+  <section class="slide" data-title="Rückblick">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Rückblick</span><span>03</span></div>
+    <div class="head">
+      <div class="kicker rot rv">Bruttoinlandsprodukt · Veränderung zum Vorjahr</div>
+      <h2 class="rv" style="--d:.1s" data-e>Zwei Jahre Rezession –<br>dann die <em>Wende?</em></h2>
+    </div>
+    <svg class="chart" id="bipJahre" style="left:96px; top:390px; width:1180px; height:560px" viewBox="0 0 1180 560"></svg>
+    <div class="tile rv" style="left:1360px; top:420px; width:464px; --d:1.2s">
+      <svg class="wx" width="120" height="120"><use href="#w-storm"/></svg>
+      <div class="big" style="font-size:96px; color:var(--rot); margin-top:10px" data-e>−1,4 %</div>
+      <p class="lead" style="font-size:27px; margin-top:12px" data-e>Wirtschaftsleistung verloren in 2023 und 2024 zusammen</p>
+    </div>
+    <div class="tile rv" style="left:1360px; top:800px; width:464px; padding:22px 30px; --d:1.5s">
+      <p style="font-size:23px; color:var(--t2)" data-e><b style="color:var(--gold)">Schraffiert</b> = Prognose der Wirtschaftsinstitute (Herbst 2026)</p>
+    </div>
+    <div class="src">Quellen: Destatis, VGR / PM Nr. 017 vom 15.01.2026 · Gemeinschaftsdiagnose Herbst 2026 (24.09.2026)</div>
+    <aside class="notes">Zum Hintergrund: 2023 und 2024 ist die deutsche Wirtschaft geschrumpft, also zwei Rezessionsjahre in Folge. 2025 gab es ein Mini-Plus von 0,2 Prozent. Für 2026 erwarten die Institute jetzt 1,3 Prozent – das wäre das beste Jahr seit Langem. Aber: 2028 sehen sie nur noch 0,4 Prozent. Die Frage ist also, ob das ein echter Aufschwung ist oder nur eine Erholung. (ca. 40 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 4 · PRÄSENZINDIKATOR: BIP IM QUARTAL
+       ========================================================== -->
+  <section class="slide" data-title="BIP Quartal">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Präsenzindikator · BIP</span><span>04</span></div>
+    <div class="head">
+      <div class="kicker rv">Bruttoinlandsprodukt · 3. Quartal 2026</div>
+      <h2 class="rv" style="--d:.1s" data-e>Wächst – aber nur in <em>Trippelschritten</em></h2>
+    </div>
+    <div class="rv" style="position:absolute; left:96px; top:360px; --d:.3s">
+      <div class="big" style="font-size:250px; color:var(--gold)"><span data-count="0.2" data-dec="1" data-prefix="+">+0,2</span><span style="font-size:120px"> %</span></div>
+      <p class="lead" style="margin-top:6px" data-e>zum Vorquartal · <b style="color:var(--t1)">+1,3 %</b> zum Vorjahr</p>
+      <p class="lead" style="margin-top:8px; color:var(--t1)" data-e>Viertes Plus-Quartal in Folge</p>
+    </div>
+    <svg class="chart" id="bipQ" style="left:1040px; top:330px; width:780px; height:400px" viewBox="0 0 780 400"></svg>
+    <div style="position:absolute; left:96px; top:810px; display:flex; gap:22px">
+      <span class="chip up rv" style="--d:1.2s"><svg class="wx" width="44" height="44"><use href="#w-suncloud"/></svg>Konsum <b>leicht ↑</b></span>
+      <span class="chip down rv" style="--d:1.4s"><svg class="wx" width="44" height="44"><use href="#w-rain"/></svg>Investitionen <b>↓</b></span>
+      <span class="chip cool rv" style="--d:1.6s"><svg class="wx" width="44" height="44"><use href="#w-cloud"/></svg>Export <b>Schwung weg</b></span>
+    </div>
+    <div class="src">Quelle: Destatis, Pressemitteilung Nr. 381 vom 30.10.2026 (Erstberechnung; Details folgen am 25.11.2026)</div>
+    <aside class="notes">Der wichtigste Präsenzindikator ist das BIP. Im dritten Quartal 2026 ist es um 0,2 Prozent gewachsen – die Bundesbank hatte sogar nur Stagnation erwartet. Das ist das vierte Plus in Folge. Aber schaut auf die Bausteine: Konsum leicht höher, Investitionen gesunken, der Export hat seinen Schwung aus dem ersten Halbjahr verloren. Ein Aufschwung, der von allein läuft, sieht anders aus. (ca. 45 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 5 · FRÜHINDIKATOR: IFO
+       ========================================================== -->
+  <section class="slide" data-title="ifo">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Frühindikator · ifo</span><span>05</span></div>
+    <div class="head">
+      <div class="kicker rv">ifo-Geschäftsklimaindex · rund 9.000 Unternehmen befragt</div>
+      <h2 class="rv" style="--d:.1s" data-e>Die Firmen werden <em>optimistischer</em></h2>
+    </div>
+    <svg class="chart" id="ifo" style="left:96px; top:360px; width:1140px; height:560px" viewBox="0 0 1140 560"></svg>
+    <div class="tile rv" style="left:1330px; top:350px; width:494px; --d:1s">
+      <div style="display:flex; align-items:center; gap:22px">
+        <svg class="wx" width="120" height="120"><use href="#w-suncloud"/></svg>
+        <div><div class="big" style="font-size:110px" data-count="90.2" data-dec="1">90,2</div><div class="mono muted" style="font-size:18px">PUNKTE · OKT. 2026</div></div>
+      </div>
+      <div class="stack" style="margin-top:28px">
+        <span class="chip up" data-e>Erwartungen <b>↑</b></span>
+        <span class="chip down" data-e>aktuelle Lage <b>leicht ↓</b></span>
+        <span class="chip up" data-e>Industrie: <b>−2,7 → +1,2</b></span>
+      </div>
+    </div>
+    <div class="src">Quelle: ifo Institut, Pressemitteilungen 26.01., 25.08. und 26.10.2026 (Monatswerte ohne Punkt: keine Angabe erhoben)</div>
+    <aside class="notes">Jetzt die Frühindikatoren aus dem Unterricht. Das ifo-Institut fragt jeden Monat rund 9.000 Unternehmen nach ihrer Lage und ihren Erwartungen. Im Frühjahr stürzte der Index auf 84,5 Punkte, seitdem steigt er fast jeden Monat – im Oktober auf 90,2. Wichtig: Der Anstieg kommt von den Erwartungen, die aktuelle Lage schätzen die Firmen sogar etwas schlechter ein. In der Industrie gibt es mehr Aufträge, sie planen mehr Produktion. (ca. 45 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 6 · FRÜHINDIKATOR: ZEW
+       ========================================================== -->
+  <section class="slide" data-title="ZEW">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Frühindikator · ZEW</span><span>06</span></div>
+    <div class="head">
+      <div class="kicker rv">ZEW-Konjunkturerwartungen · Finanzexperten, Blick 6 Monate voraus</div>
+      <h2 class="rv" style="--d:.1s" data-e>Absturz, Erholung – und jetzt ein <em style="color:var(--rot)">Dämpfer</em></h2>
+    </div>
+    <svg class="chart" id="zew" style="left:96px; top:360px; width:1140px; height:560px" viewBox="0 0 1140 560"></svg>
+    <div class="tile rv" style="left:1330px; top:350px; width:494px; --d:1s">
+      <div style="display:flex; align-items:center; gap:22px">
+        <svg class="wx" width="120" height="120"><use href="#w-cloud"/></svg>
+        <div><div class="big" style="font-size:110px" data-count="28.1" data-dec="1">28,1</div><div class="mono muted" style="font-size:18px">PUNKTE · OKT. 2026</div></div>
+      </div>
+      <div class="stack" style="margin-top:28px">
+        <span class="chip down" data-e>zum Vormonat <b>−6,6</b></span>
+        <span class="chip down" data-e>Lage: <b>−35,9</b></span>
+        <span class="chip up" data-e>über 0 = mehr Optimisten</span>
+      </div>
+    </div>
+    <div class="src">Quelle: ZEW Mannheim, Konjunkturerwartungen, Pressemitteilungen Jan.–Okt. 2026 (März: kein Wert in der Grafik)</div>
+    <aside class="notes">Der ZEW-Index fragt nicht Firmen, sondern Finanzexperten, wie sie die nächsten sechs Monate sehen. Über null heißt: mehr Optimisten als Pessimisten. Anfang 2026 war die Stimmung super, dann kam Ende Februar der Iran-Krieg und die Straße von Hormus wurde praktisch dicht – der Index fiel auf minus 20. Danach Erholung bis fast 35, im Oktober aber erstmals wieder ein Rückgang. ZEW-Präsident Wambach nennt als Grund die hohen Energiepreise. (ca. 40 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 7 · FRÜHINDIKATOR: AUFTRAGSEINGANG & PRODUKTION
+       ========================================================== -->
+  <section class="slide" data-title="Industrie">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Frühindikator · Industrie</span><span>07</span></div>
+    <div class="head">
+      <div class="kicker rv">Auftragseingang im Verarbeitenden Gewerbe · zum Vormonat</div>
+      <h2 class="rv" style="--d:.1s" data-e>Ein Monat ist <em>noch kein Trend</em></h2>
+    </div>
+    <svg class="chart" id="auftr" style="left:96px; top:350px; width:900px; height:600px" viewBox="0 0 900 600"></svg>
+    <div class="tile rv" style="left:1080px; top:360px; width:744px; --d:.9s">
+      <div class="kicker" style="font-size:17px">Treiber im September</div>
+      <div class="stack" style="margin-top:22px">
+        <span class="chip up">Autos <b>+10,5 %</b></span>
+        <span class="chip up">Maschinenbau <b>+8,3 %</b></span>
+        <span class="chip up">Produktion gesamt <b>+0,7 %</b></span>
+      </div>
+    </div>
+    <div class="tile rv" style="left:1080px; top:760px; width:744px; padding:26px 38px; --d:1.3s; border-color:rgba(229,57,42,.4)">
+      <p style="font-size:30px" data-e>Ganzes 3. Quartal: nur <b class="mono" style="color:var(--rot)">+0,2 %</b> Aufträge</p>
+    </div>
+    <div class="src">Quellen: Destatis, PM Nr. 385 vom 05.11.2026 (Auftragseingang) · Destatis, Produktion im Produzierenden Gewerbe, September 2026</div>
+    <aside class="notes">Der Auftragseingang ist ein Frühindikator, weil heutige Bestellungen die Produktion von morgen sind. Im September plus 4,4 Prozent, vor allem bei Autos und Maschinen – klingt super. Aber im August gab es minus 10 Prozent. Über das ganze Quartal bleiben nur plus 0,2 Prozent. Ein Monat ist also noch kein Trend. (ca. 35 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 8 · GEGENWIND: ENERGIE-SCHOCK (Wirkungskette)
+       ========================================================== -->
+  <section class="slide" data-title="Energie">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Unwetterwarnung</span><span>08</span></div>
+    <div class="head">
+      <div class="kicker rot rv">Der größte Gegenwind 2026</div>
+      <h2 class="rv" style="--d:.1s" data-e>Wie ein Krieg am Golf <em style="color:var(--rot)">bremst</em></h2>
+    </div>
+    <svg class="wx pop" style="position:absolute; right:96px; top:96px; --d:.3s" width="190" height="190"><use href="#w-storm"/></svg>
+    <div class="chain">
+      <div class="node" style="--d:.4s"><div class="n">01 · ENDE FEB.</div><div class="v" style="color:var(--rot)">Hormus</div><p data-e>Iran-Krieg: Öltanker kommen kaum noch durch</p></div>
+      <div class="arrow"><svg viewBox="0 0 50 30"><path d="M2 15 H44 M34 5 L46 15 L34 25"/></svg></div>
+      <div class="node" style="--d:.9s"><div class="n">02 · ENERGIE</div><div class="v">+12,2 %</div><p data-e>Energiepreise im Oktober zum Vorjahr</p></div>
+      <div class="arrow"><svg viewBox="0 0 50 30"><path d="M2 15 H44 M34 5 L46 15 L34 25"/></svg></div>
+      <div class="node" style="--d:1.4s"><div class="n">03 · PREISE</div><div class="v">2,8 %</div><p data-e>Inflation – über dem Ziel der EZB von 2 %</p></div>
+      <div class="arrow"><svg viewBox="0 0 50 30"><path d="M2 15 H44 M34 5 L46 15 L34 25"/></svg></div>
+      <div class="node" style="--d:1.9s"><div class="n">04 · EZB</div><div class="v" style="color:var(--regen)">2,50 %</div><p data-e>Leitzins im Juni und September erhöht</p></div>
+      <div class="arrow"><svg viewBox="0 0 50 30"><path d="M2 15 H44 M34 5 L46 15 L34 25"/></svg></div>
+      <div class="node" style="--d:2.4s; border-color:rgba(229,57,42,.5)"><div class="n">05 · FOLGE</div><div class="v" style="color:var(--rot)">Bremse</div><p data-e>Kredite teurer, weniger Kaufkraft und Investitionen</p></div>
+    </div>
+    <div class="src">Quellen: Destatis, PM Nr. 382 vom 30.10.2026 (Inflation, Energie) · EZB, geldpolitischer Beschluss vom 29.10.2026 · ZEW, PM vom 20.10.2026</div>
+    <aside class="notes">Warum läuft der Aufschwung so schwach? Der größte Gegenwind ist die Energie. Ende Februar begann der Iran-Krieg, durch die Straße von Hormus kommen kaum noch Öltanker. Die Energie ist im Oktober 12 Prozent teurer als vor einem Jahr. Das treibt die Inflation über das Ziel von 2 Prozent. Die EZB hat deshalb im Juni und September die Zinsen erhöht, auf 2,5 Prozent. Höhere Zinsen machen Kredite teurer – das bremst genau die Investitionen, die ein Aufschwung braucht. (ca. 45 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 9 · SPÄTINDIKATOREN: INFLATION & ARBEITSMARKT
+       ========================================================== -->
+  <section class="slide" data-title="Spätindikatoren">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Spätindikatoren</span><span>09</span></div>
+    <div class="head">
+      <div class="kicker regen rv">Inflationsrate &amp; Arbeitslosigkeit</div>
+      <h2 class="rv" style="--d:.1s" data-e>Hier ist noch <em style="color:var(--regen)">kein Aufschwung</em> angekommen</h2>
+    </div>
+    <svg class="chart" id="infl" style="left:96px; top:380px; width:820px; height:540px" viewBox="0 0 820 540"></svg>
+    <div class="tile rv" style="left:1010px; top:370px; width:814px; height:560px; --d:.8s">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start">
+        <div class="kicker regen" style="font-size:17px">Arbeitslose · Oktober 2026</div>
+        <svg class="wx" width="110" height="110"><use href="#w-rain"/></svg>
+      </div>
+      <div class="big" style="font-size:150px; margin-top:-10px"><span data-count="2.955" data-dec="3">2,955</span><span style="font-size:70px"> Mio.</span></div>
+      <div style="display:flex; gap:18px; margin-top:34px; flex-wrap:wrap">
+        <span class="chip down">Quote <b>6,3 %</b></span>
+        <span class="chip down">zum Vorjahr <b>+44.000</b></span>
+        <span class="chip up">offene Stellen <b>654.000</b></span>
+      </div>
+      <p style="font-size:24px; color:var(--t2); margin-top:30px; line-height:1.35" data-e>„Für einen Oktober schwach“ – Andrea Nahles, Bundesagentur für Arbeit</p>
+    </div>
+    <div class="src">Quellen: Destatis, PM Nr. 382 vom 30.10.2026 · Gemeinschaftsdiagnose Herbst 2026 · Bundesagentur für Arbeit, Presseinfo Nr. 41 vom 30.10.2026</div>
+    <aside class="notes">Die Spätindikatoren reagieren erst, wenn ein Aufschwung schon eine Weile läuft – und hier sieht man noch nichts. Die Inflation lag im September bei 3,3 und im Oktober bei 2,8 Prozent, also über dem EZB-Ziel. Für 2027 erwarten die Institute sogar 3,2 Prozent. Am Arbeitsmarkt gibt es fast 3 Millionen Arbeitslose, 44.000 mehr als vor einem Jahr. Die Chefin der Arbeitsagentur nennt den Oktober schwach. Das passt zur Theorie: Erst wird die Stimmung besser, dann die Produktion, ganz zum Schluss der Arbeitsmarkt. (ca. 45 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 10 · HOFFNUNGSTRÄGER TECH: INVESTITIONSGIPFEL
+       ========================================================== -->
+  <section class="slide" data-title="Tech-Gipfel">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Aktuell · Tech &amp; KI</span><span>10</span></div>
+    <div class="head">
+      <div class="kicker rv">Invest in Germany Summit · Kanzleramt Berlin · 19./20.10.2026</div>
+      <h2 class="rv" style="--d:.1s" data-e>Hoffnungsträger <em>Tech &amp; KI</em></h2>
+    </div>
+    <div class="rv" style="position:absolute; left:96px; top:350px; --d:.3s">
+      <div class="big" style="font-size:230px; color:var(--gold)"><span data-count="230" data-dec="0">230</span><span style="font-size:100px"> Mrd. €</span></div>
+      <p class="lead" style="margin-top:8px; width:820px" data-e>Investitionszusagen von rund 200 Konzernchefs und Investoren</p>
+    </div>
+    <div style="position:absolute; left:96px; top:740px; display:flex; gap:22px; flex-wrap:wrap; width:880px">
+      <span class="chip up rv" style="--d:1s"><b>Nvidia</b> KI-Partnerschaft für die Industrie</span>
+      <span class="chip up rv" style="--d:1.2s"><b>Amazon</b> rund 16 Mrd. €</span>
+      <span class="chip down rv" style="--d:1.4s">Kritik: <b>teils alte Projekte</b></span>
+    </div>
+    <div class="tile rv" style="left:1080px; top:350px; width:744px; height:600px; --d:.7s">
+      <div class="kicker" style="font-size:17px">Investitionen in Rechenzentren</div>
+      <svg class="chart" id="rz" style="position:relative; left:0; top:0; margin-top:26px; width:668px; height:330px" viewBox="0 0 668 330"></svg>
+      <p style="font-size:25px; color:var(--t2); margin-top:30px; line-height:1.35" data-e>Digital-Gipfel: Ziel „KI-Nation 2030“, Rechenleistung für KI mindestens <b style="color:var(--t1)">vervierfachen</b></p>
+    </div>
+    <div class="src">Quellen: Bundesregierung, Invest in Germany Summit (Okt. 2026) · Rede des Kanzlers, Digital-Gipfel 2026 · Bitkom, Rechenzentren 2026</div>
+    <aside class="notes">Jetzt die gute Nachricht und ein aktuelles Thema: Am 19. und 20. Oktober hat Kanzler Merz rund 200 Konzernchefs und Investoren ins Kanzleramt eingeladen. Zusammen gab es Zusagen über 230 Milliarden Euro. Nvidia-Chef Jensen Huang war da und vereinbarte eine KI-Partnerschaft für die deutsche Industrie, Amazon will rund 16 Milliarden investieren. In Rechenzentren fließen 2026 laut Bitkom 23,5 Milliarden Euro, 57 Prozent mehr als im Vorjahr. Aber Kritiker sagen: Viele Zusagen waren schon vorher bekannt und wurden nur neu verpackt. (ca. 45 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 11 · KI-WETTRENNEN: KAPAZITÄT IM VERGLEICH
+       ========================================================== -->
+  <section class="slide" data-title="KI-Wettrennen">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Aktuell · Tech &amp; KI</span><span>11</span></div>
+    <div class="head">
+      <div class="kicker rv">Erwartete Rechenzentrums-Kapazität 2035 · Gigawatt</div>
+      <h2 class="rv" style="--d:.1s" data-e>Im KI-Rennen bleibt Deutschland <em style="color:var(--rot)">klein</em></h2>
+    </div>
+    <svg class="chart" id="gw" style="left:96px; top:380px; width:1728px; height:390px" viewBox="0 0 1728 390"></svg>
+    <div class="tile rv" style="left:96px; top:810px; width:1728px; padding:26px 38px; --d:1.8s; display:flex; align-items:center; gap:30px">
+      <svg class="wx" width="80" height="80"><use href="#w-storm"/></svg>
+      <p style="font-size:31px" data-e>Größte Bremse laut Bitkom: <b style="color:var(--gold)">Strom</b> – zu teuer, zu wenig Netz. Dieselbe Energiekrise wie bei der Konjunktur.</p>
+    </div>
+    <div class="src">Quelle: Bitkom, Studie „Rechenzentren in Deutschland 2026“ (Nov. 2026); heutige deutsche Kapazität rund 3,3 GW</div>
+    <aside class="notes">Für die Zukunft zählt, ob Deutschland beim Thema KI mithält. Bis 2035 erwartet Bitkom in den USA 160 Gigawatt Rechenzentrums-Kapazität, in China 90 – in Deutschland nur rund 10. Das größte Problem ist wieder der Strom: zu teuer und zu wenig Netz. Tech ist also ein Hoffnungsträger, löst die Strukturprobleme aber nicht allein. (ca. 35 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 12 · PROGNOSEN
+       ========================================================== -->
+  <section class="slide" data-title="Prognosen">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Vorhersage</span><span>12</span></div>
+    <div class="head">
+      <div class="kicker rv">BIP-Prognosen · reale Veränderung zum Vorjahr</div>
+      <h2 class="rv" style="--d:.1s" data-e>„Aufschwung mit <em>Struktur&shy;problemen</em>“</h2>
+    </div>
+    <svg class="chart" id="prog" style="left:96px; top:380px; width:1040px; height:560px" viewBox="0 0 1040 560"></svg>
+    <div class="tile rv" style="left:1230px; top:370px; width:594px; --d:1s">
+      <div class="kicker" style="font-size:17px">Genauer hingeschaut</div>
+      <div class="stack" style="margin-top:22px; gap:26px">
+        <p style="font-size:28px; line-height:1.3" data-e><b class="mono" style="color:var(--gold)">0,3</b> Prozentpunkte von 1,3 % kommen nur von <b>mehr Arbeitstagen</b></p>
+        <p style="font-size:28px; line-height:1.3" data-e><b class="mono" style="color:var(--gold)">2/3</b> der Prognose-Anhebung: <b>Staat</b> investiert in Infrastruktur &amp; Verteidigung</p>
+        <p style="font-size:28px; line-height:1.3" data-e>2028 nur noch <b class="mono" style="color:var(--rot)">0,4 %</b></p>
+      </div>
+    </div>
+    <div class="src">Quellen: Gemeinschaftsdiagnose Herbst 2026 (24.09.2026) · Bundesministerium für Wirtschaft und Energie, Herbstprojektion 2026 (08.10.2026)</div>
+    <aside class="notes">Was sagen die Profis? Die führenden Wirtschaftsinstitute und die Bundesregierung erwarten beide 1,3 Prozent für 2026 und 1,1 Prozent für 2027. Die Institute nennen ihr Gutachten selbst „Aufschwung mit Strukturproblemen“. Drei Haken: 0,3 Prozentpunkte kommen nur daher, dass es 2026 mehr Arbeitstage gibt. Zwei Drittel der Verbesserung kommen vom Staat, also vom Sondervermögen für Infrastruktur und von der Verteidigung. Und 2028 soll das Wachstum schon wieder auf 0,4 Prozent fallen. (ca. 40 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 13 · FAZIT: DER WETTERBERICHT
+       ========================================================== -->
+  <section class="slide" data-title="Fazit">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Fazit</span><span>13</span></div>
+    <div class="head">
+      <div class="kicker rv">Unser Wetterbericht für Deutschland</div>
+      <h2 class="rv" style="--d:.1s" data-e>Aufklarend – aber <em>böig</em></h2>
+    </div>
+    <div class="wgrid">
+      <div class="wcell pop" style="--d:.3s"><span class="lbl">Präsenz</span><svg class="wx" width="84" height="84"><use href="#w-suncloud"/></svg><div><div class="nm">BIP</div><div class="st" style="color:var(--gold)">4× Plus, aber klein</div></div></div>
+      <div class="wcell pop" style="--d:.45s"><span class="lbl">Früh</span><svg class="wx" width="84" height="84"><use href="#w-sun"/></svg><div><div class="nm">ifo</div><div class="st" style="color:var(--gold)">steigt seit April</div></div></div>
+      <div class="wcell pop" style="--d:.6s"><span class="lbl">Früh</span><svg class="wx" width="84" height="84"><use href="#w-cloud"/></svg><div><div class="nm">ZEW</div><div class="st" style="color:var(--wolke)">positiv, aber ↓</div></div></div>
+      <div class="wcell pop" style="--d:.75s"><span class="lbl">Früh</span><svg class="wx" width="84" height="84"><use href="#w-suncloud"/></svg><div><div class="nm">Aufträge</div><div class="st" style="color:var(--wolke)">schwankend</div></div></div>
+      <div class="wcell pop" style="--d:.9s"><span class="lbl">Spät</span><svg class="wx" width="84" height="84"><use href="#w-rain"/></svg><div><div class="nm">Inflation</div><div class="st" style="color:var(--regen)">über 2 %</div></div></div>
+      <div class="wcell pop" style="--d:1.05s"><span class="lbl">Spät</span><svg class="wx" width="84" height="84"><use href="#w-rain"/></svg><div><div class="nm">Arbeitsmarkt</div><div class="st" style="color:var(--regen)">noch schlechter</div></div></div>
+    </div>
+    <svg class="baro rv" style="--d:.6s; left:1240px; top:300px; width:584px; height:350px; --to:18deg" viewBox="0 0 600 360" id="baro2"></svg>
+    <div class="tile rv" style="left:1240px; top:690px; width:584px; --d:1.4s; border-color:rgba(245,184,0,.45)">
+      <p style="font-size:34px; line-height:1.25; font-weight:600" data-e>Ja, der Aufschwung beginnt – aber <span style="color:var(--gold)">schwach</span>, vom <span style="color:var(--gold)">Staat</span> getragen und von der <span style="color:var(--rot)">Energie</span> gebremst.</p>
+    </div>
+    <div class="src">Eigene Bewertung auf Grundlage der Folien 03–12</div>
+    <aside class="notes">Unser Wetterbericht: Die Frühindikatoren zeigen nach oben, das ifo steigt seit April, das BIP wächst seit vier Quartalen. Die Spätindikatoren – Inflation und Arbeitsmarkt – sind noch im Regen, das ist aber normal am Anfang eines Aufschwungs. Unser Ergebnis: Ja, Deutschland ist am Anfang eines Aufschwungs. Er ist aber schwach, wird stark vom Staat getragen und von den Energiepreisen gebremst. Das Barometer steht auf „wechselhaft, Tendenz besser“. Danke fürs Zuhören – gibt es Fragen? (ca. 45 s)</aside>
+  </section>
+
+  <!-- ==========================================================
+       FOLIE 14 · QUELLEN
+       ========================================================== -->
+  <section class="slide" data-title="Quellen">
+    <div class="flag"><i></i><i></i><i></i></div>
+    <div class="chrome-top"><span class="live">Quellen</span><span>14</span></div>
+    <div class="head">
+      <div class="kicker rv">Primärquellen · abgerufen am 08.11.2026</div>
+      <h2 class="rv" style="--d:.1s" data-e>Quellen</h2>
+    </div>
+    <ol class="refs rv" style="--d:.3s">
+      <li><b>Destatis:</b> BIP im 3. Quartal 2026 um 0,2 % höher, PM Nr. 381, 30.10.2026<br><span class="u">destatis.de/DE/Presse/Pressemitteilungen/2026/10/PD26_381_811.html</span></li>
+      <li><b>Destatis:</b> Inflationsrate im Oktober 2026 voraussichtlich +2,8 %, PM Nr. 382, 30.10.2026<br><span class="u">destatis.de/DE/Presse/Pressemitteilungen/2026/10/PD26_382_611.html</span></li>
+      <li><b>Destatis:</b> Auftragseingang im September 2026 +4,4 %, PM Nr. 385, 05.11.2026<br><span class="u">destatis.de/DE/Presse/Pressemitteilungen/2026/11/PD26_385_421.html</span></li>
+      <li><b>Destatis:</b> BIP 2025, PM Nr. 017, 15.01.2026; BIP Q1 und Q2 2026 (PM Nr. 153, 269, 303)</li>
+      <li><b>ifo Institut:</b> ifo Geschäftsklima Deutschland, Pressemitteilungen Jan.–Okt. 2026, zuletzt 26.10.2026<br><span class="u">ifo.de/en/press-release/2026-10-26/ifo-business-climate-rises-october-2026</span></li>
+      <li><b>ZEW Mannheim:</b> ZEW-Konjunkturerwartungen, Pressemitteilungen Jan.–Okt. 2026, zuletzt 20.10.2026</li>
+      <li><b>Bundesagentur für Arbeit:</b> Arbeitsmarkt im Oktober 2026, Presseinfo Nr. 41<br><span class="u">arbeitsagentur.de/presse/2026-41-arbeitsmarkt-im-oktober-2026</span></li>
+      <li><b>Europäische Zentralbank:</b> Geldpolitische Beschlüsse vom 29.10.2026</li>
+      <li><b>Projektgruppe Gemeinschaftsdiagnose:</b> Herbst 2026 – Aufschwung mit Strukturproblemen, 24.09.2026<br><span class="u">gemeinschaftsdiagnose.de</span></li>
+      <li><b>BMWE:</b> Herbstprojektion 2026 der Bundesregierung, 08.10.2026</li>
+      <li><b>Bundesregierung:</b> Invest in Germany Summit (Okt. 2026); Rede des Kanzlers beim Digital-Gipfel 2026<br><span class="u">bundesregierung.de</span></li>
+      <li><b>Bitkom:</b> Rechenzentren in Deutschland 2026, Studie, Nov. 2026</li>
+    </ol>
+    <div class="src">Lut &amp; Erik · Sowi Q1 · 09.11.2026</div>
+    <aside class="notes">Unsere Quellen – fast alles Primärquellen: Statistisches Bundesamt, ifo, ZEW, Bundesagentur für Arbeit, EZB, die Gemeinschaftsdiagnose der Institute und die Bundesregierung. (ca. 10 s)</aside>
+  </section>
+
+</main>
+</div>
+
+<!-- Steuerung außerhalb der Folien -->
+<div class="progress" id="progress"></div>
+<div class="notes-panel" id="notesPanel"><div class="who" id="notesWho"></div><div id="notesText"></div></div>
+<div class="edit-hotzone" id="editHot"></div>
+<button class="edit-toggle" id="editToggle" title="Bearbeiten (E)">✎ Bearbeiten</button>
+
+<script>
+/* ============================================================
+   HILFSFUNKTIONEN FÜR SVG
+   ============================================================ */
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs = {}, parent) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+}
+function txt(parent, x, y, s, attrs = {}) { const t = el('text', { x, y, ...attrs }, parent); t.textContent = s; return t; }
+const de = (v, d = 1) => v.toLocaleString('de-DE', { minimumFractionDigits: d, maximumFractionDigits: d });
+const signed = (v, d = 1) => (v > 0 ? '+' : v < 0 ? '−' : '±') + de(Math.abs(v), d);
+
+/* ============================================================
+   BAROMETER (Titel und Fazit)
+   ============================================================ */
+function barometer(svg) {
+    const cx = 300, cy = 300, r = 250;
+    const segs = [
+        { a0: 180, a1: 135, c: '#E5392A', l: 'STURM' },
+        { a0: 135, a1: 90,  c: '#5E8FE8', l: 'REGEN' },
+        { a0: 90,  a1: 45,  c: '#C9CCD3', l: 'WECHSELHAFT' },
+        { a0: 45,  a1: 0,   c: '#F5B800', l: 'SONNIG' }
+    ];
+    const pt = (a, rr) => [cx + rr * Math.cos(a * Math.PI / 180), cy - rr * Math.sin(a * Math.PI / 180)];
+    segs.forEach((s, i) => {
+        const [x0, y0] = pt(s.a0 - 1.2, r), [x1, y1] = pt(s.a1 + 1.2, r);
+        el('path', { d: `M${x0} ${y0} A${r} ${r} 0 0 1 ${x1} ${y1}`, stroke: s.c, 'stroke-width': 34, fill: 'none', opacity: .9 }, svg);
+        const mid = (s.a0 + s.a1) / 2, [lx, ly] = pt(mid, r + 52);
+        txt(svg, lx, ly, s.l, { 'text-anchor': 'middle', fill: s.c });
+    });
+    for (let a = 0; a <= 180; a += 9) {
+        const [x0, y0] = pt(a, r - 30), [x1, y1] = pt(a, r - (a % 45 ? 42 : 56));
+        el('line', { x1: x0, y1: y0, x2: x1, y2: y1, stroke: 'rgba(244,239,228,.35)', 'stroke-width': a % 45 ? 2 : 4 }, svg);
+    }
+    const g = el('g', { class: 'needle' }, svg);
+    el('path', { d: `M${cx - 10} ${cy} L${cx} ${cy - r + 60} L${cx + 10} ${cy} Z`, fill: '#F4EFE4' }, g);
+    el('circle', { cx, cy, r: 22, fill: '#F4EFE4' }, svg);
+    el('circle', { cx, cy, r: 9, fill: '#0C0E12' }, svg);
+}
+
+/* ============================================================
+   KONJUNKTURZYKLUS (Folie 2)
+   ============================================================ */
+function cycle(svg) {
+    const W = 1728, mid = 170, A = 120, pts = [];
+    for (let x = 0; x <= W; x += 8) pts.push([x, mid - A * Math.sin((x / W) * Math.PI * 2 * 1.25 - 0.3)]);
+    el('line', { x1: 0, y1: mid, x2: W, y2: mid, class: 'zero', opacity: .5 }, svg);
+    const p = el('path', { d: 'M' + pts.map(q => q.join(' ')).join(' L'), stroke: '#F4EFE4', 'stroke-width': 5, fill: 'none', class: 'draw', 'stroke-linecap': 'round' }, svg);
+    const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p.style.setProperty('--d', '.3s');
+    // Phasen-Beschriftung (x-Positionen auf der Kurve)
+    const yAt = x => mid - A * Math.sin((x / W) * Math.PI * 2 * 1.25 - 0.3);
+    const labels = [[200, 'AUFSCHWUNG', -1], [370, 'BOOM', -1], [690, 'ABSCHWUNG', -1], [1060, 'TIEF', 1], [1330, 'AUFSCHWUNG', -1]];
+    labels.forEach(([x, s, dir], i) => {
+        const t = txt(svg, x, yAt(x) + (dir < 0 ? -34 : 52), s, { 'text-anchor': 'middle', class: 'fade', style: `--d:${.6 + i * .2}s; font-size:20px; letter-spacing:.12em` });
+    });
+    // "Deutschland 2026?" knapp hinter dem Tiefpunkt
+    const xd = 1170, yd = yAt(xd);
+    const g = el('g', { class: 'fade', style: '--d:1.8s' }, svg);
+    el('circle', { cx: xd, cy: yd, r: 26, fill: 'rgba(245,184,0,.25)', class: 'cyc-dot' }, g);
+    el('circle', { cx: xd, cy: yd, r: 13, fill: '#F5B800' }, g);
+    txt(g, xd + 30, yd + 64, 'DEUTSCHLAND 2026?', { fill: '#F5B800', style: 'font-size:22px; font-weight:700' });
+}
+
+/* ============================================================
+   SÄULENDIAGRAMM (positive und negative Werte)
+   cfg: data [{l, v, prog}], min, max, w, h, colors
+   ============================================================ */
+function bars(svg, cfg) {
+    const { data, min, max, W, H, padL = 60, padR = 10, padB = 60, padT = 40, unit = '', dec = 1, color = v => v >= 0 ? '#F5B800' : '#E5392A', step } = cfg;
+    const ih = H - padB - padT, iw = W - padL - padR;
+    const y = v => padT + (max - v) / (max - min) * ih;
+    // Hilfslinien
+    if (step) for (let v = Math.ceil(min / step) * step; v <= max + 1e-9; v += step) {
+        el('line', { x1: padL, y1: y(v), x2: W, y2: y(v), class: Math.abs(v) < 1e-9 ? 'zero' : 'grid' }, svg);
+        txt(svg, padL - 14, y(v) + 6, de(v, cfg.axisDec ?? 0), { 'text-anchor': 'end', style: 'font-size:16px' });
+    }
+    if (cfg.target != null) {
+        el('line', { x1: padL, y1: y(cfg.target), x2: W - padR + 10, y2: y(cfg.target), stroke: '#F4EFE4', 'stroke-width': 2.5, 'stroke-dasharray': '10 8' }, svg);
+        txt(svg, W, y(cfg.target) + 7, cfg.targetLabel, { 'text-anchor': 'end', fill: '#F4EFE4', style: 'font-size:18px; font-weight:700' });
+    }
+    const n = data.length, slot = iw / n, bw = slot * (cfg.bw ?? .58);
+    // Schraffur für Prognosen
+    const defs = el('defs', {}, svg);
+    const pat = el('pattern', { id: svg.id + 'H', width: 14, height: 14, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
+    el('rect', { width: 14, height: 14, fill: 'rgba(245,184,0,.12)' }, pat);
+    el('line', { x1: 0, y1: 0, x2: 0, y2: 14, stroke: '#F5B800', 'stroke-width': 5 }, pat);
+    data.forEach((d, i) => {
+        const x = padL + slot * i + (slot - bw) / 2, y0 = y(0), yv = y(d.v);
+        const top = Math.min(y0, yv), h = Math.max(2, Math.abs(yv - y0));
+        const c = d.c || color(d.v);
+        el('rect', { x, y: top, width: bw, height: h, rx: 6, fill: d.prog ? `url(#${svg.id}H)` : c, stroke: d.prog ? '#F5B800' : 'none', 'stroke-width': 2,
+            class: 'bar' + (d.v < 0 ? ' neg' : ''), style: `--d:${.35 + i * .12}s` }, svg);
+        txt(svg, x + bw / 2, d.v >= 0 ? yv - 16 : yv + 34, (cfg.signed === false ? de(d.v, dec) : signed(d.v, dec)) + unit,
+            { 'text-anchor': 'middle', class: 'val fade', style: `--d:${.8 + i * .12}s; fill:${d.v < 0 ? '#E5392A' : '#F4EFE4'}` });
+        txt(svg, x + bw / 2, H - padB + 40, d.l, { 'text-anchor': 'middle', style: 'font-size:19px' + (d.prog ? ';fill:#F5B800' : '') });
+    });
+}
+
+/* ============================================================
+   LINIENDIAGRAMM mit Lücken (fehlende Monate gestrichelt)
+   ============================================================ */
+function line(svg, cfg) {
+    const { pts, months, min, max, W, H, padL = 70, padB = 60, padT = 30, step, color = '#F5B800', dec = 1 } = cfg;
+    const ih = H - padB - padT, iw = W - padL - 30;
+    const x = i => padL + i / (months.length - 1) * iw;
+    const y = v => padT + (max - v) / (max - min) * ih;
+    for (let v = Math.ceil(min / step) * step; v <= max + 1e-9; v += step) {
+        el('line', { x1: padL, y1: y(v), x2: W - 20, y2: y(v), class: Math.abs(v) < 1e-9 ? 'zero' : 'grid' }, svg);
+        txt(svg, padL - 14, y(v) + 6, de(v, 0), { 'text-anchor': 'end', style: 'font-size:16px' });
+    }
+    months.forEach((m, i) => txt(svg, x(i), H - padB + 38, m, { 'text-anchor': 'middle', style: 'font-size:16px' }));
+    // Hintergrund-Bänder (z. B. Krisenzeit)
+    (cfg.bands || []).forEach(b => {
+        el('rect', { x: x(b.from), y: padT, width: x(b.to) - x(b.from), height: ih, fill: 'rgba(229,57,42,.10)', class: 'fade', style: '--d:1.6s' }, svg);
+        txt(svg, (x(b.from) + x(b.to)) / 2, padT + 26, b.label, { 'text-anchor': 'middle', fill: '#E5392A', class: 'fade', style: '--d:1.8s; font-size:17px; font-weight:700' });
+    });
+    // Fläche + Linie
+    const known = pts.filter(p => p.v != null);
+    const d = 'M' + known.map(p => `${x(p.i)} ${y(p.v)}`).join(' L');
+    el('path', { d: d + ` L${x(known.at(-1).i)} ${y(min)} L${x(known[0].i)} ${y(min)} Z`, fill: color, 'fill-opacity': .1, class: 'fade', style: '--d:1.4s' }, svg);
+    const p = el('path', { d, stroke: color, 'stroke-width': 5, fill: 'none', class: 'draw', 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+    const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+    // Gestrichelte Overlay-Linien über Lücken (Monate ohne Wert)
+    for (let k = 1; k < known.length; k++) if (known[k].i - known[k - 1].i > 1)
+        el('line', { x1: x(known[k - 1].i), y1: y(known[k - 1].v), x2: x(known[k].i), y2: y(known[k].v), stroke: '#0C0E12', 'stroke-width': 6, 'stroke-dasharray': '2 12', class: 'fade', style: '--d:2.2s' }, svg);
+    known.forEach((q, k) => {
+        el('circle', { cx: x(q.i), cy: y(q.v), r: q.hl ? 11 : 7, fill: q.hl ? color : '#0C0E12', stroke: color, 'stroke-width': 4, class: 'fade', style: `--d:${.5 + k * .17}s` }, svg);
+        if (q.lab) txt(svg, x(q.i) + (q.dx || 0), y(q.v) + (q.dy || -22), de(q.v, dec), { 'text-anchor': 'middle', class: 'val fade', style: `--d:${.7 + k * .17}s` });
+    });
+}
+
+/* ============================================================
+   HORIZONTALE BALKEN (KI-Wettrennen, Rechenzentren)
+   ============================================================ */
+function hbars(svg, cfg) {
+    const { data, max, W, rowH, labW = 260, unit } = cfg;
+    data.forEach((d, i) => {
+        const yy = i * rowH, w = Math.max(6, (W - labW - 220) * d.v / max);
+        txt(svg, 0, yy + rowH / 2 + 10, d.l, { style: `font-size:${cfg.fs || 30}px; fill:#F4EFE4; font-family:'Instrument Sans'; font-weight:600` });
+        el('rect', { x: labW, y: yy + rowH * .18, width: w, height: rowH * .64, rx: 8, fill: d.c, class: 'hbar', style: `--d:${.4 + i * .3}s` }, svg);
+        txt(svg, labW + w + 20, yy + rowH / 2 + 12, d.t, { class: 'val fade', style: `--d:${1 + i * .3}s; font-size:${cfg.vfs || 32}px; fill:${d.c}` });
+    });
+}
+
+/* ============================================================
+   DIAGRAMME MIT DATEN BEFÜLLEN
+   Alle Werte: siehe Quellenzeile der jeweiligen Folie
+   ============================================================ */
+document.querySelectorAll('#baro1, #baro2').forEach(barometer);
+cycle(document.getElementById('cycle'));
+
+// Folie 3: BIP Jahreswerte (Destatis) + Prognose (Gemeinschaftsdiagnose Herbst 2026)
+bars(document.getElementById('bipJahre'), {
+    W: 1180, H: 560, min: -1.5, max: 1.75, step: .5, axisDec: 1, unit: ' %',
+    data: [{ l: '2023', v: -0.9 }, { l: '2024', v: -0.5 }, { l: '2025', v: 0.2 },
+           { l: '2026 P', v: 1.3, prog: 1 }, { l: '2027 P', v: 1.1, prog: 1 }, { l: '2028 P', v: 0.4, prog: 1 }]
+});
+// Folie 4: BIP Quartale zum Vorquartal (Destatis)
+bars(document.getElementById('bipQ'), {
+    W: 780, H: 400, min: 0, max: .5, step: .1, axisDec: 1, unit: ' %',
+    data: [{ l: 'Q4/25', v: .2 }, { l: 'Q1/26', v: .4 }, { l: 'Q2/26', v: .3 }, { l: 'Q3/26', v: .2 }]
+});
+// Folie 5: ifo-Geschäftsklima (Monatsindex, Okt 2025 = Position 0)
+line(document.getElementById('ifo'), {
+    W: 1140, H: 560, min: 82, max: 92, step: 2,
+    months: ['Okt 25', 'Nov', 'Dez', 'Jan 26', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt'],
+    bands: [{ from: 4.5, to: 7.5, label: 'IRAN-KRIEG' }],
+    pts: [{ i: 0, v: 88.3, lab: 1 }, { i: 2, v: 87.6 }, { i: 3, v: 87.6, lab: 1 }, { i: 6, v: 84.5, lab: 1, dy: 40 }, { i: 8, v: 85.7 },
+          { i: 9, v: 86.7 }, { i: 10, v: 88.8 }, { i: 11, v: 89.9 }, { i: 12, v: 90.2, lab: 1, hl: 1 }]
+});
+// Folie 6: ZEW-Konjunkturerwartungen (Saldo, Jan 2026 = Position 0)
+line(document.getElementById('zew'), {
+    W: 1140, H: 560, min: -30, max: 70, step: 20, color: '#F4EFE4',
+    months: ['Jan 26', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt'],
+    bands: [{ from: 1.5, to: 3.5, label: 'HORMUS' }],
+    pts: [{ i: 0, v: 59.6, lab: 1 }, { i: 1, v: 58.3 }, { i: 3, v: -20.4, lab: 1, dy: 44 }, { i: 4, v: -10.2 }, { i: 5, v: 10.5 },
+          { i: 6, v: 26.3 }, { i: 7, v: 34.2 }, { i: 8, v: 34.7, lab: 1 }, { i: 9, v: 28.1, lab: 1, hl: 1, dy: 44 }]
+});
+// Folie 7: Auftragseingang zum Vormonat (Destatis PM 385)
+bars(document.getElementById('auftr'), {
+    W: 900, H: 600, min: -12, max: 6, step: 3, unit: ' %', bw: .5,
+    data: [{ l: 'Aug 26', v: -10.1 }, { l: 'Sep 26', v: 4.4 }, { l: 'Q3 gesamt', v: 0.2, c: '#C9CCD3' }]
+});
+// Folie 9: Inflationsrate (Destatis; Prognose: Gemeinschaftsdiagnose)
+bars(document.getElementById('infl'), {
+    W: 820, H: 540, padR: 170, min: 0, max: 3.6, step: 1, unit: ' %', signed: false, target: 2, targetLabel: 'EZB-ZIEL 2 %',
+    color: v => v > 2 ? '#5E8FE8' : '#C9CCD3',
+    data: [{ l: 'Ø 2025', v: 2.2 }, { l: 'Sep 26', v: 3.3 }, { l: 'Okt 26', v: 2.8 }, { l: '2027 P', v: 3.2, prog: 1 }]
+});
+// Folie 10: Investitionen in Rechenzentren (Bitkom; 2025 aus +57 % zurückgerechnet)
+hbars(document.getElementById('rz'), {
+    W: 600, max: 23.5, rowH: 150, labW: 110, fs: 28, vfs: 30,
+    data: [{ l: '2025', v: 15.0, c: '#7C818B', t: '15,0 Mrd. €' }, { l: '2026', v: 23.5, c: '#F5B800', t: '23,5 Mrd. €' }]
+});
+// Folie 11: Rechenzentrums-Kapazität 2035 (Bitkom)
+hbars(document.getElementById('gw'), {
+    W: 1728, max: 160, rowH: 130,
+    data: [{ l: 'USA', v: 160, c: '#C9CCD3', t: '160 GW' }, { l: 'China', v: 90, c: '#E5392A', t: '90 GW' }, { l: 'Deutschland', v: 10, c: '#F5B800', t: '≈ 10 GW' }]
+});
+// Folie 12: Prognosen Gemeinschaftsdiagnose vs. Bundesregierung
+(function prog() {
+    const svg = document.getElementById('prog'), W = 1040, H = 560, padL = 60, padB = 70, padT = 40, max = 1.5;
+    const ih = H - padB - padT, y = v => padT + (max - v) / max * ih;
+    for (let v = 0; v <= max + 1e-9; v += .5) { el('line', { x1: padL, y1: y(v), x2: W, y2: y(v), class: v ? 'grid' : 'axis' }, svg); txt(svg, padL - 14, y(v) + 6, de(v, 1), { 'text-anchor': 'end', style: 'font-size:16px' }); }
+    const years = ['2026', '2027', '2028'], gd = [1.3, 1.1, .4], br = [1.3, 1.1, .6];
+    const slot = (W - padL) / 3, bw = 110;
+    years.forEach((yr, i) => {
+        const cx = padL + slot * i + slot / 2;
+        [[gd[i], '#F5B800', -bw - 8], [br[i], '#C9CCD3', 8]].forEach(([v, c, off], j) => {
+            el('rect', { x: cx + off, y: y(v), width: bw, height: y(0) - y(v), rx: 6, fill: c, class: 'bar', style: `--d:${.4 + i * .25 + j * .1}s` }, svg);
+            txt(svg, cx + off + bw / 2, y(v) - 16, '+' + de(v, 1) + ' %', { 'text-anchor': 'middle', class: 'val fade', style: `--d:${.9 + i * .25 + j * .1}s` });
+        });
+        txt(svg, cx, H - padB + 44, yr, { 'text-anchor': 'middle', style: 'font-size:22px' });
+    });
+    const lg = el('g', { class: 'fade', style: '--d:1.6s' }, svg);
+    el('rect', { x: W - 520, y: 0, width: 22, height: 22, rx: 4, fill: '#F5B800' }, lg); txt(lg, W - 488, 19, 'Institute (Gemeinschaftsdiagnose)', { style: 'font-size:18px' });
+    el('rect', { x: W - 520, y: 36, width: 22, height: 22, rx: 4, fill: '#C9CCD3' }, lg); txt(lg, W - 488, 55, 'Bundesregierung', { style: 'font-size:18px' });
+})();
+
+/* ============================================================
+   FOLIEN-STEUERUNG (Tastatur, Wischen, Mausrad, Notizen)
+   ============================================================ */
+class SlidePresentation {
+    constructor() {
+        this.slides = [...document.querySelectorAll('.slide')];
+        this.i = 0;
+        this.stage = document.getElementById('deckStage');
+        this.notes = document.getElementById('notesPanel');
+        this.scale(); addEventListener('resize', () => this.scale());
+        this.keys(); this.touch(); this.wheel();
+        const start = parseInt(location.hash.slice(1)) - 1;
+        this.show(isNaN(start) ? 0 : start);
+    }
+    scale() {
+        const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+        this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    }
+    keys() {
+        addEventListener('keydown', e => {
+            if (document.body.classList.contains('editing') && e.target.isContentEditable) return;
+            if (['ArrowRight', 'ArrowDown', ' ', 'PageDown', 'Enter'].includes(e.key)) { e.preventDefault(); this.show(this.i + 1); }
+            if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); this.show(this.i - 1); }
+            if (e.key === 'Home') this.show(0);
+            if (e.key === 'End') this.show(this.slides.length - 1);
+            if (e.key === 'n' || e.key === 'N') this.notes.classList.toggle('show');
+            if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+        });
+    }
+    touch() {
+        let x0 = null, y0 = null;
+        addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+        addEventListener('touchend', e => {
+            if (x0 == null) return;
+            const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) this.show(this.i + (dx < 0 ? 1 : -1));
+            else if (Math.abs(dx) < 10 && Math.abs(dy) < 10 && !document.body.classList.contains('editing')) this.show(this.i + (e.changedTouches[0].clientX > innerWidth / 3 ? 1 : -1));
+            x0 = null;
+        });
+    }
+    wheel() {
+        let lock = false;
+        addEventListener('wheel', e => { if (lock || Math.abs(e.deltaY) < 30) return; lock = true; this.show(this.i + (e.deltaY > 0 ? 1 : -1)); setTimeout(() => lock = false, 700); }, { passive: true });
+    }
+    show(n) {
+        n = Math.max(0, Math.min(n, this.slides.length - 1));
+        this.slides.forEach((s, k) => { s.classList.toggle('active', k === n); s.classList.toggle('visible', k === n); });
+        this.i = n;
+        history.replaceState(null, '', '#' + (n + 1));
+        document.getElementById('progress').style.width = ((n + 1) / this.slides.length * 100) + '%';
+        const s = this.slides[n], note = s.querySelector('.notes');
+        document.getElementById('notesWho').textContent = `FOLIE ${n + 1} / ${this.slides.length} · ${s.dataset.title.toUpperCase()}`;
+        document.getElementById('notesText').textContent = note ? note.textContent : '';
+        this.count(s);
+    }
+    // Zahlen hochzählen (data-count)
+    count(s) {
+        s.querySelectorAll('[data-count]').forEach(c => {
+            const to = parseFloat(c.dataset.count), dec = +c.dataset.dec || 0, pre = c.dataset.prefix || '';
+            const t0 = performance.now() + 400, dur = 1400;
+            const tick = t => {
+                const p = Math.min(1, Math.max(0, (t - t0) / dur)), e = 1 - Math.pow(1 - p, 3);
+                c.textContent = pre + de(to * e, dec);
+                if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        });
+    }
+}
+const deck = new SlidePresentation();
+
+/* ============================================================
+   TEXT BEARBEITEN (E oder Ecke oben links) – speichert lokal
+   ============================================================ */
+const editor = {
+    isActive: false,
+    key: 'aufschwung-claude-edits',
+    items: [...document.querySelectorAll('[data-e]')],
+    load() { try { const s = JSON.parse(localStorage.getItem(this.key) || '{}'); this.items.forEach((e, i) => { if (s[i] != null) e.innerHTML = s[i]; }); } catch (_) {} },
+    save() { try { const s = {}; this.items.forEach((e, i) => s[i] = e.innerHTML); localStorage.setItem(this.key, JSON.stringify(s)); } catch (_) {} },
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        this.items.forEach(e => e.contentEditable = this.isActive);
+        const b = document.getElementById('editToggle');
+        b.classList.toggle('active', this.isActive); b.textContent = this.isActive ? '✓ Fertig' : '✎ Bearbeiten';
+        if (!this.isActive) this.save();
+    }
+};
+editor.load();
+const hot = document.getElementById('editHot'), tog = document.getElementById('editToggle'); let hideT = null;
+tog.addEventListener('click', () => editor.toggleEditMode());
+hot.addEventListener('click', () => editor.toggleEditMode());
+hot.addEventListener('mouseenter', () => { clearTimeout(hideT); tog.classList.add('show'); });
+hot.addEventListener('mouseleave', () => { hideT = setTimeout(() => { if (!editor.isActive) tog.classList.remove('show'); }, 400); });
+tog.addEventListener('mouseenter', () => clearTimeout(hideT));
+tog.addEventListener('mouseleave', () => { hideT = setTimeout(() => { if (!editor.isActive) tog.classList.remove('show'); }, 400); });
+addEventListener('keydown', e => { if ((e.key === 'e' || e.key === 'E') && !e.target.isContentEditable) editor.toggleEditMode(); });
+addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); editor.save(); } });
+</script>
+</body>
+</html>
