@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gran Torino – Dear Thao</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,400&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14161a;--fg:#f2eee6;--acc:#2e7d4f;--red:#c83a2e;--mut:#a8a399;--box:#22252b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 7vw 6vh calc(7vw + 12px);
+  opacity:0;pointer-events:none;transform:translateX(40px);transition:opacity .5s ease,transform .5s ease}
+.slide.active{opacity:1;pointer-events:auto;transform:none}
+.slide.prev{transform:translateX(-40px)}
+body::before{content:"";position:fixed;left:0;top:0;bottom:0;width:12px;background:var(--acc);z-index:2}
+.kicker{color:var(--acc);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:clamp(12px,1.3vw,18px);margin-bottom:1.2vh}
+h1,h2{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.08}
+h1{font-size:clamp(36px,6.4vw,96px);max-width:14ch}
+h2{font-size:clamp(28px,3.8vw,58px);margin-bottom:4vh}
+.sub{color:var(--mut);font-size:clamp(16px,1.9vw,28px);margin-top:3vh}
+.quote{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:clamp(26px,3.6vw,54px);line-height:1.2;max-width:24ch}
+.grid{display:grid;grid-template-columns:1.7fr 1fr;gap:4vw;align-items:start}
+ul{list-style:none}
+li{font-size:clamp(16px,1.75vw,26px);line-height:1.4;padding:1vh 0 1vh 1.4em;position:relative;
+  opacity:0;transform:translateY(10px);transition:.4s ease}
+.active li{opacity:1;transform:none}
+.active li:nth-child(2){transition-delay:.08s}.active li:nth-child(3){transition-delay:.16s}
+.active li:nth-child(4){transition-delay:.24s}.active li:nth-child(5){transition-delay:.32s}
+li::before{content:"";position:absolute;left:0;top:1.05em;width:.6em;height:2px;background:var(--acc)}
+.note{background:var(--box);border-left:4px solid var(--acc);padding:3vh 2vw;font-family:Fraunces,Georgia,serif;font-style:italic;
+  font-size:clamp(18px,1.9vw,30px);line-height:1.3}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:4vw}
+.cols h3{font-size:clamp(18px,2vw,30px);letter-spacing:.08em;margin-bottom:1vh}
+.yes h3{color:var(--red)}.but h3{color:var(--acc)}
+.names{color:var(--acc);font-weight:600;font-size:clamp(16px,1.8vw,26px);margin-top:4vh;letter-spacing:.04em}
+.letter{background:#f2eee6;color:#1d1b18;max-width:62rem;padding:4vh 3.4vw;border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.45);
+  font-family:Fraunces,Georgia,serif;font-size:clamp(15px,1.55vw,23px);line-height:1.5;transform:rotate(-.4deg)}
+.letter p+p{margin-top:1.4vh}
+.letter mark{background:none;color:#1d1b18;box-shadow:inset 0 -.45em 0 rgba(46,125,79,.35)}
+.letter .sign{font-style:italic;margin-top:2.4vh}
+.thanks{color:var(--acc);font-weight:600;font-size:clamp(20px,2.4vw,36px);margin-top:5vh}
+.num{position:fixed;right:3vw;bottom:3vh;color:var(--mut);font-size:14px;z-index:3;font-variant-numeric:tabular-nums}
+.progress{position:fixed;left:0;bottom:0;height:3px;background:var(--acc);transition:width .4s;z-index:3}
+.nav{position:fixed;bottom:2vh;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+.nav button{background:var(--box);color:var(--fg);border:1px solid #333;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer}
+.nav button:hover{border-color:var(--acc)}
+@media (max-width:760px){.grid,.cols{grid-template-columns:1fr;gap:3vh}.slide{overflow-y:auto;justify-content:flex-start;padding-top:8vh}}
+@media (prefers-reduced-motion:reduce){.slide,li{transition:none}}
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="kicker">Gran Torino (2008) · Task 2</div>
+  <h1>Dear Thao …</h1>
+  <p class="sub">A letter from Walt Kowalski, written shortly before his death</p>
+  <p class="names">By Lut, Tobias &amp; Erik</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">The situation</div>
+  <h2>Why does Walt write this letter?</h2>
+  <div class="grid"><ul>
+    <li>Walt is old and very sick – he knows he will die soon</li>
+    <li>The gang has attacked Sue – Walt wants to end the violence</li>
+    <li>He goes to the gang's house alone and without a gun</li>
+    <li>The night before, he writes to Thao – the friend he never expected</li>
+  </ul><div class="note">Our letter: simple words, short sentences – the way Walt talks.</div></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 1 · The American Dream</div>
+  <div class="letter">
+    <p>Dear Thao,</p>
+    <p>when you read this, I will be gone. Don't be sad. I made my decision, and I'm okay with it.</p>
+    <p>I always thought I knew what the American Dream was: work hard, buy a house, keep your lawn clean, drive an American car. I built cars at Ford for fifty years. I had a house, a wife and two sons. I thought that was success.</p>
+    <p>But in the end I sat alone on my porch with a beer and my dog. My own sons didn't really know me. <mark>I got the house – but I missed the dream.</mark></p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 2 · Prejudice and change</div>
+  <div class="letter">
+    <p>I have to be honest with you, kid. When your family moved in next door, I didn't like it. I called you names I'm not proud of. After Korea, I hated everybody who looked like the enemy.</p>
+    <p>Then you tried to steal my car, and your mother and sister brought you over to work for me. Sue talked to me like nobody else did. Your family invited me in and filled me up with food.</p>
+    <p><mark>I have more in common with you than with my own family.</mark> It took me way too long to see that.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 3 · Opportunities and challenges</div>
+  <div class="letter">
+    <p>Life won't be easy for you. You live in a rough neighbourhood. You have no father to show you the way. Some people will judge you by your face before you say a word. And guys like Spider will try to pull you down.</p>
+    <p>But you have a lot going for you, too. You are smart and you work hard. You learned to fix things. You've got a real job now, and the guys at the construction site respect you. <mark>And you have a family that sticks together.</mark> That's worth more than money.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 4 · Hopes for Thao's future</div>
+  <div class="letter">
+    <p>So here's what I want: keep working. Go to school if you can – Sue did, and look at her. Stay away from the gangs. Take care of your mother and your sister. And ask Youa out properly.</p>
+    <p>I'm leaving you my Gran Torino. Don't chop the top, don't paint flames on it, keep it clean. <mark>It's not just a car – it's a chance.</mark> Drive it into a better life than mine.</p>
+    <p>The American Dream isn't free, and it isn't the same for everybody. But I believe you can make it – your way.</p>
+    <p class="sign">Your friend,<br>Walt Kowalski</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Our thoughts</div>
+  <h2>What the letter shows</h2>
+  <div class="grid"><ul>
+    <li>Walt's idea of success changes: from owning things to caring for people</li>
+    <li>He admits his racism – and shows that people can change</li>
+    <li>Thao has real problems, but also real chances</li>
+    <li>The car is a symbol: Walt passes his dream on to Thao</li>
+  </ul><div class="note">Walt gives Thao what nobody gave him: trust in his future.</div></div>
+</section>
+
+<section class="slide">
+  <p class="quote">“It's not just a car – it's a chance.”</p>
+  <p class="thanks">Thank you! Any questions?</p>
+</section>
+
+<div class="nav"><button id="b" aria-label="Previous">‹</button><button id="f" aria-label="Next">›</button></div>
+<div class="num" id="num"></div>
+<div class="progress" id="bar"></div>
+
+<script>
+const s=[...document.querySelectorAll('.slide')];let i=0;
+function go(n){i=Math.max(0,Math.min(s.length-1,n));
+  s.forEach((el,k)=>{el.classList.toggle('active',k===i);el.classList.toggle('prev',k<i)});
+  num.textContent=String(i+1).padStart(2,'0')+' / '+String(s.length).padStart(2,'0');
+  bar.style.width=((i+1)/s.length*100)+'%';history.replaceState(null,'','#'+(i+1));}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' ','PageDown','Enter'].includes(e.key)){e.preventDefault();go(i+1)}
+  if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(i-1)}
+  if(e.key==='Home')go(0);if(e.key==='End')go(s.length-1);
+  if(e.key==='f')document.documentElement.requestFullscreen?.();});
+b.onclick=()=>go(i-1);f.onclick=()=>go(i+1);
+let x0=null;addEventListener('touchstart',e=>x0=e.touches[0].clientX);
+addEventListener('touchend',e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)go(i+(d<0?1:-1));x0=null});
+go((parseInt(location.hash.slice(1))||1)-1);
+</script>
+</body>
+</html>
