@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  Deutsch Q1 · Lut & Erik
+  Thema: Ein Drama, das aus dem Rahmen fällt?
+         Kleists „Der zerbrochne Krug“ im Spiegel klassischer Dramentheorien
+  Stand: 2026-11-11 17:45 (Claude) · Fassung MIT der Folie zur Symbolik des Krugs (22 Folien)
+  Bedienung: Pfeiltasten / Leertaste / Klicker / Wischen
+             N = Sprechernotizen · F = Vollbild · E = Text bearbeiten
+  Ein Tastendruck deckt erst die nächsten Inhalte der Folie auf,
+  danach geht es zur nächsten Folie.
+  ============================================================
+-->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Der Krug">
+<link rel="manifest" href="../manifest.webmanifest">
+<title>Der zerbrochne Krug · Deutsch Q1</title>
+
+<!-- Schriften: Gloock (Titel) · Albert Sans (Text) · Instrument Serif (Zitate) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Gloock&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN-SYSTEM: DELFTER BLAU
+   Idee: Das Stück spielt in Holland, es geht um einen Krug.
+   Also sieht alles aus wie Delfter Porzellan: cremeweiße Glasur,
+   Kobaltblau, feine Haarrisse. Jede Folie hat einen Rahmen.
+   Farbregel für den ganzen Vortrag:
+     BLAU       = passt in den klassischen Rahmen
+     TERRAKOTTA = fällt aus dem Rahmen (Bruch)
+     GOLD       = Merkhilfe für die Klausur
+   ============================================================ */
+:root {
+    --porz:   #F2ECDF;   /* Porzellan, Hintergrund */
+    --glasur: #FBF8F0;   /* helle Glasur, Karten */
+    --kobalt: #1B3FA0;   /* Delfter Blau */
+    --tief:   #0F1F5C;   /* dunkles Kobalt */
+    --ink:    #16224F;   /* Textfarbe */
+    --mute:   #56608A;
+    --ton:    #C5512B;   /* gebrannter Ton = Bruch */
+    --gold:   #B4832A;
+    --line:   rgba(27,63,160,.22);
+
+    --ff-d: 'Gloock', Georgia, serif;
+    --ff-b: 'Albert Sans', 'Segoe UI', sans-serif;
+    --ff-q: 'Instrument Serif', Georgia, serif;
+
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --stage-bg: #0A1238;
+    --slide-bg: #F2ECDF;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ============================================================
+   VIEWPORT-BASE (feste 16:9-Bühne, vollständig eingebettet)
+   ============================================================ */
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--slide-bg, #fff); }
+.slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: block; visibility: hidden; opacity: 0; pointer-events: none; background: var(--slide-bg, #fff); }
+.slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+.deck-controls { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1000; }
+@media print {
+    html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+    .deck-viewport { position: static; overflow: visible; background: #fff; }
+    .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+    .slide { position: relative; display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px; height: 1080px; break-after: page; page-break-after: always; }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .deck-controls { display: none !important; }
+    .s { opacity: 1 !important; transform: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* ============================================================
+   FOLIEN-GRUND: Porzellan mit Haarrissen und Rahmen
+   ============================================================ */
+.slide {
+    padding: 92px 124px 104px;
+    font-family: var(--ff-b); font-size: 34px; line-height: 1.34; color: var(--ink);
+    background-color: var(--porz);
+    background-image:
+        radial-gradient(1200px 700px at 78% 8%, rgba(255,255,255,.75), transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cg fill='none' stroke='%231B3FA0' stroke-opacity='.075' stroke-width='1.4'%3E%3Cpath d='M0 118 L92 150 L146 92 L262 132 L330 58 L424 112 L640 74'/%3E%3Cpath d='M146 92 L170 0'/%3E%3Cpath d='M262 132 L238 260 L120 300 L60 420 L0 440'/%3E%3Cpath d='M238 260 L372 318 L470 270 L424 112'/%3E%3Cpath d='M372 318 L410 452 L300 520 L330 640'/%3E%3Cpath d='M470 270 L590 330 L640 300'/%3E%3Cpath d='M410 452 L540 480 L590 330'/%3E%3Cpath d='M540 480 L600 640'/%3E%3Cpath d='M120 300 L180 470 L300 520'/%3E%3Cpath d='M180 470 L110 640'/%3E%3C/g%3E%3C/svg%3E");
+}
+/* Der Rahmen jeder Folie */
+.slide::before {
+    content: ''; position: absolute; inset: 30px; border: 3px solid var(--kobalt);
+    outline: 1.5px solid var(--kobalt); outline-offset: -13px; pointer-events: none; opacity: .9;
+}
+/* Eckblüten wie auf Delfter Fliesen */
+.slide::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    --fl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='36' fill='%23F2ECDF'/%3E%3Cg fill='%231B3FA0'%3E%3Cellipse cx='40' cy='18' rx='8' ry='14'/%3E%3Cellipse cx='40' cy='62' rx='8' ry='14'/%3E%3Cellipse cx='18' cy='40' rx='14' ry='8'/%3E%3Cellipse cx='62' cy='40' rx='14' ry='8'/%3E%3C/g%3E%3Ccircle cx='40' cy='40' r='7' fill='%23F2ECDF' stroke='%231B3FA0' stroke-width='3'/%3E%3C/svg%3E");
+    background: var(--fl) 2px 2px / 60px no-repeat, var(--fl) calc(100% - 2px) 2px / 60px no-repeat,
+                var(--fl) 2px calc(100% - 2px) / 60px no-repeat, var(--fl) calc(100% - 2px) calc(100% - 2px) / 60px no-repeat;
+}
+
+/* Dunkle Kapitel-Folien */
+.slide.dark { background-color: var(--tief); color: var(--glasur);
+    background-image: radial-gradient(1100px 700px at 20% 10%, rgba(60,100,220,.45), transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cg fill='none' stroke='%23FBF8F0' stroke-opacity='.07' stroke-width='1.4'%3E%3Cpath d='M0 118 L92 150 L146 92 L262 132 L330 58 L424 112 L640 74'/%3E%3Cpath d='M262 132 L238 260 L120 300 L60 420 L0 440'/%3E%3Cpath d='M238 260 L372 318 L470 270 L424 112'/%3E%3Cpath d='M372 318 L410 452 L300 520 L330 640'/%3E%3Cpath d='M410 452 L540 480 L590 330 L640 300'/%3E%3Cpath d='M120 300 L180 470 L300 520'/%3E%3C/g%3E%3C/svg%3E"); }
+.slide.dark::before { border-color: var(--glasur); outline-color: var(--glasur); opacity: .55; }
+.slide.dark::after { --fl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='36' fill='%230F1F5C'/%3E%3Cg fill='%23FBF8F0'%3E%3Cellipse cx='40' cy='18' rx='8' ry='14'/%3E%3Cellipse cx='40' cy='62' rx='8' ry='14'/%3E%3Cellipse cx='18' cy='40' rx='14' ry='8'/%3E%3Cellipse cx='62' cy='40' rx='14' ry='8'/%3E%3C/g%3E%3Ccircle cx='40' cy='40' r='7' fill='%230F1F5C' stroke='%23FBF8F0' stroke-width='3'/%3E%3C/svg%3E"); }
+
+/* ============================================================
+   TYPOGRAFIE UND BAUSTEINE
+   ============================================================ */
+.kicker { font-weight: 700; font-size: 24px; letter-spacing: .17em; text-transform: uppercase; color: var(--kobalt); display: flex; align-items: center; gap: 18px; height: 44px; }
+.kicker::before { content: ''; width: 54px; height: 4px; background: currentColor; }
+.dark .kicker { color: #9DB4FF; }
+h2 { font-family: var(--ff-d); font-weight: 400; font-size: 78px; line-height: 1.06; letter-spacing: -.012em; margin-top: 14px; }
+.ton { color: var(--ton); } .kob { color: var(--kobalt); } .gold { color: var(--gold); }
+.q { font-family: var(--ff-q); font-style: italic; }
+.small { font-size: 26px; color: var(--mute); }
+.dark .small { color: #B9C6F5; }
+.card { background: var(--glasur); border: 2.5px solid var(--kobalt); border-radius: 18px; box-shadow: 8px 8px 0 rgba(27,63,160,.16); }
+.card.bruch { border-color: var(--ton); box-shadow: 8px 8px 0 rgba(197,81,43,.2); }
+.card.merk { border-color: var(--gold); box-shadow: 8px 8px 0 rgba(180,131,42,.22); }
+.foot { position: absolute; left: 124px; right: 124px; bottom: 54px; display: flex; justify-content: space-between; font-size: 20px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.dark .foot { color: #9DB4FF; }
+
+/* Einblenden beim Öffnen der Folie */
+@keyframes rise { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.slide.active .in { animation: rise .9s var(--ease) both; animation-delay: var(--d, 0s); }
+.slide.active .fi { animation: fadeIn .9s ease both; animation-delay: var(--d, 0s); }
+
+/* Schrittweise Aufdecken (ein Tastendruck = ein Schritt) */
+.s { opacity: 0; transform: translateY(26px); transition: opacity .6s var(--ease), transform .75s var(--ease); transition-delay: var(--d, 0s); }
+.s.on { opacity: 1; transform: none; }
+svg .s { transform: none; }
+
+/* Linien, die sich zeichnen (pathLength = 1) */
+.draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.slide.active .draw.auto { animation: drawL 1.8s var(--ease) forwards; animation-delay: var(--d, .3s); }
+.draw.s { opacity: 1; transition: stroke-dashoffset 1.2s var(--ease); transition-delay: var(--d, 0s); }
+.draw.s.on { stroke-dashoffset: 0; }
+.draw.s.mk { opacity: 0; transition: stroke-dashoffset 1.2s var(--ease), opacity .2s ease; transition-delay: var(--d, 0s); }
+.draw.s.mk.on { opacity: 1; }
+@keyframes drawL { to { stroke-dashoffset: 0; } }
+
+/* Urteils-Stempel auf den Prüf-Folien */
+.stamp { position: absolute; right: 136px; bottom: 112px; padding: 16px 34px 18px; border: 6px solid currentColor; border-radius: 14px; transform: rotate(-5deg) scale(2.4); opacity: 0;
+    text-align: center; background: rgba(251,248,240,.88); transition: transform .45s cubic-bezier(.2,1.4,.4,1), opacity .25s ease; z-index: 5; }
+.stamp.on { transform: rotate(-5deg) scale(1); opacity: 1; }
+.stamp b { display: block; font-family: var(--ff-d); font-weight: 400; font-size: 78px; line-height: 1; letter-spacing: .04em; }
+.stamp span { display: block; font-size: 25px; font-weight: 700; letter-spacing: .06em; margin-top: 8px; }
+.stamp.pass { color: var(--kobalt); } .stamp.break { color: var(--ton); }
+.stamp.half { color: var(--tief); border-image: linear-gradient(100deg, var(--kobalt) 50%, var(--ton) 50%) 1; border-radius: 0; }
+.stamp.half b { background: linear-gradient(100deg, var(--kobalt) 50%, var(--ton) 50%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Punktestand oben rechts (sechs Prüfpunkte) */
+.score { position: absolute; right: 124px; top: 92px; display: flex; gap: 10px; }
+.score i { width: 46px; height: 46px; border: 2.5px solid var(--kobalt); border-radius: 9px; display: grid; place-items: center; font-style: normal; font-weight: 700; font-size: 24px; color: var(--kobalt); background: var(--glasur); }
+.score i.pass { background: var(--kobalt); color: #fff; }
+.score i.break { background: var(--ton); border-color: var(--ton); color: #fff; }
+.score i.half { background: linear-gradient(100deg, var(--kobalt) 50%, var(--ton) 50%); color: #fff; border-color: var(--tief); }
+.score i.now { box-shadow: 0 0 0 5px rgba(27,63,160,.2); transform: scale(1.12); }
+.vote { position: absolute; left: 124px; bottom: 122px; font-size: 27px; font-weight: 600; color: var(--mute); display: flex; align-items: center; gap: 14px; }
+.vote::before { content: '?'; width: 46px; height: 46px; border-radius: 50%; background: var(--kobalt); color: #fff; display: grid; place-items: center; font-family: var(--ff-d); font-size: 30px; }
+
+/* ============================================================
+   FOLIE 1: TITEL
+   ============================================================ */
+.s-title h1 { font-family: var(--ff-d); font-weight: 400; font-size: 134px; line-height: .99; letter-spacing: -.02em; width: 1080px; margin-top: 34px; }
+.s-title .sub { font-size: 42px; line-height: 1.25; width: 960px; margin-top: 74px; }
+.s-title .by { margin-top: 44px; font-weight: 700; font-size: 28px; letter-spacing: .16em; text-transform: uppercase; color: var(--kobalt); }
+.s-title .t-top { margin-top: 50px; }
+.fallword { display: inline-block; transform-origin: 10% 90%; }
+.slide.active .fallword { animation: wordFall 1.3s cubic-bezier(.5,0,.8,.5) 2.6s both; }
+@keyframes wordFall { 0% { transform: none; } 70% { transform: translateY(26px) rotate(9deg); } 82% { transform: translateY(18px) rotate(6deg); } 100% { transform: translateY(24px) rotate(8deg); } }
+.t-frame { position: absolute; z-index: 1; left: 1290px; top: 128px; width: 460px; height: 530px; border: 24px solid var(--kobalt); background: var(--glasur);
+    box-shadow: inset 0 0 0 5px var(--gold), inset 0 0 0 12px var(--glasur), inset 0 0 60px rgba(27,63,160,.18), 14px 16px 0 rgba(15,31,92,.18); }
+.t-frame::before { content: ''; position: absolute; left: 50%; top: -58px; width: 3px; height: 36px; background: var(--tief); }
+.t-frame::after { content: ''; position: absolute; left: 50%; top: -68px; width: 14px; height: 14px; margin-left: -6px; border-radius: 50%; background: var(--tief); }
+.t-jug { position: absolute; left: 1392px; top: 222px; width: 270px; height: 342px; transform-origin: 50% 90%; z-index: 4; overflow: visible; }
+.slide.active .t-jug { animation: jugFall 2.6s 1.1s both; }
+@keyframes jugFall {
+    0%, 8% { transform: rotate(0); animation-timing-function: ease-in-out; }
+    18% { transform: rotate(-5deg); } 30% { transform: rotate(6deg); } 42% { transform: rotate(-9deg); animation-timing-function: cubic-bezier(.6,0,1,.7); }
+    66% { transform: translate(-54px, 392px) rotate(-31deg); animation-timing-function: ease-out; }
+    76% { transform: translate(-58px, 360px) rotate(-24deg); animation-timing-function: ease-in; }
+    86%, 100% { transform: translate(-60px, 384px) rotate(-27deg); }
+}
+.t-jug .k-crack { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.slide.active .t-jug .k-crack { animation: drawL .5s ease-out 2.85s forwards; }
+.t-shard { position: absolute; z-index: 2; opacity: 0; }
+.slide.active .t-shard { animation: shard .9s var(--ease) 2.85s both; }
+@keyframes shard { from { opacity: 0; transform: translate(0,0) rotate(0); } to { opacity: 1; transform: translate(var(--x), var(--y)) rotate(var(--r)); } }
+.t-plaque { position: absolute; z-index: 2; left: 1290px; top: 560px; width: 460px; text-align: center; font-size: 22px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--mute); }
+
+/* ============================================================
+   FOLIE 2: LEITFRAGE
+   ============================================================ */
+.lead { font-family: var(--ff-d); font-size: 79px; line-height: 1.1; margin-top: 44px; width: 1672px; }
+.road { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 96px; }
+.road .card { padding: 34px 34px 40px; }
+.road b { display: block; font-family: var(--ff-d); font-weight: 400; font-size: 84px; line-height: 1; color: var(--kobalt); }
+.road strong { display: block; font-size: 40px; margin-top: 16px; }
+.road span { display: block; font-size: 30px; color: var(--mute); margin-top: 8px; line-height: 1.28; }
+.road .merk b { color: var(--gold); }
+
+/* ============================================================
+   FOLIE 3: FIGUREN
+   ============================================================ */
+.cast { position: relative; width: 1672px; height: 700px; margin-top: 44px; }
+.cast svg { position: absolute; inset: 0; width: 1672px; height: 700px; overflow: visible; }
+.cast .p { position: absolute; padding: 20px 24px 22px 108px; min-height: 160px; }
+.cast .p i { position: absolute; left: 22px; top: 24px; width: 68px; height: 68px; border-radius: 50%; background: var(--kobalt); color: #fff; display: grid; place-items: center; font-style: normal; font-family: var(--ff-d); font-size: 40px; }
+.cast .p.bruch i { background: var(--ton); }
+.cast .p b { display: block; font-family: var(--ff-d); font-weight: 400; font-size: 38px; line-height: 1.1; }
+.cast .p span { display: block; font-size: 26px; line-height: 1.26; margin-top: 6px; color: var(--mute); }
+.cast text { font-family: var(--ff-b); font-size: 25px; font-weight: 700; fill: var(--kobalt); }
+.names { position: absolute; left: 0; bottom: 0; width: 100%; font-size: 28px; text-align: center; }
+
+/* ============================================================
+   FOLIE 4: NACHT UND MORGEN
+   ============================================================ */
+.tl { display: grid; grid-template-columns: 700px 96px 1fr; margin-top: 42px; height: 660px; }
+.tl .night { background: var(--tief); color: var(--glasur); border-radius: 18px 0 0 18px; padding: 30px 36px; }
+.tl .day { background: var(--glasur); border: 2.5px solid var(--kobalt); border-left: 0; border-radius: 0 18px 18px 0; padding: 30px 36px; }
+.tl h3 { font-size: 23px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+.tl .night h3 { color: #9DB4FF; } .tl .day h3 { color: var(--kobalt); }
+.tl h4 { font-family: var(--ff-d); font-weight: 400; font-size: 44px; margin-bottom: 18px; }
+.tl li { list-style: none; display: grid; grid-template-columns: 50px 1fr; gap: 18px; font-size: 31.5px; line-height: 1.28; margin-top: 24px; }
+.tl li b { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-size: 24px; background: var(--ton); color: #fff; }
+.tl .day li b { background: var(--kobalt); }
+.curtain { position: relative; background: repeating-linear-gradient(90deg, #9E2F1F 0 12px, #C5512B 12px 24px); box-shadow: inset 0 0 30px rgba(0,0,0,.35); }
+.curtain span { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) rotate(-90deg); white-space: nowrap; font-weight: 700; font-size: 26px; letter-spacing: .3em; color: #fff; }
+
+/* ============================================================
+   FOLIE 5: KRUG ALS SYMBOL
+   ============================================================ */
+.sym { display: grid; grid-template-columns: 430px 1fr; gap: 70px; margin-top: 40px; align-items: center; }
+.sym .krug { width: 400px; height: 506px; overflow: visible; }
+.slide.active .sym .k-crack { animation: drawL 1.4s ease-out .7s forwards; }
+.sym .k-crack { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.sym .card { padding: 22px 30px 24px; margin-bottom: 22px; display: grid; grid-template-columns: 84px 1fr; gap: 22px; align-items: center; }
+.sym .card b { font-family: var(--ff-d); font-weight: 400; font-size: 66px; line-height: 1; color: var(--ton); text-align: center; }
+.sym .card strong { font-size: 35px; display: block; }
+.sym .card span { font-size: 27px; color: var(--mute); display: block; margin-top: 2px; line-height: 1.28; }
+.sym .card span .q { display: inline; font-size: 31px; color: var(--ink); }
+.sym .merk-line { font-family: var(--ff-q); font-style: italic; font-size: 46px; color: var(--ton); margin-top: 8px; }
+
+/* ============================================================
+   FOLIE 6 + 11: KAPITEL
+   ============================================================ */
+.chap h2 { font-size: 150px; margin-top: 26px; }
+.chap .lede { font-size: 44px; margin-top: 16px; width: 1400px; line-height: 1.25; }
+.era { position: relative; height: 420px; margin-top: 64px; }
+.era svg { position: absolute; inset: 0; width: 1672px; height: 330px; overflow: visible; }
+.era .n { position: absolute; top: 96px; width: 330px; margin-left: -165px; text-align: center; }
+.era .n b { display: block; font-family: var(--ff-d); font-weight: 400; font-size: 40px; }
+.era .n em { display: block; font-style: normal; font-size: 24px; font-weight: 700; letter-spacing: .1em; color: #9DB4FF; }
+.era .n span { display: block; font-size: 25px; line-height: 1.25; margin-top: 6px; color: #D7DEFA; }
+.era .kleist { top: 268px; width: 300px; margin-left: -150px; padding: 14px 16px 16px; background: var(--ton); border-radius: 14px; transform: rotate(4deg); box-shadow: 8px 8px 0 rgba(0,0,0,.3); }
+.era .kleist em, .era .kleist span { color: #fff; }
+.checks { display: grid; grid-template-columns: repeat(6, 1fr); gap: 22px; margin-top: 70px; }
+.checks div { border: 2.5px solid rgba(251,248,240,.7); border-radius: 16px; padding: 22px 22px 26px; }
+.checks i { display: block; width: 52px; height: 52px; border: 3px solid var(--glasur); border-radius: 10px; margin-bottom: 18px; }
+.checks b { display: block; font-size: 22px; letter-spacing: .14em; color: #9DB4FF; }
+.checks strong { display: block; font-family: var(--ff-d); font-weight: 400; font-size: 36px; line-height: 1.12; margin-top: 4px; }
+.thumbs { margin-top: 54px; font-size: 34px; }
+
+/* ============================================================
+   FOLIE 7 + 12: DREI EINHEITEN
+   ============================================================ */
+.tri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; margin-top: 44px; }
+.tri .card { padding: 30px 34px 32px; }
+.tri svg { width: 210px; height: 130px; display: block; overflow: visible; }
+.tri b { display: block; font-size: 24px; letter-spacing: .2em; color: var(--kobalt); margin-top: 16px; }
+.tri strong { display: block; font-family: var(--ff-d); font-weight: 400; font-size: 46px; line-height: 1.1; margin-top: 4px; }
+.tri span { display: block; font-size: 28px; color: var(--mute); margin-top: 10px; line-height: 1.28; }
+.slide.active .sun { animation: sun 3.2s ease-in-out .5s both; transform-origin: 105px 118px; }
+@keyframes sun { from { transform: rotate(-78deg); } to { transform: rotate(78deg); } }
+.kath { margin-top: 34px; padding: 24px 34px 26px; display: grid; grid-template-columns: 300px 1fr; gap: 30px; align-items: center; }
+.kath b { font-family: var(--ff-d); font-weight: 400; font-size: 50px; color: var(--gold); }
+.kath span { font-size: 30px; line-height: 1.3; }
+.fn { margin-top: 20px; font-size: 24px; color: var(--mute); }
+
+/* ============================================================
+   FOLIE 8: PYRAMIDE
+   ============================================================ */
+.pyr { position: relative; width: 1672px; height: 640px; margin-top: 30px; }
+.pyr svg { position: absolute; inset: 0; width: 1672px; height: 640px; overflow: visible; }
+.pyr .l { position: absolute; }
+.pyr .l b { display: block; font-family: var(--ff-d); font-weight: 400; font-size: 38px; line-height: 1.1; }
+.pyr .l b i { font-style: normal; color: var(--kobalt); margin-right: 10px; }
+.pyr .l span { display: block; font-size: 26px; color: var(--mute); line-height: 1.25; margin-top: 4px; }
+.pyr text { font-family: var(--ff-b); font-size: 24px; font-weight: 700; fill: var(--ton); }
+.ziel { position: absolute; left: 124px; right: 124px; bottom: 106px; font-size: 28px; padding: 16px 28px 18px; }
+
+/* ============================================================
+   FOLIE 9: STÄNDEKLAUSEL
+   ============================================================ */
+.stand { display: grid; grid-template-columns: 720px 1fr; gap: 60px; margin-top: 30px; }
+.stand svg { width: 720px; height: 680px; overflow: visible; }
+.stand svg text { font-family: var(--ff-b); font-weight: 700; font-size: 26px; letter-spacing: .12em; }
+.fig { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 1.1s cubic-bezier(.55,0,1,.6); }
+.fig.king.on { transform: translate(128px, 420px) rotate(96deg); }
+.fig.farmer { transition: transform .7s cubic-bezier(.4,0,.6,1) .5s; }
+.fig.farmer.on { transform: translate(96px, 80px) rotate(8deg); }
+.stand .card { padding: 24px 32px 26px; margin-bottom: 24px; }
+.stand .card b { font-size: 23px; letter-spacing: .2em; color: var(--kobalt); display: block; }
+.stand .card strong { font-family: var(--ff-d); font-weight: 400; font-size: 44px; display: block; line-height: 1.1; }
+.stand .card span { font-size: 28px; color: var(--mute); display: block; margin-top: 6px; }
+.stand .fall { font-size: 30px; margin-top: 4px; line-height: 1.32; }
+.stand .fall b { color: var(--ton); }
+
+/* ============================================================
+   FOLIE 10 + 17: FORM UND VERS
+   ============================================================ */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 40px; }
+.two .card { padding: 30px 36px 34px; }
+.two h3 { font-family: var(--ff-d); font-weight: 400; font-size: 48px; line-height: 1.1; }
+.two .lbl { font-size: 23px; letter-spacing: .2em; font-weight: 700; color: var(--kobalt); text-transform: uppercase; }
+.two ul { list-style: none; margin-top: 18px; }
+.two li { font-size: 30px; padding-left: 44px; position: relative; margin-top: 12px; line-height: 1.28; }
+.two li::before { content: ''; position: absolute; left: 4px; top: 12px; width: 20px; height: 20px; border-radius: 50%; background: var(--kobalt); }
+.two li.x::before { background: var(--ton); border-radius: 3px; transform: rotate(45deg); }
+.chain { display: flex; align-items: center; margin-top: 22px; }
+.chain i { width: 92px; height: 60px; border: 6px solid var(--kobalt); border-radius: 30px; margin-right: -18px; }
+.slide.active .chain i { animation: rise .6s var(--ease) both; animation-delay: calc(.4s + var(--k) * .14s); }
+.verse { display: flex; margin-top: 20px; }
+.verse i { font-style: normal; flex: 0 0 auto; min-width: 58px; padding: 0 9px; height: 70px; display: grid; place-items: center; font-size: 27px; border: 2.5px solid var(--kobalt); margin-right: -2.5px; background: var(--glasur); }
+.verse i.h { background: var(--kobalt); color: #fff; font-weight: 700; }
+.slide.active .verse.beat i.h { animation: beat .5s ease both; animation-delay: calc(.9s + var(--k) * .28s); }
+@keyframes beat { 0% { transform: translateY(0); } 40% { transform: translateY(-18px); } 100% { transform: translateY(0); } }
+.cap { font-size: 24px; color: var(--mute); margin-top: 14px; }
+.open { margin-top: 30px; font-size: 28px; padding: 16px 28px 18px; }
+
+.sp { position: relative; height: 470px; margin-top: 8px; }
+.sp .verse { position: absolute; left: 0; top: 0; }
+.sp .verse .seg { display: flex; position: relative; transition: transform .9s var(--ease); }
+.sp .verse .seg u { position: absolute; left: 0; top: -34px; text-decoration: none; font-size: 22px; font-weight: 700; letter-spacing: .14em; color: var(--ton); opacity: 0; transition: opacity .5s ease .5s; white-space: nowrap; }
+.sp.on .seg u { opacity: 1; }
+.sp.on .seg i { border-color: var(--ton); } .sp.on .seg i.h { background: var(--ton); }
+.sp.on .seg:nth-child(1) { transform: translate(0, 20px) rotate(-1.5deg); }
+.sp.on .seg:nth-child(2) { transform: translate(34px, 118px) rotate(2deg); }
+.sp.on .seg:nth-child(3) { transform: translate(68px, 216px) rotate(-2deg); }
+
+/* ============================================================
+   FOLIE 13: AUFBAU
+   ============================================================ */
+.acts { display: flex; align-items: center; gap: 14px; margin-top: 30px; height: 80px; }
+.acts .a { position: relative; display: flex; gap: 10px; }
+.acts .a i { width: 86px; height: 70px; border: 2.5px solid var(--kobalt); border-radius: 10px; display: grid; place-items: center; font-style: normal; font-family: var(--ff-d); font-size: 36px; color: var(--kobalt); background: var(--glasur); }
+.acts .a::after { content: ''; position: absolute; left: -12px; right: -12px; top: 50%; height: 7px; margin-top: -3px; background: var(--ton); border-radius: 4px; transform: scaleX(0) rotate(-4deg); transform-origin: 0 50%; transition: transform .7s var(--ease) .1s; }
+.acts .a.on::after { transform: scaleX(1) rotate(-4deg); }
+.acts .arrow { font-size: 50px; color: var(--ton); margin: 0 14px; }
+.acts .one { padding: 12px 28px 14px; font-size: 34px; font-weight: 700; color: var(--ton); border: 3.5px solid var(--ton); border-radius: 12px; background: var(--glasur); }
+.curve { width: 1672px; height: 470px; margin-top: 14px; overflow: visible; display: block; }
+.curve text { font-family: var(--ff-b); font-size: 25px; font-weight: 700; paint-order: stroke; stroke: var(--porz); stroke-width: 9px; stroke-linejoin: round; }
+.fact { position: absolute; left: 124px; bottom: 118px; width: 1040px; font-size: 27px; color: var(--mute); }
+
+/* ============================================================
+   FOLIE 14: ANALYTISCH
+   ============================================================ */
+.ana { width: 1672px; height: 560px; margin-top: 24px; overflow: visible; display: block; }
+.ana text { font-family: var(--ff-b); font-size: 26px; font-weight: 600; fill: var(--ink); paint-order: stroke; stroke: var(--porz); stroke-width: 9px; stroke-linejoin: round; }
+.ana text.plain { stroke: none; }
+.ana .cap2 { font-size: 24px; letter-spacing: .16em; font-weight: 700; }
+.claim { position: absolute; left: 124px; bottom: 112px; width: 1060px; font-size: 31px; line-height: 1.3; }
+
+/* ============================================================
+   FOLIE 15: ÖDIPUS
+   ============================================================ */
+.vs { display: grid; grid-template-columns: 250px 1fr 1fr; margin-top: 34px; border: 2.5px solid var(--kobalt); border-radius: 18px; overflow: hidden; background: var(--glasur); box-shadow: 8px 8px 0 rgba(27,63,160,.16); }
+.vs > div { padding: 15px 28px 16px; font-size: 30px; border-top: 1.5px solid var(--line); line-height: 1.25; }
+.vs .h { border-top: 0; padding-top: 20px; padding-bottom: 18px; }
+.vs .h b { font-family: var(--ff-d); font-weight: 400; font-size: 46px; display: block; line-height: 1.1; }
+.vs .h span { font-size: 24px; color: var(--mute); letter-spacing: .06em; }
+.vs .k { font-size: 23px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); display: flex; align-items: center; }
+.vs .o { background: rgba(27,63,160,.07); }
+.vs .d { color: var(--ton); font-weight: 700; } .vs .o.d { color: var(--kobalt); }
+.flip { margin-top: 32px; font-family: var(--ff-d); font-size: 46px; line-height: 1.15; }
+
+/* ============================================================
+   FOLIE 16 + 18: PASST / PASST NICHT
+   ============================================================ */
+.pro { display: grid; grid-template-columns: 1fr 250px 1fr; gap: 30px; margin-top: 40px; align-items: stretch; }
+.pro .card { padding: 26px 32px 30px; }
+.pro .lbl { font-size: 23px; letter-spacing: .2em; font-weight: 700; text-transform: uppercase; color: var(--kobalt); }
+.pro .bruch .lbl { color: var(--ton); }
+.pro p { font-size: 31px; margin-top: 14px; line-height: 1.3; }
+.pro p b { font-weight: 700; }
+.pro.big p { font-size: 36px; margin-top: 20px; }
+.pro.big .card { padding: 34px 40px 40px; }
+.pro.big + .under { font-size: 40px; margin-top: 44px; }
+.mask { width: 250px; height: 330px; align-self: center; overflow: visible; }
+.mask .sm, .mask .fr { transition: opacity .7s ease; }
+.mask .fr { opacity: 0; } .mask.on .fr { opacity: 1; } .mask.on .sm { opacity: 0; }
+.mask .face { transition: fill .7s ease; fill: var(--kobalt); }
+.mask.on .face { fill: var(--ton); }
+.under { margin-top: 30px; width: 1080px; font-size: 30px; line-height: 1.32; }
+
+/* ============================================================
+   FOLIE 19: ERGEBNIS
+   ============================================================ */
+.res { display: grid; grid-template-columns: 640px 1fr; gap: 70px; margin-top: 40px; }
+.res .rows div { display: grid; grid-template-columns: 62px 1fr auto; align-items: center; gap: 20px; padding: 13px 0; border-bottom: 1.5px solid var(--line); font-size: 31px; }
+.res .rows i { width: 54px; height: 54px; border-radius: 10px; display: grid; place-items: center; font-style: normal; color: #fff; font-weight: 700; font-size: 27px; }
+.res .rows .pass i { background: var(--kobalt); } .res .rows .break i { background: var(--ton); }
+.res .rows .half i { background: linear-gradient(100deg, var(--kobalt) 50%, var(--ton) 50%); }
+.res .rows em { font-style: normal; font-size: 22px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.res .big { font-family: var(--ff-d); font-size: 84px; line-height: 1.04; letter-spacing: -.012em; }
+.res ol { list-style: none; margin-top: 30px; }
+.res li { font-size: 30px; line-height: 1.3; padding-left: 58px; position: relative; margin-top: 16px; }
+.res li b.nr { position: absolute; left: 0; top: 0; font-family: var(--ff-d); font-weight: 400; font-size: 44px; line-height: 1; }
+
+/* ============================================================
+   FOLIE 20: QUIZ
+   ============================================================ */
+.quiz { margin-top: 34px; }
+.quiz .r { display: grid; grid-template-columns: 70px 1fr 600px; gap: 24px; align-items: center; padding: 15px 0; border-bottom: 1.5px solid var(--line); min-height: 116px; }
+.quiz .r > b { font-family: var(--ff-d); font-weight: 400; font-size: 58px; color: var(--kobalt); line-height: 1; }
+.quiz .r > p { font-family: var(--ff-q); font-style: italic; font-size: 44px; line-height: 1.12; }
+.quiz .a { padding: 12px 22px 14px; border-radius: 12px; color: #fff; font-size: 25px; line-height: 1.25; }
+.quiz .a strong { display: block; font-size: 23px; letter-spacing: .16em; }
+.quiz .a.kl { background: var(--kobalt); } .quiz .a.kk { background: var(--ton); }
+.quiz .a.bo { background: linear-gradient(100deg, var(--kobalt) 50%, var(--ton) 50%); }
+
+/* ============================================================
+   FOLIE 21: WERKZEUG
+   ============================================================ */
+.tool { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 36px; }
+.tool .card { padding: 28px 36px 32px; }
+.tool .lbl { font-size: 23px; letter-spacing: .2em; font-weight: 700; text-transform: uppercase; color: var(--kobalt); }
+.tool .merk .lbl { color: var(--gold); }
+.tool ol { list-style: none; margin-top: 12px; counter-reset: q; }
+.tool ol li { counter-increment: q; font-size: 29px; line-height: 1.26; padding: 11px 0 11px 62px; position: relative; border-bottom: 1.5px solid var(--line); }
+.tool ol li:last-child { border-bottom: 0; }
+.tool ol li::before { content: counter(q); position: absolute; left: 0; top: 9px; width: 44px; height: 44px; border-radius: 50%; background: var(--kobalt); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 24px; }
+.tool ol li b { display: block; }
+.tool .sb { font-family: var(--ff-q); font-style: italic; font-size: 42px; line-height: 1.2; margin-top: 20px; padding-left: 26px; border-left: 5px solid var(--gold); }
+.tool .ex { margin-top: 32px; font-size: 29px; line-height: 1.34; color: var(--mute); }
+
+/* ============================================================
+   FOLIE 22: SCHLUSS
+   ============================================================ */
+.end h2 { font-size: 170px; margin-top: 30px; }
+.end .lede { font-family: var(--ff-q); font-style: italic; font-size: 60px; line-height: 1.12; width: 1250px; margin-top: 20px; }
+.src { position: absolute; left: 124px; bottom: 108px; width: 1180px; font-size: 23px; line-height: 1.4; color: #B9C6F5; }
+.src b { color: var(--glasur); letter-spacing: .14em; }
+.end .krug { position: absolute; right: 150px; top: 250px; width: 340px; height: 430px; transform: rotate(8deg); overflow: visible; }
+
+/* ============================================================
+   STEUERUNG AUSSERHALB DER FOLIEN
+   ============================================================ */
+.progress { position: fixed; left: 0; bottom: 0; height: 5px; background: #6E8CFF; z-index: 1001; transition: width .4s var(--ease); }
+.notes { display: none; }
+.notes-panel { position: fixed; left: 16px; right: 16px; bottom: 16px; max-height: 42vh; overflow: auto; z-index: 1002; display: none;
+    background: rgba(10,18,56,.96); color: #F2ECDF; border: 1px solid #6E8CFF; border-radius: 12px; padding: 14px 18px; font: 17px/1.5 'Albert Sans', sans-serif; }
+.notes-panel.show { display: block; }
+.notes-panel .who { font-size: 12px; font-weight: 700; color: #9DB4FF; letter-spacing: .12em; margin-bottom: 6px; }
+.edit-hotzone { position: fixed; left: 0; top: 0; width: 70px; height: 70px; z-index: 1003; }
+.edit-toggle { position: fixed; left: 14px; top: 14px; z-index: 1004; padding: 8px 14px; border-radius: 8px; border: 1px solid #6E8CFF; background: #0A1238; color: #F2ECDF; font: 600 13px 'Albert Sans', sans-serif; opacity: 0; pointer-events: none; transition: opacity .2s; cursor: pointer; }
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+body.editing [contenteditable="true"] { outline: 2px dashed var(--ton); outline-offset: 4px; }
+</style>
+</head>
+<body>
+
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+  <!-- ==================== 1 · TITEL ==================== -->
+  <section class="slide s-title active" data-title="Titel" data-who="Lut">
+    <div class="kicker in t-top" style="--d:.1s">Deutsch Q1 · Dramentheorie</div>
+    <h1 class="in" style="--d:.25s">Ein Drama, das aus dem <span class="kob">Rahmen</span> <span class="fallword ton">fällt?</span></h1>
+    <p class="sub in" style="--d:.5s">Heinrich von Kleists „Der zerbrochne Krug“ im Spiegel klassischer Dramentheorien</p>
+    <p class="by in" style="--d:.7s">Lut &amp; Erik</p>
+    <div class="t-frame fi" style="--d:.3s"></div>
+    <div class="t-plaque fi" style="--d:.5s">Lustspiel · Uraufführung 1808</div>
+    <svg class="t-shard" style="left:1310px; top:930px; --x:-74px; --y:6px; --r:-40deg" width="60" height="50" viewBox="0 0 60 50"><path d="M4 40 L22 4 L56 30 Z" fill="#FBF8F0" stroke="#1B3FA0" stroke-width="5" stroke-linejoin="round"/></svg>
+    <svg class="t-shard" style="left:1560px; top:940px; --x:70px; --y:2px; --r:55deg" width="50" height="44" viewBox="0 0 50 44"><path d="M6 8 L44 14 L20 40 Z" fill="#FBF8F0" stroke="#1B3FA0" stroke-width="5" stroke-linejoin="round"/></svg>
+    <svg class="t-jug krug" viewBox="0 0 300 380"></svg>
+    <aside class="notes">Begrüßung. Unser Thema ist eine Frage: Ist „Der zerbrochne Krug“ ein Drama, das aus dem Rahmen fällt? Der Rahmen, das sind die Regeln des klassischen Dramas. Wir prüfen heute Punkt für Punkt, ob Kleists Stück in diesen Rahmen passt. Am Ende bekommt ihr ein Werkzeug, das ihr in der Klausur für jedes Drama benutzen könnt. (ca. 20 s)</aside>
+  </section>
+
+  <!-- ==================== 2 · LEITFRAGE ==================== -->
+  <section class="slide" data-title="Leitfrage" data-who="Lut">
+    <div class="kicker in">Unsere Leitfrage</div>
+    <p class="lead in" style="--d:.15s">Wo hält sich Kleists „Krug“ an die Regeln des <span class="kob">klassischen Dramas</span> und wo <span class="ton">bricht</span> er sie?</p>
+    <div class="road">
+      <div class="card s" data-s="1"><b>1</b><strong>Das Stück</strong><span>Worum geht es? In zwei Minuten.</span></div>
+      <div class="card s" data-s="1" style="--d:.12s"><b>2</b><strong>Der Rahmen</strong><span>Vier Regeln des klassischen Dramas.</span></div>
+      <div class="card s" data-s="1" style="--d:.24s"><b>3</b><strong>Der Test</strong><span>Sechs Prüfpunkte. Ihr stimmt mit ab.</span></div>
+      <div class="card merk s" data-s="2"><b>4</b><strong>Euer Werkzeug</strong><span>Fünf Fragen und Satzbausteine für die Klausur.</span></div>
+    </div>
+    <aside class="notes">Das ist unsere Aufgabenstellung in einfachen Worten: Wo hält sich das Stück an die klassischen Regeln, wo bricht es sie? [Klick] Wir gehen in drei Schritten vor: erst ganz kurz das Stück, damit alle mitkommen, dann der Rahmen, also vier Regeln, dann der Test mit sechs Prüfpunkten. Dabei dürft ihr mit abstimmen. [Klick] Und am Ende gibt es ein Werkzeug für die Klausur. Der Vortrag ist klausurrelevant, also lohnt sich Mitschreiben vor allem bei Teil 3 und 4. (ca. 40 s)</aside>
+  </section>
+
+  <!-- ==================== 3 · FIGUREN ==================== -->
+  <section class="slide" data-title="Figuren" data-who="Lut">
+    <div class="kicker in">Teil 1 · Das Stück</div>
+    <h2 class="in" style="--d:.1s">Wer ist wer in Huisum?</h2>
+    <div class="cast">
+      <svg viewBox="0 0 1672 700">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#1B3FA0"/></marker>
+          <marker id="ahT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#C5512B"/></marker>
+        </defs>
+        <g class="s" data-s="1" style="--d:.3s">
+          <line x1="448" y1="84" x2="606" y2="84" stroke="#1B3FA0" stroke-width="4" marker-end="url(#ah)"/>
+          <text x="527" y="66" text-anchor="middle">kontrolliert</text>
+          <line x1="1224" y1="84" x2="1066" y2="84" stroke="#1B3FA0" stroke-width="4" marker-end="url(#ah)"/>
+          <text x="1145" y="66" text-anchor="middle">durchschaut</text>
+        </g>
+        <g class="s" data-s="2" style="--d:.4s">
+          <path d="M300 440 V408 H497 V440" fill="none" stroke="#1B3FA0" stroke-width="4" marker-end="url(#ah)"/>
+          <text x="398" y="394" text-anchor="middle">verklagt</text>
+          <path d="M737 440 V408 H934 V440" fill="none" stroke="#1B3FA0" stroke-width="4"/>
+          <text x="835" y="394" text-anchor="middle">verlobt</text>
+        </g>
+        <g class="s" data-s="3">
+          <line x1="900" y1="196" x2="1050" y2="430" stroke="#C5512B" stroke-width="5" stroke-dasharray="12 9" marker-end="url(#ahT)"/>
+          <text x="1002" y="306" style="fill:#C5512B">erpresst</text>
+        </g>
+      </svg>
+      <div class="p card s" data-s="1" style="left:40px; top:0; width:400px"><i>W</i><b>Gerichtsrat Walter</b><span>Kontrolleur aus Utrecht. Schaut heute zu.</span></div>
+      <div class="p card bruch in" style="left:616px; top:0; width:440px; --d:.3s"><i>A</i><b>Dorfrichter Adam</b><span>Soll den Fall klären. Dabei war er es selbst.</span></div>
+      <div class="p card s" data-s="1" style="left:1232px; top:0; width:400px; --d:.12s"><i>L</i><b>Schreiber Licht</b><span>Merkt früh, was los ist. Will Adams Amt.</span></div>
+      <div class="p card s" data-s="2" style="left:0; top:440px; width:360px"><i>M</i><b>Frau Marthe</b><span>Klägerin. Ihr Krug ist kaputt.</span></div>
+      <div class="p card s" data-s="2" style="left:437px; top:440px; width:360px; --d:.1s"><i>R</i><b>Ruprecht</b><span>Eves Verlobter. Wird beschuldigt.</span></div>
+      <div class="p card s" data-s="2" style="left:874px; top:440px; width:360px; --d:.2s"><i>E</i><b>Eve</b><span>Marthes Tochter. Weiß alles, schweigt.</span></div>
+      <div class="p card s" data-s="2" style="left:1311px; top:440px; width:360px; --d:.3s"><i>B</i><b>Frau Brigitte</b><span>Zeugin. Findet Adams Perücke.</span></div>
+      <p class="names s" data-s="3" style="--d:.3s"><b>Sprechende Namen:</b> Adam und Eve wie beim Sündenfall · Licht bringt Licht ins Dunkel</p>
+    </div>
+    <aside class="notes">Das Stück spielt in Huisum, einem Dorf in Holland bei Utrecht. In der Mitte steht Dorfrichter Adam. [Klick] Neben ihm: Gerichtsrat Walter, ein Kontrolleur aus Utrecht, der heute überraschend zu Besuch kommt, und der Schreiber Licht, der schnell merkt, dass mit Adam etwas nicht stimmt. Licht will selbst Richter werden. [Klick] Vor Gericht stehen: Frau Marthe, ihr Krug ist zerbrochen. Sie verklagt Ruprecht, den Verlobten ihrer Tochter Eve. Eve weiß, wer es wirklich war, sagt aber nichts. Frau Brigitte kommt später als Zeugin. [Klick] Warum schweigt Eve? Weil der Richter selbst sie erpresst. Und die Namen sind kein Zufall: Adam und Eve wie in der Bibel, auch Adam „fällt“. Und Licht bringt am Ende Licht ins Dunkel. (ca. 60 s)</aside>
+  </section>
+
+  <!-- ==================== 4 · HANDLUNG ==================== -->
+  <section class="slide" data-title="Handlung" data-who="Lut">
+    <div class="kicker in">Teil 1 · Das Stück</div>
+    <h2 class="in" style="--d:.1s">Das Wichtigste passiert <span class="ton">vor</span> dem Vorhang</h2>
+    <div class="tl">
+      <div class="night in" style="--d:.25s">
+        <h3>Nicht auf der Bühne</h3><h4>Die Nacht davor</h4>
+        <ul>
+          <li class="s" data-s="1"><b>1</b><span>Richter Adam schleicht zu Eve. Er erpresst sie mit einem gefälschten Brief: Ruprecht müsse als Soldat nach Ostindien.</span></li>
+          <li class="s" data-s="1" style="--d:.2s"><b>2</b><span>Ruprecht tritt die Tür ein. Adam springt aus dem Fenster. Dabei zerbricht der Krug.</span></li>
+          <li class="s" data-s="1" style="--d:.4s"><b>3</b><span>Ruprecht schlägt dem Unbekannten zweimal auf den Kopf. Adams Perücke bleibt hängen.</span></li>
+        </ul>
+      </div>
+      <div class="curtain in" style="--d:.35s"><span>VORHANG</span></div>
+      <div class="day in" style="--d:.45s">
+        <h3>Das sehen wir</h3><h4>Der Morgen im Gericht</h4>
+        <ul>
+          <li class="s" data-s="2"><b>4</b><span>Gerichtsrat Walter kommt zur Kontrolle. Adam hat Wunden am Kopf und keine Perücke.</span></li>
+          <li class="s" data-s="2" style="--d:.15s"><b>5</b><span>Frau Marthe klagt wegen des Krugs. Adam muss über seine eigene Tat richten.</span></li>
+          <li class="s" data-s="2" style="--d:.3s"><b>6</b><span>Frau Brigitte bringt die Perücke. Eve ruft: <span class="q">„Der Richter Adam hat den Krug zerbrochen!“</span></span></li>
+          <li class="s" data-s="2" style="--d:.45s"><b>7</b><span>Adam flieht. Schreiber Licht übernimmt das Amt.</span></li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">Jetzt die Handlung, und hier ist schon das Besondere: Das Wichtigste passiert, bevor das Stück anfängt. [Klick] In der Nacht davor: Richter Adam geht heimlich zu Eve. Er behauptet, ihr Verlobter Ruprecht müsse als Soldat nach Ostindien, wo viele sterben. Er könne ihn mit einem Attest retten, und dafür will er etwas von ihr. Der Brief ist gefälscht. Ruprecht sieht einen Mann bei Eve, tritt die Tür ein. Adam springt aus dem Fenster, dabei fällt der Krug herunter. Ruprecht schlägt ihm noch zweimal mit der Türklinke auf den Kopf, erkennt ihn aber nicht. Adams Perücke bleibt im Weinspalier hängen. [Klick] Am Morgen, das ist das eigentliche Stück: Gerichtsrat Walter kommt zur Kontrolle. Frau Marthe klagt. Adam muss also als Richter einen Fall aufklären, in dem er selbst der Täter ist. Er versucht alles, um die Schuld auf andere zu schieben. Am Ende bringt Frau Brigitte die Perücke, Eve sagt die Wahrheit, Adam rennt weg. (ca. 75 s)</aside>
+  </section>
+
+  <!-- ==================== 5 · SYMBOL ==================== -->
+  <section class="slide" data-title="Der Krug als Symbol" data-who="Lut">
+    <div class="kicker in">Teil 1 · Das Stück</div>
+    <h2 class="in" style="--d:.1s">Der Krug ist mehr als ein Krug</h2>
+    <div class="sym">
+      <svg class="krug in" viewBox="0 0 300 380" style="--d:.2s"></svg>
+      <div>
+        <div class="card bruch s" data-s="1"><b>1</b><div><strong>Eves guter Ruf</strong><span>Ein Mann nachts in ihrem Zimmer: Ihre Ehre hat einen Sprung. <span class="q">„Dein guter Name lag in diesem Topfe“</span>, sagt die Mutter.</span></div></div>
+        <div class="card bruch s" data-s="2"><b>2</b><div><strong>Das Recht</strong><span>Der Richter selbst bricht das Gesetz. Die Gerechtigkeit ist kaputt.</span></div></div>
+        <div class="card bruch s" data-s="3"><b>3</b><div><strong>Das Vertrauen</strong><span>Ruprecht glaubt Eve nicht. Auch zwischen den beiden ist etwas zerbrochen.</span></div></div>
+        <p class="merk-line s" data-s="3" style="--d:.3s">Zerbrochen ist nicht nur Ton.</p>
+      </div>
+    </div>
+    <aside class="notes">Warum streitet man ein ganzes Stück lang über einen Krug? Weil der Krug ein Symbol ist. [Klick] Erstens steht er für Eves guten Ruf. Ein fremder Mann nachts im Zimmer, das war damals ein Skandal. Die Mutter sagt wörtlich: „Dein guter Name lag in diesem Topfe.“ Ihr geht es also gar nicht um den Krug, sondern um die Ehre der Tochter. [Klick] Zweitens steht er für das Recht: Der Richter, der das Recht schützen soll, bricht es selbst. [Klick] Drittens für das Vertrauen: Ruprecht glaubt Eve nicht und beschimpft sie. Merkt euch den Satz: Zerbrochen ist nicht nur Ton. Das brauchen wir am Ende noch einmal: Auch die klassische Ordnung bekommt bei Kleist einen Sprung. (ca. 50 s)</aside>
+  </section>
+
+  <!-- ==================== 6 · KAPITEL: DER RAHMEN ==================== -->
+  <section class="slide dark chap" data-title="Der Rahmen" data-who="Erik">
+    <div class="kicker in">Teil 2</div>
+    <h2 class="in" style="--d:.1s">Der Rahmen</h2>
+    <p class="lede in" style="--d:.25s">„Klassisches Drama“ heißt: ein Stück, das festen Regeln folgt. Diese Regeln sind über 2000 Jahre gewachsen.</p>
+    <div class="era">
+      <svg viewBox="0 0 1672 330">
+        <line class="draw auto" pathLength="1" x1="0" y1="50" x2="1672" y2="50" stroke="#FBF8F0" stroke-width="4" style="--d:.5s"/>
+        <g class="s" data-s="1"><circle cx="190" cy="50" r="16" fill="#FBF8F0"/></g>
+        <g class="s" data-s="1" style="--d:.15s"><circle cx="600" cy="50" r="16" fill="#FBF8F0"/></g>
+        <g class="s" data-s="1" style="--d:.3s"><circle cx="1010" cy="50" r="16" fill="#FBF8F0"/></g>
+        <g class="s" data-s="1" style="--d:.45s"><circle cx="1480" cy="50" r="16" fill="#FBF8F0"/></g>
+        <g class="s" data-s="2"><circle cx="1245" cy="50" r="18" fill="#C5512B" stroke="#FBF8F0" stroke-width="4"/><line x1="1245" y1="68" x2="1245" y2="272" stroke="#C5512B" stroke-width="4"/></g>
+      </svg>
+      <div class="n s" data-s="1" style="left:190px"><em>um 335 v. Chr.</em><b>Aristoteles</b><span>schreibt die Grundregeln auf</span></div>
+      <div class="n s" data-s="1" style="left:600px; --d:.15s"><em>1624 und 1730</em><b>Opitz, Gottsched</b><span>Wer darf in welchem Stück auftreten?</span></div>
+      <div class="n s" data-s="1" style="left:1010px; --d:.3s"><em>um 1800</em><b>Goethe, Schiller</b><span>Weimarer Klassik: die Regeln in Bestform</span></div>
+      <div class="n s" data-s="1" style="left:1480px; --d:.45s"><em>1863</em><b>Freytag</b><span>fasst alles in der Pyramide zusammen</span></div>
+      <div class="n kleist s" data-s="2" style="left:1245px"><em>1808</em><b>Kleist</b><span>„Der zerbrochne Krug“</span></div>
+    </div>
+    <aside class="notes">Teil 2: der Rahmen. Mit „klassischem Drama“ ist ein Stück gemeint, das festen Regeln folgt. [Klick] Diese Regeln stammen nicht von einer Person. Aristoteles hat in der Antike die Grundregeln aufgeschrieben. Opitz und Gottsched haben im Barock und in der Aufklärung festgelegt, wer in welchem Stück auftreten darf. Goethe und Schiller haben um 1800 in Weimar Stücke geschrieben, die als Vorbild gelten, zum Beispiel „Iphigenie auf Tauris“. Und Gustav Freytag, den wir aus der Hausaufgabe kennen, hat 1863 alles in seiner Pyramide zusammengefasst. [Klick] Und Kleist? Der schreibt genau in der Zeit der Weimarer Klassik. Sein Stück wird 1808 sogar in Weimar von Goethe uraufgeführt. Er kennt die Regeln also genau. Wir machen daraus jetzt vier einfache Regeln. (ca. 45 s)</aside>
+  </section>
+
+  <!-- ==================== 7 · REGEL 1: EINHEITEN ==================== -->
+  <section class="slide" data-title="Regel 1: Drei Einheiten" data-who="Erik">
+    <div class="kicker in">Aristoteles · „Poetik“</div>
+    <h2 class="in" style="--d:.1s">Regel 1: Die drei Einheiten</h2>
+    <div class="tri">
+      <div class="card in" style="--d:.2s">
+        <svg viewBox="0 0 210 130"><path d="M30 122 V62 L105 14 L180 62 V122 Z" fill="none" stroke="#1B3FA0" stroke-width="7" stroke-linejoin="round"/><rect x="86" y="78" width="38" height="44" fill="#1B3FA0"/><line x1="6" y1="124" x2="204" y2="124" stroke="#1B3FA0" stroke-width="7" stroke-linecap="round"/></svg>
+        <b>ORT</b><strong>Ein Schauplatz</strong><span>Die Bühne zeigt nur einen Ort. Kein Wechsel der Kulisse.</span>
+      </div>
+      <div class="card in" style="--d:.35s">
+        <svg viewBox="0 0 210 130"><path d="M14 118 A91 91 0 0 1 196 118" fill="none" stroke="#1B3FA0" stroke-width="4" stroke-dasharray="6 9"/><line x1="6" y1="124" x2="204" y2="124" stroke="#1B3FA0" stroke-width="7" stroke-linecap="round"/><g class="sun"><circle cx="105" cy="27" r="19" fill="#B4832A"/></g></svg>
+        <b>ZEIT</b><strong>Höchstens ein Tag</strong><span>Die Handlung dauert nicht länger als einen Sonnenlauf. Keine Zeitsprünge.</span>
+      </div>
+      <div class="card in" style="--d:.5s">
+        <svg viewBox="0 0 210 130"><path class="draw auto" pathLength="1" d="M10 96 C60 96 70 40 110 40 S150 80 190 34" fill="none" stroke="#C5512B" stroke-width="8" stroke-linecap="round" style="--d:.9s"/><path d="M172 30 L196 28 L186 52 Z" fill="#C5512B"/></svg>
+        <b>HANDLUNG</b><strong>Ein roter Faden</strong><span>Nur eine Geschichte, mit Anfang, Mitte und Ende. Keine Nebenhandlung.</span>
+      </div>
+    </div>
+    <div class="card merk kath s" data-s="1"><b>Katharsis</b><span>Das Ziel der Tragödie: Die Zuschauer leiden und zittern mit dem Helden mit („Jammer und Schaudern“) und gehen danach innerlich „gereinigt“ nach Hause.</span></div>
+    <p class="fn s" data-s="1" style="--d:.2s">Genau genommen fordert Aristoteles nur die Einheit der Handlung streng. Zeit und Ort machten spätere Theoretiker zur festen Regel.</p>
+    <aside class="notes">Regel 1 kommt von Aristoteles, aus seinem Buch „Poetik“: die drei Einheiten. Einheit des Ortes: ein Schauplatz. Einheit der Zeit: höchstens ein Tag. Einheit der Handlung: nur eine Geschichte ohne Nebenhandlungen, mit Anfang, Mitte und Ende. Der Grund: Das Stück soll glaubwürdig und übersichtlich sein. [Klick] Und wozu das Ganze? Aristoteles sagt: Eine Tragödie soll beim Zuschauer Jammer und Schaudern auslösen, oft auch mit Mitleid und Furcht übersetzt. Dadurch wird er von diesen Gefühlen gereinigt. Das nennt man Katharsis. Kleiner Zusatz für Genaue: Aristoteles selbst besteht nur auf der Handlung, Ort und Zeit kamen später als feste Regel dazu. (ca. 60 s)</aside>
+  </section>
+
+  <!-- ==================== 8 · REGEL 2: PYRAMIDE ==================== -->
+  <section class="slide" data-title="Regel 2: Fünf Akte" data-who="Erik">
+    <div class="kicker in">Gustav Freytag · 1863</div>
+    <h2 class="in" style="--d:.1s">Regel 2: Fünf Akte wie eine Pyramide</h2>
+    <div class="pyr">
+      <svg viewBox="0 0 1672 640">
+        <line x1="60" y1="540" x2="1612" y2="540" stroke="#1B3FA0" stroke-width="3" opacity=".35"/>
+        <path class="draw auto" pathLength="1" d="M140 540 L836 130 L1532 540" fill="none" stroke="#1B3FA0" stroke-width="9" stroke-linejoin="round" stroke-linecap="round" style="--d:.4s"/>
+        <g class="s" data-s="1"><circle cx="140" cy="540" r="19" fill="#1B3FA0"/><circle cx="488" cy="335" r="19" fill="#1B3FA0"/>
+          <circle cx="300" cy="446" r="11" fill="#C5512B"/><text x="322" y="492">erregendes Moment</text></g>
+        <g class="s" data-s="2"><circle cx="836" cy="130" r="24" fill="#C5512B"/></g>
+        <g class="s" data-s="3"><circle cx="1184" cy="335" r="19" fill="#1B3FA0"/><circle cx="1532" cy="540" r="19" fill="#1B3FA0"/>
+          <circle cx="1372" cy="446" r="11" fill="#C5512B"/><text x="1350" y="492" text-anchor="end">retardierendes Moment</text></g>
+      </svg>
+      <div class="l s" data-s="1" style="left:60px; top:566px; width:520px"><b><i>I</i>Exposition</b><span>Wer? Wo? Worum geht es?</span></div>
+      <div class="l s" data-s="1" style="left:20px; top:250px; width:430px; text-align:right; --d:.15s"><b><i>II</i>Steigende Handlung</b><span>Der Konflikt kommt in Gang.</span></div>
+      <div class="l s" data-s="2" style="left:536px; top:0; width:600px; text-align:center"><b><i>III</i>Höhepunkt und Wendepunkt</b><span>Ab hier kippt es (Peripetie).</span></div>
+      <div class="l s" data-s="3" style="left:1222px; top:250px; width:440px"><b><i>IV</i>Fallende Handlung</b><span>Noch einmal kurz Hoffnung.</span></div>
+      <div class="l s" data-s="3" style="left:1092px; top:566px; width:520px; text-align:right; --d:.15s"><b><i>V</i>Katastrophe</b><span>Die Lösung. In der Komödie: gutes Ende.</span></div>
+    </div>
+    <aside class="notes">Regel 2 kennt ihr aus der Hausaufgabe: Freytags Pyramide. Ein klassisches Drama hat fünf Akte. [Klick] Erster Akt, Exposition: Wir erfahren, wer mitspielt und worum es geht. Zweiter Akt, steigende Handlung: Mit dem erregenden Moment kommt der Konflikt in Gang. [Klick] Dritter Akt: Höhepunkt und Wendepunkt, die Peripetie. Ab hier kippt das Schicksal des Helden. [Klick] Vierter Akt, fallende Handlung, mit dem retardierenden Moment: Die Handlung wird kurz gebremst, man hofft noch einmal. Fünfter Akt: die Katastrophe, also die Lösung. In der Tragödie stirbt der Held, in der Komödie geht es gut aus. Wichtig für später: Bei so einem Stück passiert alles vor unseren Augen und läuft Schritt für Schritt auf das Ende zu. Man nennt das Zieldrama oder synthetisches Drama. (ca. 50 s)</aside>
+  </section>
+
+  <!-- ==================== 9 · REGEL 3: STÄNDEKLAUSEL ==================== -->
+  <section class="slide" data-title="Regel 3: Ständeklausel" data-who="Erik">
+    <div class="kicker in">Opitz · Gottsched</div>
+    <h2 class="in" style="--d:.1s">Regel 3: Der Stand bestimmt die Gattung</h2>
+    <div class="stand">
+      <svg viewBox="0 0 720 680" class="in" style="--d:.2s">
+        <line x1="20" y1="610" x2="700" y2="610" stroke="#1B3FA0" stroke-width="6" stroke-linecap="round"/>
+        <!-- hohe Säule -->
+        <rect x="110" y="170" width="120" height="440" fill="#FBF8F0" stroke="#1B3FA0" stroke-width="5"/>
+        <path d="M140 170 V610 M170 170 V610 M200 170 V610" stroke="#1B3FA0" stroke-width="2" opacity=".4"/>
+        <rect x="96" y="156" width="148" height="22" fill="#1B3FA0"/>
+        <!-- König -->
+        <g class="fig king s" data-s="1" style="opacity:1">
+          <path d="M136 156 L148 70 L192 70 L204 156 Z" fill="#1B3FA0"/><circle cx="170" cy="44" r="24" fill="#1B3FA0"/>
+          <path d="M146 22 L146 -4 L158 10 L170 -8 L182 10 L194 -4 L194 22 Z" fill="#B4832A"/>
+        </g>
+        <path class="draw s" data-s="1" pathLength="1" d="M252 110 C322 150 340 360 342 520" fill="none" stroke="#C5512B" stroke-width="5" stroke-dasharray="1" style="--d:.2s"/>
+        <text class="s" data-s="1" x="356" y="290" fill="#C5512B" style="--d:.9s">TIEFER FALL</text>
+        <!-- Hocker -->
+        <rect x="500" y="540" width="110" height="70" fill="#FBF8F0" stroke="#1B3FA0" stroke-width="5"/>
+        <g class="fig farmer s" data-s="1" style="opacity:1">
+          <path d="M521 540 L533 454 L577 454 L589 540 Z" fill="#56608A"/><circle cx="555" cy="428" r="24" fill="#56608A"/>
+          <path d="M519 410 H591 L575 390 H535 Z" fill="#56608A"/>
+        </g>
+        <text x="170" y="656" text-anchor="middle" fill="#1B3FA0">TRAGÖDIE</text>
+        <text x="555" y="656" text-anchor="middle" fill="#56608A">KOMÖDIE</text>
+      </svg>
+      <div>
+        <div class="card in" style="--d:.35s"><b>TRAGÖDIE</b><strong>Könige, Adlige, Helden</strong><span>Hohe Sprache. Am Ende steht der Untergang.</span></div>
+        <div class="card in" style="--d:.5s"><b>KOMÖDIE</b><strong>Bürger und Bauern</strong><span>Alltägliche Fehler zum Lachen. Am Ende wird alles gut.</span></div>
+        <p class="fall s" data-s="1" style="--d:.5s"><b>Fallhöhe:</b> Je höher eine Figur steht, desto tiefer stürzt sie und desto stärker erschüttert das die Zuschauer. Deshalb galt: Ernste Schicksale nur für hohe Herrschaften. Diese Vorschrift heißt <b>Ständeklausel</b>.</p>
+      </div>
+    </div>
+    <aside class="notes">Regel 3: die Ständeklausel. Der Stand einer Figur, also ihre Stellung in der Gesellschaft, bestimmt, in welcher Art von Stück sie auftreten darf. In die Tragödie gehören Könige, Adlige und Helden. In die Komödie gehören einfache Leute: Bürger und Bauern. Über die darf gelacht werden. [Klick] Die Begründung heißt Fallhöhe: Wenn ein König stürzt, fällt er tief, das erschüttert uns. Wenn ein Bauer stolpert, ist das eher lustig. So dachte man damals. Festgeschrieben haben das in Deutschland vor allem Martin Opitz und später Gottsched. Lessing hat das im 18. Jahrhundert schon kritisiert, aber die Vorstellung blieb lange. (ca. 50 s)</aside>
+  </section>
+
+  <!-- ==================== 10 · REGEL 4: FORM UND SPRACHE ==================== -->
+  <section class="slide" data-title="Regel 4: Form und Sprache" data-who="Erik">
+    <div class="kicker in">Weimarer Klassik</div>
+    <h2 class="in" style="--d:.1s">Regel 4: Feste Form, hohe Sprache</h2>
+    <div class="two">
+      <div class="card in" style="--d:.2s">
+        <div class="lbl">Geschlossene Form</div>
+        <h3>Alles greift ineinander</h3>
+        <div class="chain"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i></div>
+        <ul>
+          <li>Jede Szene folgt aus der Szene davor.</li>
+          <li>Wenige Figuren, ein klarer Konflikt.</li>
+          <li>Am Ende ist alles gelöst.</li>
+        </ul>
+      </div>
+      <div class="card in" style="--d:.35s">
+        <div class="lbl">Hohe Sprache</div>
+        <h3>Der Blankvers</h3>
+        <div class="verse beat" data-verse="Her|aus*|in|eu*|re|Schat*|ten,|re*|ge|Wip*|fel"></div>
+        <p class="cap">Goethe, „Iphigenie auf Tauris“, erster Vers</p>
+        <ul>
+          <li>Fünf Betonungen pro Vers, kein Reim.</li>
+          <li>Klingt feierlich und geordnet.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="card bruch open s" data-s="1"><b class="ton">Das Gegenteil heißt offene Form:</b> viele Orte, Zeitsprünge, lose Szenen, Alltagssprache. Beispiel: Büchners „Woyzeck“.</p>
+    <aside class="notes">Regel 4 fasst zwei Dinge zusammen. Erstens die geschlossene Form: Alle Szenen hängen wie Kettenglieder zusammen, jede folgt logisch aus der davor. Es gibt wenige Figuren, einen klaren Konflikt, und am Ende ist alles gelöst. Zweitens die hohe Sprache. Die Figuren sprechen in Versen, meistens im Blankvers. Das ist ein Vers mit fünf Betonungen ohne Reim. Hört mal: „Heraus in eure Schatten, rege Wipfel“. Das ist der erste Vers von Goethes „Iphigenie“. [Klick] Das Gegenteil ist die offene Form: viele Orte, Zeitsprünge, einzelne Szenen, die fast für sich stehen, und Alltagssprache. Ein bekanntes Beispiel ist „Woyzeck“ von Büchner. Damit haben wir den Rahmen: Einheiten, fünf Akte, Ständeklausel, feste Form mit hoher Sprache. (ca. 50 s)</aside>
+  </section>
+
+  <!-- ==================== 11 · KAPITEL: DER TEST ==================== -->
+  <section class="slide dark chap" data-title="Der Test" data-who="Lut">
+    <div class="kicker in">Teil 3</div>
+    <h2 class="in" style="--d:.1s">Der Test</h2>
+    <p class="lede in" style="--d:.25s">Passt der „Krug“ in den Rahmen? Sechs Prüfpunkte.</p>
+    <div class="checks">
+      <div class="in" style="--d:.40s"><i></i><b>1</b><strong>Ort, Zeit, Handlung</strong></div>
+      <div class="in" style="--d:.48s"><i></i><b>2</b><strong>Aufbau in Akten</strong></div>
+      <div class="in" style="--d:.56s"><i></i><b>3</b><strong>Richtung der Handlung</strong></div>
+      <div class="in" style="--d:.64s"><i></i><b>4</b><strong>Figuren und Gattung</strong></div>
+      <div class="in" style="--d:.72s"><i></i><b>5</b><strong>Sprache</strong></div>
+      <div class="in" style="--d:.80s"><i></i><b>6</b><strong>Schluss</strong></div>
+    </div>
+    <p class="thumbs s" data-s="1"><b>Ihr stimmt ab:</b> Daumen hoch = passt in den Rahmen · Daumen runter = fällt heraus</p>
+    <aside class="notes">Jetzt kommt der Test. Wir legen Kleists Stück an den Rahmen an, mit sechs Prüfpunkten. [Klick] Und ihr macht mit: Bei jedem Punkt stellen wir die Frage, ihr zeigt mit dem Daumen, was ihr denkt, dann lösen wir auf. Blau heißt immer: passt. Rot heißt: fällt aus dem Rahmen. (ca. 20 s)</aside>
+  </section>
+
+  <!-- ==================== 12 · PRÜFPUNKT 1 ==================== -->
+  <section class="slide" data-title="Prüfpunkt 1: Einheiten" data-who="Lut">
+    <div class="kicker in">Prüfpunkt 1 von 6</div>
+    <div class="score" data-k="1"></div>
+    <h2 class="in" style="--d:.1s">Ein Ort, eine Zeit, eine Handlung?</h2>
+    <div class="tri">
+      <div class="card s" data-s="1">
+        <svg viewBox="0 0 210 130"><path d="M30 122 V62 L105 14 L180 62 V122 Z" fill="none" stroke="#1B3FA0" stroke-width="7" stroke-linejoin="round"/><rect x="86" y="78" width="38" height="44" fill="#1B3FA0"/><line x1="6" y1="124" x2="204" y2="124" stroke="#1B3FA0" stroke-width="7" stroke-linecap="round"/></svg>
+        <b>ORT</b><strong>Nur die Gerichtsstube</strong><span>Niemand verlässt für eine neue Szene den Raum. Die Nacht wird nur erzählt.</span>
+      </div>
+      <div class="card s" data-s="1" style="--d:.15s">
+        <svg viewBox="0 0 210 130"><path d="M14 118 A91 91 0 0 1 196 118" fill="none" stroke="#1B3FA0" stroke-width="4" stroke-dasharray="6 9"/><line x1="6" y1="124" x2="204" y2="124" stroke="#1B3FA0" stroke-width="7" stroke-linecap="round"/><circle cx="60" cy="52" r="19" fill="#B4832A"/></svg>
+        <b>ZEIT</b><strong>Ein Vormittag</strong><span>Kein Zeitsprung. Das Stück dauert so lange wie die Verhandlung selbst.</span>
+      </div>
+      <div class="card s" data-s="1" style="--d:.3s">
+        <svg viewBox="0 0 210 130"><path d="M10 96 C60 96 70 40 110 40 S150 80 190 34" fill="none" stroke="#C5512B" stroke-width="8" stroke-linecap="round"/><path d="M172 30 L196 28 L186 52 Z" fill="#C5512B"/></svg>
+        <b>HANDLUNG</b><strong>Eine einzige Frage</strong><span>Wer hat den Krug zerbrochen? Alles dreht sich nur darum.</span>
+      </div>
+    </div>
+    <p class="vote">Daumen hoch oder runter?</p>
+    <div class="stamp pass s" data-s="2"><b>PASST</b><span>sogar strenger als verlangt</span></div>
+    <aside class="notes">Prüfpunkt 1: die drei Einheiten. Was meint ihr, Daumen hoch oder runter? [Klick] Ort: Das ganze Stück spielt in einem einzigen Raum, der Gerichtsstube. Was in der Nacht in Eves Zimmer passiert ist, sehen wir nie, es wird nur erzählt. Zeit: Es ist ein einziger Vormittag, ohne jeden Sprung. Die Zeit auf der Bühne läuft genauso schnell wie die Zeit im Zuschauerraum. Handlung: Es gibt nur eine Frage, nämlich wer den Krug zerbrochen hat. [Klick] Ergebnis: Passt. Kleist hält die drei Einheiten strenger ein als viele klassische Stücke. Hier ist er ein Musterschüler. (ca. 45 s)</aside>
+  </section>
+
+  <!-- ==================== 13 · PRÜFPUNKT 2 ==================== -->
+  <section class="slide" data-title="Prüfpunkt 2: Aufbau" data-who="Lut">
+    <div class="kicker in">Prüfpunkt 2 von 6</div>
+    <div class="score" data-k="2"></div>
+    <h2 class="in" style="--d:.1s">Fünf Akte wie eine Pyramide?</h2>
+    <div class="acts">
+      <div class="a s" data-s="1" style="opacity:1; transform:none"><i>I</i><i>II</i><i>III</i><i>IV</i><i>V</i></div>
+      <span class="arrow s" data-s="1">→</span>
+      <span class="one s" data-s="1" style="--d:.2s">1 Akt · 13 Auftritte · keine Pause</span>
+    </div>
+    <svg class="curve" viewBox="0 0 1672 470">
+      <line x1="60" y1="400" x2="1620" y2="400" stroke="#1B3FA0" stroke-width="3" opacity=".4"/>
+      <g id="ticks"></g>
+      <g class="s" data-s="2">
+        <path d="M110 400 L818 70 L1526 400" fill="none" stroke="#1B3FA0" stroke-width="5" stroke-dasharray="14 12" opacity=".65"/>
+        <text x="640" y="118" fill="#1B3FA0" text-anchor="end">klassische Pyramide</text>
+      </g>
+      <path class="draw s" data-s="3" pathLength="1" d="M110 382 L228 374 L346 364 L464 352 L582 342 L700 292 L818 244 L936 204 L1054 166 L1172 204 L1290 62 L1408 236 L1526 336" fill="none" stroke="#C5512B" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" style="transition-duration:2.2s"/>
+      <g class="s" data-s="3" style="--d:1.2s" fill="#C5512B">
+        <text x="346" y="318" text-anchor="middle">Wunden, Besuch, Perücke weg</text>
+        <text x="690" y="262" text-anchor="end">Kläger kommen</text>
+        <text x="900" y="158" text-anchor="end">Verhör</text>
+        <text x="1172" y="246" text-anchor="middle">Weinpause</text>
+        <text x="1272" y="36" text-anchor="end">Perücke! Eve nennt den Täter</text>
+        <text x="1440" y="250">Flucht und Lösung</text>
+      </g>
+      <text x="60" y="462" fill="#56608A" style="font-size:22px; letter-spacing:.14em">AUFTRITT</text>
+    </svg>
+    <p class="fact s" data-s="4"><b>Wusstet ihr?</b> Goethe teilte das Stück 1808 für die Uraufführung in drei Akte. Sie fiel beim Publikum durch.</p>
+    <div class="stamp half s" data-s="4"><b>TEILS</b><span>Stationen ja, fünf Akte nein</span></div>
+    <aside class="notes">Prüfpunkt 2: der Aufbau. Hat das Stück fünf Akte? Daumen? [Klick] Nein. Es hat nur einen einzigen Akt mit dreizehn Auftritten, ohne Pause. [Klick] Zum Vergleich: So sähe die klassische Pyramide aus, Höhepunkt in der Mitte. [Klick] Und so verläuft die Spannung im „Krug“: Auftritte 1 bis 5 sind die Exposition: Adams Wunden, der Besuch von Walter, die fehlende Perücke. In Auftritt 6 kommen die Kläger, das ist das erregende Moment. In 7 bis 9 das Verhör, die Spannung steigt. In Auftritt 10 eine Weinpause: Adam scheint davonzukommen, das ist das retardierende Moment. In Auftritt 11 der Höhepunkt: Brigitte bringt die Perücke, Eve nennt den Täter. Danach geht alles ganz schnell. [Klick] Ergebnis: teils. Die Stationen von Freytag findet man wieder, aber nicht in fünf Akten, und der Höhepunkt liegt nicht in der Mitte, sondern fast am Ende. Übrigens: Goethe hat das Stück für die Uraufführung in drei Akte zerschnitten, und es wurde ein Misserfolg. (ca. 60 s)</aside>
+  </section>
+
+  <!-- ==================== 14 · PRÜFPUNKT 3 ==================== -->
+  <section class="slide" data-title="Prüfpunkt 3: analytisch" data-who="Lut">
+    <div class="kicker in">Prüfpunkt 3 von 6</div>
+    <div class="score" data-k="3"></div>
+    <h2 class="in" style="--d:.1s">Läuft die Handlung nach vorn?</h2>
+    <svg class="ana" viewBox="0 0 1672 560">
+      <defs>
+        <marker id="ahB" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#1B3FA0"/></marker>
+        <marker id="ahR" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#C5512B"/></marker>
+      </defs>
+      <!-- synthetisch -->
+      <g class="s" data-s="1">
+        <text class="cap2" x="0" y="26" fill="#1B3FA0">SYNTHETISCH · ZIELDRAMA (SO DENKT FREYTAG)</text>
+        <line x1="60" y1="96" x2="1600" y2="96" stroke="#1B3FA0" stroke-width="7" marker-end="url(#ahB)"/>
+        <circle cx="300" cy="96" r="17" fill="#1B3FA0"/><circle cx="836" cy="96" r="17" fill="#1B3FA0"/><circle cx="1372" cy="96" r="17" fill="#1B3FA0"/>
+        <text x="300" y="152" text-anchor="middle">Konflikt entsteht</text><text x="836" y="152" text-anchor="middle">spitzt sich zu</text><text x="1372" y="152" text-anchor="middle">Ende</text>
+      </g>
+      <!-- analytisch -->
+      <g class="s" data-s="2">
+        <text class="cap2" x="0" y="246" fill="#C5512B">ANALYTISCH · ENTHÜLLUNGSDRAMA (SO BAUT KLEIST)</text>
+        <circle cx="150" cy="420" r="86" fill="#C5512B"/>
+        <text class="plain" x="150" y="412" text-anchor="middle" style="fill:#fff; font-size:32px; font-weight:700">Die Tat</text>
+        <text class="plain" x="150" y="446" text-anchor="middle" style="fill:#fff; font-size:23px">in der Nacht</text>
+        <line x1="318" y1="296" x2="318" y2="540" stroke="#9E2F1F" stroke-width="8" stroke-dasharray="4 10"/>
+        <text x="332" y="548" style="font-size:21px; letter-spacing:.16em; fill:#9E2F1F; font-weight:700">VORHANG</text>
+        <line x1="330" y1="420" x2="1610" y2="420" stroke="#1B3FA0" stroke-width="5" marker-end="url(#ahB)" opacity=".5"/>
+      </g>
+      <g id="clues"></g>
+    </svg>
+    <p class="claim s" data-s="5">Auf der Bühne geschieht nichts Neues. Es wird nur <b class="ton">aufgedeckt</b>, was längst passiert ist. Die Frage heißt nicht „Was passiert?“, sondern „Wann fliegt er auf?“</p>
+    <div class="stamp break s" data-s="5"><b>BRUCH</b><span>Freytags Pyramide greift nicht</span></div>
+    <aside class="notes">Prüfpunkt 3 ist der wichtigste, und er passt zu dem, was wir gerade im Buch machen. Läuft die Handlung nach vorn auf ein Ziel zu? Daumen? [Klick] So denkt Freytag: Ein Konflikt entsteht vor unseren Augen, spitzt sich zu und endet. Das ist das synthetische Drama oder Zieldrama. [Klick] Kleist baut anders. Die Tat ist schon in der Nacht passiert, vor dem Vorhang. Auf der Bühne wird nur zurückgeschaut. [Klick, Klick] Jeder Auftritt liefert ein Puzzleteil, das auf die Nacht zurückzeigt: Adams Wunden. Die fehlende Perücke. Ruprechts Aussage, er habe dem Fremden zweimal auf den Kopf geschlagen, und Adam hat genau zwei Wunden. Die Spur im Schnee, die zu Adams Haus führt. Und am Ende Eves Aussage. [Klick] Das nennt man analytisches Drama oder Enthüllungsdrama. Ergebnis: Bruch mit Freytag. Seine Pyramide beschreibt ein Zieldrama. Und die Spannung ist eine andere: Wir Zuschauer ahnen sehr früh, dass Adam es war. Spannend ist nicht, was passiert, sondern wie er sich herausredet und wann er auffliegt. (ca. 75 s)</aside>
+  </section>
+
+  <!-- ==================== 15 · ÖDIPUS ==================== -->
+  <section class="slide" data-title="Vorbild Ödipus" data-who="Lut">
+    <div class="kicker in">Zu Prüfpunkt 3 · Das Vorbild</div>
+    <div class="score" data-k="3" data-done="1"></div>
+    <h2 class="in" style="--d:.1s">Ganz neu ist das nicht: König Ödipus</h2>
+    <div class="vs in" style="--d:.25s">
+      <div class="h"></div>
+      <div class="h o"><b>König Ödipus</b><span>Sophokles · um 429 v. Chr. · Tragödie</span></div>
+      <div class="h"><b>Richter Adam</b><span>Kleist · 1808 · Komödie</span></div>
+      <div class="k">Aufgabe</div><div class="o">soll einen Täter finden</div><div>soll einen Täter finden</div>
+      <div class="k">Täter</div><div class="o">er selbst</div><div>er selbst</div>
+      <div class="k s" data-s="1" style="transform:none">Weiß er es?</div><div class="o d s" data-s="1" style="transform:none">Nein. Er sucht die Wahrheit.</div><div class="d s" data-s="1" style="transform:none">Ja. Er versteckt die Wahrheit.</div>
+      <div class="k s" data-s="1" style="transform:none; --d:.2s">Ende</div><div class="o d s" data-s="1" style="transform:none; --d:.2s">Er blendet sich selbst.</div><div class="d s" data-s="1" style="transform:none; --d:.2s">Er rennt davon.</div>
+      <div class="k s" data-s="2" style="transform:none">Der Fuß</div><div class="o s" data-s="2" style="transform:none">Der Name bedeutet „Schwellfuß“.</div><div class="s" data-s="2" style="transform:none">Adam hat einen Klumpfuß.</div>
+    </div>
+    <p class="flip s" data-s="3">Kleist dreht die berühmteste Tragödie der Antike <span class="ton">zur Komödie um.</span></p>
+    <aside class="notes">Ist das analytische Drama also etwas ganz Neues? Nein. Das berühmteste Beispiel ist uralt: „König Ödipus“ von Sophokles, das kommt auch im Buch als Nächstes. Ödipus soll den Mörder des alten Königs finden und entdeckt am Ende: Er war es selbst. Genau wie Adam: Er soll einen Täter finden und ist selbst der Täter. [Klick] Der Unterschied: Ödipus weiß es nicht und sucht ehrlich nach der Wahrheit. Als er sie findet, sticht er sich die Augen aus. Das ist tragisch. Adam weiß es von Anfang an und tut alles, um die Wahrheit zu verstecken. Am Ende rennt er weg. Das ist komisch. [Klick] Sogar der Fuß passt: Ödipus heißt übersetzt Schwellfuß, Adam hat einen Klumpfuß. Kleist erwähnt Ödipus sogar selbst in seiner Vorrede. [Klick] Das heißt: Kleist bricht hier zwar mit Freytags Pyramide, aber er greift auf ein Vorbild zurück, das Aristoteles für die beste Tragödie überhaupt hielt. Er dreht es nur um. Das ist ein starker Satz für die Klausur. (ca. 60 s)</aside>
+  </section>
+
+  <!-- ==================== 16 · PRÜFPUNKT 4 ==================== -->
+  <section class="slide" data-title="Prüfpunkt 4: Figuren und Gattung" data-who="Erik">
+    <div class="kicker in">Prüfpunkt 4 von 6</div>
+    <div class="score" data-k="4"></div>
+    <h2 class="in" style="--d:.1s">Passen Figuren und Gattung zusammen?</h2>
+    <div class="pro">
+      <div class="card s" data-s="1">
+        <div class="lbl">Passt</div>
+        <p><b>Einfache Leute:</b> Bauern, ein Dorfrichter, ein Schreiber. Kein König weit und breit.</p>
+        <p><b>Es wird gelacht,</b> und am Ende geht es gut aus. So verlangt es die Ständeklausel für eine Komödie.</p>
+      </div>
+      <svg class="mask s" data-s="2" viewBox="0 0 250 330" style="opacity:1; transform:none">
+        <path class="face" d="M30 40 C30 40 90 14 125 14 C160 14 220 40 220 40 C226 150 200 300 125 316 C50 300 24 150 30 40 Z"/>
+        <ellipse cx="86" cy="118" rx="26" ry="15" fill="#FBF8F0"/><ellipse cx="164" cy="118" rx="26" ry="15" fill="#FBF8F0"/>
+        <path class="sm" d="M70 196 C96 262 154 262 180 196 C150 214 100 214 70 196 Z" fill="#FBF8F0"/>
+        <path class="fr" d="M70 246 C96 186 154 186 180 246 C150 226 100 226 70 246 Z" fill="#FBF8F0"/>
+      </svg>
+      <div class="card bruch s" data-s="2">
+        <div class="lbl">Passt nicht</div>
+        <p><b>Der Stoff ist ernst:</b> Ein Richter missbraucht sein Amt und erpresst ein Mädchen.</p>
+        <p><b>Eves Angst ist echt.</b> Sie fürchtet um Ruprechts Leben. Das ist Stoff für eine Tragödie.</p>
+      </div>
+    </div>
+    <p class="under s" data-s="3"><b class="ton">Fallhöhe einmal anders:</b> Hier stürzt kein König. Adam fällt trotzdem: aus dem Fenster, aus seinen Ausreden, aus dem Amt.</p>
+    <div class="stamp half s" data-s="3"><b>TEILS</b><span>Komödie mit ernstem Kern</span></div>
+    <aside class="notes">Prüfpunkt 4: Figuren und Gattung. Das Stück heißt „Lustspiel“, also Komödie. Passen die Figuren dazu? Daumen? [Klick] Zuerst ja: Es treten nur einfache Leute auf, Bauern, ein Dorfrichter, ein Schreiber. Es wird viel gelacht, und am Ende geht es gut aus. Die Ständeklausel ist erfüllt. [Klick] Aber schaut euch den Stoff an: Ein Richter missbraucht seine Macht, er erpresst ein junges Mädchen mit einem gefälschten Brief. Eve hat echte Todesangst um Ruprecht. Wenn man das ernst erzählt, ist es eine Tragödie. Die Maske kippt. [Klick] Und die Fallhöhe? Es fällt kein König. Aber Adam fällt gleich mehrfach, sogar wörtlich: aus dem Fenster, aus allen Ausreden und am Ende aus dem Amt. Ergebnis: teils. Eine Komödie mit ernstem Kern. Manche nennen das tragikomisch. (ca. 60 s)</aside>
+  </section>
+
+  <!-- ==================== 17 · PRÜFPUNKT 5 ==================== -->
+  <section class="slide" data-title="Prüfpunkt 5: Sprache" data-who="Erik">
+    <div class="kicker in">Prüfpunkt 5 von 6</div>
+    <div class="score" data-k="5"></div>
+    <h2 class="in" style="--d:.1s">Sprechen die Figuren klassisch?</h2>
+    <div class="two" style="grid-template-columns: 980px 1fr; margin-top:30px">
+      <div>
+        <div class="lbl kob in" style="--d:.2s">Goethe: ein Vers, ein Sprecher</div>
+        <div class="verse in" style="--d:.25s" data-verse="Her|aus*|in|eu*|re|Schat*|ten,|re*|ge|Wip*|fel"></div>
+        <div class="lbl ton in" style="--d:.4s; margin-top:38px">Kleist: ein Vers, drei Stücke</div>
+        <div class="sp s" data-s="1" style="opacity:1; transform:none">
+          <div class="verse" data-split="ADAM:Ja,|in*|sich|selbst!*//LICHT:Ver|flucht*|das!//ADAM:Was*|be|liebt?*"></div>
+        </div>
+      </div>
+      <div class="card" style="align-self:start">
+        <ul style="margin-top:0">
+          <li class="s" data-s="2"><b>Blankvers</b> wie bei Goethe und Schiller.</li>
+          <li class="x s" data-s="3">Der Vers <b>zerbricht</b>: Die Figuren fallen sich ins Wort.</li>
+          <li class="x s" data-s="3" style="--d:.15s">Flüche, Ausreden, <b>Alltagston</b> statt edler Rede.</li>
+          <li class="x s" data-s="3" style="--d:.3s">Sprache dient dem <b>Verstecken</b>, nicht der Wahrheit.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="stamp half s" data-s="4"><b>TEILS</b><span>klassische Form, anderer Ton</span></div>
+    <aside class="notes">Prüfpunkt 5: die Sprache. Sprechen die Figuren klassisch? Daumen? Oben seht ihr noch einmal Goethes Vers: ein Vers, ein Sprecher, ruhig und feierlich. Darunter ein Vers aus dem ersten Auftritt bei Kleist. [Klick] Adam sagt: „Ja, in sich selbst!“ Licht: „Verflucht das!“ Adam: „Was beliebt?“ Das ist zusammen ein einziger Vers mit fünf Betonungen, aber auf drei Wortmeldungen verteilt. Der Fachbegriff dafür ist Antilabe. [Klick] Also: Ja, Kleist schreibt im Blankvers, genau wie Goethe und Schiller. [Klick] Aber der Vers zerbricht, weil sich die Figuren ständig ins Wort fallen. Dazu kommen Flüche, Ausreden und Alltagssprache. Und das Wichtigste: In der Klassik hilft die Sprache, die Wahrheit zu finden. Hier benutzt Adam sie, um die Wahrheit zu verstecken. [Klick] Ergebnis: teils. Die Form ist klassisch, der Ton nicht. Man könnte sagen: Auch die Sprache ist ein zerbrochener Krug. (ca. 60 s)</aside>
+  </section>
+
+  <!-- ==================== 18 · PRÜFPUNKT 6 ==================== -->
+  <section class="slide" data-title="Prüfpunkt 6: Schluss" data-who="Erik">
+    <div class="kicker in">Prüfpunkt 6 von 6</div>
+    <div class="score" data-k="6"></div>
+    <h2 class="in" style="--d:.1s">Ist am Ende alles gelöst?</h2>
+    <div class="pro big" style="grid-template-columns: 1fr 1fr">
+      <div class="card s" data-s="1">
+        <div class="lbl">Passt</div>
+        <p><b>Der Täter ist enttarnt.</b> Die Wahrheit kommt ans Licht.</p>
+        <p><b>Eve und Ruprecht versöhnen sich.</b> Die Hochzeit kann stattfinden.</p>
+      </div>
+      <div class="card bruch s" data-s="2">
+        <div class="lbl">Passt nicht</div>
+        <p><b>Adam kommt glimpflich davon.</b> Er verliert sein Amt, aber Walter will keinen Skandal.</p>
+        <p><b>Der Krug bleibt kaputt.</b> Frau Marthe will weiterklagen: <span class="q">„Soll hier dem Kruge nicht sein Recht geschehn?“</span></p>
+      </div>
+    </div>
+    <p class="under s" data-s="3">In einem geschlossenen Drama bleibt am Ende nichts offen. Hier bleibt <b class="ton">ein Riss.</b></p>
+    <div class="stamp half s" data-s="3"><b>TEILS</b><span>gutes Ende mit Riss</span></div>
+    <aside class="notes">Letzter Prüfpunkt: der Schluss. Im klassischen Drama ist am Ende alles geklärt. Hier auch? Daumen? [Klick] Zuerst ja: Der Täter ist enttarnt, Eve und Ruprecht versöhnen sich, die Hochzeit kann stattfinden. Ein typisches Komödien-Ende. [Klick] Aber: Adam wird nicht wirklich bestraft. Er verliert sein Amt, Licht übernimmt. Walter sagt aber ausdrücklich, er wolle ihn nicht zur Flucht zwingen, solange die Kassen stimmen. Dem Staat ist sein guter Ruf wichtiger. Und der Krug? Der ist immer noch kaputt. Frau Marthe fragt im letzten Auftritt: „Soll hier dem Kruge nicht sein Recht geschehn?“ Sie will in Utrecht weiterklagen. [Klick] Das heißt: Das Stück endet gut, aber mit einem Riss. Volle Gerechtigkeit gibt es nicht. Ergebnis: teils. (ca. 50 s)</aside>
+  </section>
+
+  <!-- ==================== 19 · ERGEBNIS ==================== -->
+  <section class="slide" data-title="Ergebnis" data-who="Lut">
+    <div class="kicker in">Das Ergebnis</div>
+    <h2 class="in" style="--d:.1s">Fällt der „Krug“ aus dem Rahmen?</h2>
+    <div class="res">
+      <div class="rows in" style="--d:.25s">
+        <div class="pass"><i>✓</i><span>Ort, Zeit, Handlung</span><em>passt</em></div>
+        <div class="half"><i>½</i><span>Aufbau in Akten</span><em>teils</em></div>
+        <div class="break"><i>✕</i><span>Richtung der Handlung</span><em>Bruch</em></div>
+        <div class="half"><i>½</i><span>Figuren und Gattung</span><em>teils</em></div>
+        <div class="half"><i>½</i><span>Sprache</span><em>teils</em></div>
+        <div class="half"><i>½</i><span>Schluss</span><em>teils</em></div>
+      </div>
+      <div>
+        <p class="big s" data-s="1">Kleist bleibt <span class="kob">im Rahmen</span> und <span class="ton">zerbricht ihn von innen.</span></p>
+        <ol>
+          <li class="s" data-s="2"><b class="nr kob">1</b><b>Außen klassisch:</b> drei Einheiten, Blankvers, wenige Figuren, lückenlose Handlung.</li>
+          <li class="s" data-s="2" style="--d:.15s"><b class="nr ton">2</b><b>Innen anders:</b> ein Akt, Enthüllung statt Zieldrama, Komödie mit ernstem Kern, zerhackte Verse, Schluss mit Riss.</li>
+          <li class="s" data-s="3"><b class="nr gold">3</b><b>Mit Absicht:</b> Kleist kennt die Regeln genau. Er zeigt, dass die heile Ordnung der Klassik Sprünge hat.</li>
+        </ol>
+      </div>
+    </div>
+    <aside class="notes">Jetzt die Antwort auf unsere Leitfrage. Links der Punktestand: einmal klar passt, einmal klarer Bruch, viermal teils. [Klick] Unser Ergebnis in einem Satz: Kleist bleibt im Rahmen und zerbricht ihn von innen. [Klick] Außen ist das Stück klassisch: Es hält die drei Einheiten ein, es ist im Blankvers geschrieben, es hat wenige Figuren und eine lückenlose Handlung. Innen ist es anders: nur ein Akt, Enthüllung statt Zieldrama, eine Komödie mit ernstem Kern, zerhackte Verse und ein Schluss mit Riss. [Klick] Und das ist kein Versehen. Kleist kennt die Regeln genau und spielt mit ihnen. Er zeigt: Die heile Welt der Klassik, in der am Ende Ordnung und Wahrheit siegen, hat Sprünge. Genau wie der Krug. Also: Fällt das Drama aus dem Rahmen? Halb. Es hängt noch im Rahmen, aber es hat einen deutlichen Sprung. (ca. 60 s)</aside>
+  </section>
+
+  <!-- ==================== 20 · QUIZ ==================== -->
+  <section class="slide" data-title="Quiz" data-who="Erik">
+    <div class="kicker in">Jetzt ihr</div>
+    <h2 class="in" style="--d:.1s">Klassisch oder Kleist?</h2>
+    <div class="quiz">
+      <div class="r in" style="--d:.2s"><b>1</b><p>„Alles spielt in einem einzigen Raum.“</p><div class="a bo s" data-s="1"><strong>BEIDES</strong>Klassische Regel, und der Krug hält sie ein.</div></div>
+      <div class="r in" style="--d:.28s"><b>2</b><p>„Das Wichtigste ist vor Beginn passiert.“</p><div class="a kk s" data-s="2"><strong>KLEIST</strong>Analytisches Drama: Es wird nur aufgedeckt.</div></div>
+      <div class="r in" style="--d:.36s"><b>3</b><p>„Fünf Akte, Höhepunkt in der Mitte.“</p><div class="a kl s" data-s="3"><strong>KLASSISCH</strong>Freytags Pyramide. Der Krug hat einen Akt.</div></div>
+      <div class="r in" style="--d:.44s"><b>4</b><p>„Die Figuren sprechen in Versen ohne Reim.“</p><div class="a bo s" data-s="4"><strong>BEIDES</strong>Blankvers. Bei Kleist aber zerstückelt.</div></div>
+      <div class="r in" style="--d:.52s"><b>5</b><p>„Der Richter ist selbst der Täter.“</p><div class="a kk s" data-s="5"><strong>KLEIST</strong>Wie bei Ödipus, nur zum Lachen.</div></div>
+    </div>
+    <aside class="notes">Jetzt seid ihr dran. Wir lesen fünf Aussagen vor. Ihr ruft rein: klassisch, Kleist oder beides? [Jede Aussage vorlesen, kurz warten, dann Klick für die Auflösung.] 1: Beides. Einheit des Ortes ist eine klassische Regel, und der Krug hält sie ein. 2: Kleist. Das ist das analytische Drama. 3: Klassisch, Freytags Pyramide. Der Krug hat nur einen Akt. 4: Beides. Blankvers haben beide, bei Kleist ist er aber zerstückelt. 5: Kleist, mit dem Vorbild Ödipus. (ca. 90 s)</aside>
+  </section>
+
+  <!-- ==================== 21 · WERKZEUG ==================== -->
+  <section class="slide" data-title="Werkzeug für die Klausur" data-who="Lut">
+    <div class="kicker in" style="color:var(--gold)">Zum Mitnehmen</div>
+    <h2 class="in" style="--d:.1s">Euer Werkzeug für die Klausur</h2>
+    <div class="tool">
+      <div class="card in" style="--d:.2s">
+        <div class="lbl">Fünf Fragen an jedes Drama</div>
+        <ol>
+          <li><b>Ort, Zeit, Handlung:</b> einheitlich oder verstreut?</li>
+          <li><b>Aufbau:</b> fünf Akte nach der Pyramide oder anders?</li>
+          <li><b>Richtung:</b> läuft es auf ein Ziel zu (synthetisch) oder deckt es Vergangenes auf (analytisch)?</li>
+          <li><b>Figuren:</b> welcher Stand, Tragödie oder Komödie?</li>
+          <li><b>Sprache und Schluss:</b> Vers oder Alltag, alles gelöst oder offen?</li>
+        </ol>
+      </div>
+      <div class="card merk s" data-s="1">
+        <div class="lbl">Satzbausteine</div>
+        <p class="sb">„Das Stück entspricht dem klassischen Drama insofern, als …“</p>
+        <p class="sb">„Abweichend davon …“</p>
+        <p class="sb">„Daran wird deutlich, dass …“</p>
+        <p class="ex"><b>Beispiel:</b> Der „Krug“ entspricht dem klassischen Drama insofern, als er die drei Einheiten streng einhält. Abweichend davon ist er analytisch gebaut. Daran wird deutlich, dass Kleist die klassische Form bewusst von innen aufbricht.</p>
+      </div>
+    </div>
+    <aside class="notes">Zum Schluss das, was ihr mitnehmen sollt. Links unsere sechs Prüfpunkte, zusammengefasst zu fünf Fragen. Die könnt ihr an jedes Drama stellen, nicht nur an den Krug: Ort, Zeit und Handlung? Aufbau? Richtung der Handlung, also synthetisch oder analytisch? Figuren und Gattung? Sprache und Schluss? Wenn ihr in der Klausur diese fünf Fragen durchgeht, habt ihr automatisch eine Gliederung. [Klick] Rechts drei Satzbausteine, mit denen ihr sauber zeigt, wo ein Stück den Regeln entspricht und wo es abweicht. Unten ein Beispiel für den Krug. Das steht alles auch auf dem Handout. (ca. 60 s)</aside>
+  </section>
+
+  <!-- ==================== 22 · SCHLUSS ==================== -->
+  <section class="slide dark end" data-title="Fragen" data-who="Lut und Erik">
+    <div class="kicker in">Danke fürs Zuhören</div>
+    <h2 class="in" style="--d:.1s">Fragen?</h2>
+    <p class="lede in" style="--d:.3s">Der „Krug“ hängt noch im Rahmen. Aber er hat einen Sprung.</p>
+    <svg class="krug dk fi" viewBox="0 0 300 380" style="--d:.4s"></svg>
+    <p class="src in" style="--d:.5s"><b>QUELLEN</b><br>Heinrich von Kleist: Der zerbrochne Krug. Ein Lustspiel (1811) · Aristoteles: Poetik · Gustav Freytag: Die Technik des Dramas (1863) · Volker Klotz: Geschlossene und offene Form im Drama (1960) · Sophokles: König Ödipus · Deutschbuch, S. 88–91: „Kleists Lustspiel im Kontext der Theatergeschichte“</p>
+    <aside class="notes">Danke fürs Zuhören. Unser Merksatz noch einmal: Der Krug hängt noch im Rahmen, aber er hat einen Sprung. Habt ihr Fragen? (ca. 20 s, danach Fragen)</aside>
+  </section>
+
+</main>
+</div>
+
+<!-- Steuerung außerhalb der Folien -->
+<div class="progress" id="progress"></div>
+<div class="notes-panel" id="notesPanel"><div class="who" id="notesWho"></div><div id="notesText"></div></div>
+<div class="edit-hotzone" id="editHot"></div>
+<button class="edit-toggle" id="editToggle" title="Bearbeiten (E)">✎ Bearbeiten</button>
+
+<script>
+/* ============================================================
+   DER KRUG (wird in alle <svg class="krug"> gezeichnet)
+   ============================================================ */
+function krug(dark) {
+    const c = dark ? '#FBF8F0' : '#1B3FA0', f = dark ? '#0F1F5C' : '#FBF8F0';
+    return `
+    <path d="M204 108 C288 96 298 206 232 238" fill="none" stroke="${c}" stroke-width="20" stroke-linecap="round"/>
+    <path d="M100 124 L110 60 L190 60 L200 124 Z" fill="${f}" stroke="${c}" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M96 122 C38 164 30 252 60 310 C76 344 110 362 150 362 C190 362 224 344 240 310 C270 252 262 164 204 122 Z" fill="${f}" stroke="${c}" stroke-width="6"/>
+    <path d="M102 48 L70 32 L98 68 Z" fill="${c}"/>
+    <rect x="98" y="42" width="104" height="22" rx="11" fill="${c}"/>
+    <g fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round">
+      <path d="M50 196 C100 212 200 212 250 196"/><path d="M46 206 C100 224 200 224 254 206" opacity=".5"/>
+      <path d="M52 292 C100 308 200 308 248 292"/><path d="M58 302 C100 318 200 318 242 302" opacity=".5"/>
+      <path d="M112 92 H188"/>
+    </g>
+    <g fill="${c}">
+      <ellipse cx="150" cy="232" rx="9" ry="17"/><ellipse cx="150" cy="276" rx="9" ry="17"/>
+      <ellipse cx="128" cy="254" rx="17" ry="9"/><ellipse cx="172" cy="254" rx="17" ry="9"/>
+      <circle cx="92" cy="254" r="6"/><circle cx="208" cy="254" r="6"/>
+      <circle cx="130" cy="150" r="5"/><circle cx="150" cy="156" r="5"/><circle cx="170" cy="150" r="5"/>
+    </g>
+    <circle cx="150" cy="254" r="7" fill="${f}" stroke="${c}" stroke-width="3"/>
+    <path class="k-crack" pathLength="1" d="M160 124 L140 170 L168 208 L132 250 L162 298 L146 361" fill="none" stroke="#C5512B" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>`;
+}
+document.querySelectorAll('svg.krug').forEach(s => s.innerHTML = krug(s.classList.contains('dk')));
+
+/* ============================================================
+   VERSE: Silben-Kästchen bauen
+   data-verse: Silben mit | getrennt, Stern hinter betonten Silben
+   data-split: wie oben, Sprecher mit Doppelpunkt, Teile mit zwei Schrägstrichen getrennt
+   ============================================================ */
+const syl = (t, k) => { const h = t.endsWith('*'); return `<i class="${h ? 'h' : ''}" style="--k:${k}">${t.replace('*', '')}</i>`; };
+document.querySelectorAll('[data-verse]').forEach(v => { let k = 0; v.innerHTML = v.dataset.verse.split('|').map(t => syl(t, t.endsWith('*') ? k++ : 0)).join(''); });
+document.querySelectorAll('[data-split]').forEach(v => {
+    v.innerHTML = v.dataset.split.split('//').map(seg => { const [who, rest] = seg.split(':');
+        return `<span class="seg"><u>${who}</u>${rest.split('|').map(t => syl(t, 0)).join('')}</span>`; }).join('');
+});
+
+/* ============================================================
+   FOLIE 13: Auftritts-Achse 1 bis 13
+   ============================================================ */
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+(function ticks() {
+    const g = document.getElementById('ticks');
+    for (let n = 1; n <= 13; n++) { const x = 110 + (n - 1) * 118;
+        el('line', { x1: x, y1: 392, x2: x, y2: 408, stroke: '#1B3FA0', 'stroke-width': 3 }, g);
+        const t = el('text', { x, y: 440, 'text-anchor': 'middle', fill: '#56608A' }, g); t.textContent = n; }
+})();
+
+/* ============================================================
+   FOLIE 14: Hinweise, die auf die Nacht zurückzeigen
+   ============================================================ */
+(function clues() {
+    const g = document.getElementById('clues');
+    const list = [[520, 'Adams', 'Wunden', 3], [770, 'Perücke', 'fehlt', 3], [1020, 'zwei Schläge', 'auf den Kopf', 4], [1270, 'Spur', 'im Schnee', 4], [1500, 'Eve nennt', 'den Täter', 4]];
+    list.forEach(([x, a, b, step], i) => {
+        const d = (i % 3) * .25;
+        const grp = el('g', { class: 's', 'data-s': step, style: `--d:${d}s` }, g);
+        el('circle', { cx: x, cy: 420, r: 17, fill: '#1B3FA0' }, grp);
+        const t1 = el('text', { x, y: 474, 'text-anchor': 'middle' }, grp); t1.textContent = a;
+        const t2 = el('text', { x, y: 506, 'text-anchor': 'middle' }, grp); t2.textContent = b;
+        const h = 40 + (x - 170) * 0.06;
+        el('path', { d: `M${x} 398 Q${(x + 190) / 2} ${398 - h * 2} 214 356`, fill: 'none', stroke: '#C5512B', 'stroke-width': 5, pathLength: 1,
+            class: 'draw s mk', 'data-s': step, style: `--d:${d + .25}s`, 'marker-end': 'url(#ahR)' }, g);
+    });
+})();
+
+/* ============================================================
+   PUNKTESTAND auf den Prüf-Folien
+   ============================================================ */
+const RESULT = ['pass', 'half', 'break', 'half', 'half', 'half'], SIGN = { pass: '✓', half: '½', break: '✕' };
+document.querySelectorAll('.score').forEach(sc => {
+    const k = +sc.dataset.k, done = sc.dataset.done ? k : k - 1;
+    sc.innerHTML = RESULT.map((r, i) => i < done ? `<i class="${r}">${SIGN[r]}</i>` : `<i class="${i === k - 1 ? 'now' : ''}">${i + 1}</i>`).join('');
+});
+
+/* ============================================================
+   FOLIEN-STEUERUNG
+   Weiter: erst Schritte der Folie aufdecken, dann nächste Folie
+   ============================================================ */
+class SlidePresentation {
+    constructor() {
+        this.slides = [...document.querySelectorAll('.slide')];
+        this.i = 0; this.step = 0;
+        this.all = location.search.includes('all');   // ?all zeigt alles sofort (zum Prüfen)
+        this.stage = document.getElementById('deckStage');
+        this.notes = document.getElementById('notesPanel');
+        this.slides.forEach((s, n) => {
+            s.dataset.max = Math.max(0, ...[...s.querySelectorAll('[data-s]')].map(e => +e.dataset.s));
+            if (n > 0) s.insertAdjacentHTML('beforeend', `<div class="foot"><span>Der zerbrochne Krug · Lut &amp; Erik</span><span>${String(n + 1).padStart(2, '0')} / ${this.slides.length}</span></div>`);
+        });
+        this.scale(); addEventListener('resize', () => this.scale());
+        this.keys(); this.touch(); this.wheel();
+        const start = parseInt(location.hash.slice(1)) - 1;
+        this.show(isNaN(start) ? 0 : start);
+    }
+    scale() {
+        const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+        this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+    }
+    keys() {
+        addEventListener('keydown', e => {
+            if (document.body.classList.contains('editing') && e.target.isContentEditable) return;
+            if (['ArrowRight', 'ArrowDown', ' ', 'PageDown', 'Enter'].includes(e.key)) { e.preventDefault(); this.next(); }
+            if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); this.prev(); }
+            if (e.key === 'Home') this.show(0);
+            if (e.key === 'End') this.show(this.slides.length - 1);
+            if (e.key === 'n' || e.key === 'N') this.notes.classList.toggle('show');
+            if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+        });
+    }
+    touch() {
+        let x0 = null, y0 = null;
+        addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+        addEventListener('touchend', e => {
+            if (x0 == null || document.body.classList.contains('editing')) return;
+            const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) dx < 0 ? this.next() : this.prev();
+            else if (Math.abs(dx) < 10 && Math.abs(dy) < 10) e.changedTouches[0].clientX > innerWidth / 3 ? this.next() : this.prev();
+            x0 = null;
+        });
+    }
+    wheel() {
+        let lock = false;
+        addEventListener('wheel', e => { if (lock || Math.abs(e.deltaY) < 30) return; lock = true; e.deltaY > 0 ? this.next() : this.prev(); setTimeout(() => lock = false, 600); }, { passive: true });
+    }
+    next() { const s = this.slides[this.i]; if (this.step < +s.dataset.max) { this.step++; this.apply(); } else this.show(this.i + 1); }
+    prev() { if (this.step > 0) { this.step--; this.apply(); } else this.show(this.i - 1, true); }
+    apply() {
+        const s = this.slides[this.i];
+        s.querySelectorAll('[data-s]').forEach(e => e.classList.toggle('on', +e.dataset.s <= this.step));
+    }
+    show(n, back = false) {
+        n = Math.max(0, Math.min(n, this.slides.length - 1));
+        if (n !== this.i) this.slides[this.i].querySelectorAll('[data-s]').forEach(e => e.classList.remove('on'));
+        this.slides.forEach((s, k) => { s.classList.toggle('active', k === n); s.classList.toggle('visible', k === n); });
+        this.i = n;
+        const s = this.slides[n];
+        this.step = (back || this.all) ? +s.dataset.max : 0;
+        this.apply();
+        history.replaceState(null, '', location.search + '#' + (n + 1));
+        document.getElementById('progress').style.width = ((n + 1) / this.slides.length * 100) + '%';
+        const note = s.querySelector('.notes');
+        document.getElementById('notesWho').textContent = `FOLIE ${n + 1} / ${this.slides.length} · ${s.dataset.title.toUpperCase()} · VORSCHLAG: ${(s.dataset.who || '').toUpperCase()}`;
+        document.getElementById('notesText').textContent = note ? note.textContent : '';
+    }
+}
+const deck = new SlidePresentation();
+
+/* ============================================================
+   TEXT BEARBEITEN (E oder Ecke oben links), speichert im Browser
+   ============================================================ */
+const editor = {
+    isActive: false,
+    key: 'krug-praesentation-symbolik-edits-v1',
+    items: [...document.querySelectorAll('.slide h1, .slide h2, .slide h3, .slide h4, .slide p, .slide li, .slide .card > b, .slide .card > strong, .slide .card > span')],
+    load() { try { const s = JSON.parse(localStorage.getItem(this.key) || '{}'); this.items.forEach((e, i) => { if (s[i] != null) e.innerHTML = s[i]; }); } catch (_) {} },
+    save() { try { const s = {}; this.items.forEach((e, i) => s[i] = e.innerHTML); localStorage.setItem(this.key, JSON.stringify(s)); } catch (_) {} },
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        this.items.forEach(e => e.contentEditable = this.isActive);
+        const b = document.getElementById('editToggle');
+        b.classList.toggle('active', this.isActive); b.textContent = this.isActive ? '✓ Fertig' : '✎ Bearbeiten';
+        if (!this.isActive) this.save();
+    }
+};
+editor.load();
+const hot = document.getElementById('editHot'), tog = document.getElementById('editToggle'); let hideT = null;
+tog.addEventListener('click', () => editor.toggleEditMode());
+hot.addEventListener('click', () => editor.toggleEditMode());
+hot.addEventListener('mouseenter', () => { clearTimeout(hideT); tog.classList.add('show'); });
+hot.addEventListener('mouseleave', () => { hideT = setTimeout(() => { if (!editor.isActive) tog.classList.remove('show'); }, 400); });
+tog.addEventListener('mouseenter', () => clearTimeout(hideT));
+tog.addEventListener('mouseleave', () => { hideT = setTimeout(() => { if (!editor.isActive) tog.classList.remove('show'); }, 400); });
+addEventListener('keydown', e => { if ((e.key === 'e' || e.key === 'E') && !e.target.isContentEditable) editor.toggleEditMode(); });
+addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); editor.save(); } });
+</script>
+</body>
+</html>
