@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Präsis">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="../manifest.webmanifest">
+<title>Bismarck und die Reichsgründung</title>
+<!-- Stand: 2026-11-20 21:55, Claude -->
+<style>
+:root{
+  /* Layout: iOS-artige Lernseite, Reiterleiste oben, eine Spalte max. 760px */
+  --bg:#000;--card:#1c1c1e;--card2:#2c2c2e;--sep:#38383a;--ink:#fff;--ink2:#a1a1a8;--line:#48484a;
+  --blue:#0a84ff;--green:#30d158;--red:#ff453a;--orange:#ff9f0a;--purple:#bf5af2;--thumb:#636366;--bar:rgba(22,22,24,.86);
+  --hlbg:rgba(10,132,255,.12);--errbg:rgba(255,69,58,.12);--okbg:rgba(48,209,88,.12);--kernbg:rgba(255,69,58,.14);--onblue:#fff;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,Roboto,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f2f2f7;--card:#fff;--card2:#efeff4;--sep:#d1d1d6;--ink:#000;--ink2:#6c6c70;--line:#c7c7cc;
+  --blue:#007aff;--green:#1f8a3b;--red:#d70015;--orange:#b25000;--purple:#8944ab;--thumb:#fff;--bar:rgba(249,249,249,.88);
+  --hlbg:rgba(0,122,255,.08);--errbg:rgba(215,0,21,.07);--okbg:rgba(31,138,59,.08);--kernbg:rgba(215,0,21,.08);color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f2f2f7;--card:#fff;--card2:#efeff4;--sep:#d1d1d6;--ink:#000;--ink2:#6c6c70;--line:#c7c7cc;
+  --blue:#007aff;--green:#1f8a3b;--red:#d70015;--orange:#b25000;--purple:#8944ab;--thumb:#fff;--bar:rgba(249,249,249,.88);
+  --hlbg:rgba(0,122,255,.08);--errbg:rgba(215,0,21,.07);--okbg:rgba(31,138,59,.08);--kernbg:rgba(215,0,21,.08);color-scheme:light}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font:15px/1.5 var(--font);color:var(--ink);background:var(--bg);overflow-wrap:anywhere;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.01em}
+h1{font-size:1.6rem;margin:4px 0 6px} h2{font-size:1.15rem;margin:22px 0 8px} h3{font-size:1rem;margin:14px 0 4px}
+p{margin:.45em 0} ul,ol{margin:.35em 0;padding-left:1.3em} li{margin:.25em 0}
+a{color:var(--blue)} b{font-weight:600}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.muted{color:var(--ink2)} .small{font-size:.83rem}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bar);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--sep)}
+.bar{max-width:760px;margin:0 auto;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;gap:10px;align-items:center}
+nav{display:flex;gap:2px;background:var(--card2);border-radius:9px;padding:2px;overflow-x:auto;scrollbar-width:none;flex:1}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:none;padding:6px 11px;border-radius:7px;font-size:.84rem;font-weight:500;min-height:32px}
+nav button[aria-current]{background:var(--thumb);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+#theme{width:34px;height:34px;border-radius:50%;color:var(--blue);flex:none;font-size:1.1rem}
+main{max-width:760px;margin:0 auto;padding-block:14px 90px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{display:none} section.on{display:block}
+.card{background:var(--card);border-radius:12px;padding:14px 16px;margin:0 0 12px}
+.tag{display:inline-block;font-size:.72rem;font-weight:600;border-radius:999px;padding:1px 8px;margin-right:4px;vertical-align:1px}
+.t1{background:rgba(48,209,88,.18);color:var(--green)} .t2{background:rgba(10,132,255,.18);color:var(--blue)} .t3{background:rgba(191,90,242,.2);color:var(--purple)}
+.warn{border-left:3px solid var(--orange)}
+.task{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:.5px solid var(--sep)}
+.task:first-of-type{border-top:0}
+.task input{width:22px;height:22px;margin-top:2px;accent-color:var(--green);flex:none}
+.task .min{margin-left:auto;color:var(--ink2);font-size:.8rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.task.done .body{opacity:.45;text-decoration:line-through}
+.prog{height:6px;background:var(--card2);border-radius:3px;overflow:hidden;margin:8px 0 2px}
+.prog i{display:block;height:100%;background:var(--green);width:0;transition:width .3s}
+details{background:var(--card2);border-radius:10px;margin:8px 0;padding:0 12px}
+details>summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--blue);list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";display:inline-block;transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}
+details[open]{padding-bottom:10px}
+.src{font-family:var(--serif);font-size:1.02rem;line-height:1.75;counter-reset:z}
+.src span{display:block;padding-left:2.4em;position:relative}
+.src span::before{counter-increment:z;content:counter(z);position:absolute;left:0;width:1.8em;text-align:right;color:var(--ink2);font:.75rem/1.75rem var(--font)}
+.src span:nth-child(5n)::before{color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:6px 0}
+th,td{text-align:left;vertical-align:top;padding:7px 8px;border-top:.5px solid var(--sep)}
+th{color:var(--ink2);font-weight:500;font-size:.78rem}
+.tl td:first-child{white-space:nowrap;font-weight:600;font-variant-numeric:tabular-nums;color:var(--orange)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.fc{background:var(--card);border-radius:12px;padding:12px;min-height:92px;text-align:left;display:flex;flex-direction:column;justify-content:center}
+.fc .a{display:none;color:var(--ink2);font-size:.88rem;margin-top:6px}
+.fc.flip .a{display:block}
+.fc .q{font-weight:600}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.btn{background:var(--card2);border-radius:10px;padding:8px 14px;min-height:38px;font-weight:500;color:var(--blue)}
+.btn.pri{background:var(--blue);color:var(--onblue)}
+#timer{font-size:2rem;font-weight:700;font-variant-numeric:tabular-nums}
+.quote{border-left:3px solid var(--blue);padding:2px 0 2px 12px;margin:8px 0;font-family:var(--serif)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem}
+.kv b{color:var(--ink2);font-weight:500}
+.hl{background:var(--hlbg)}
+.merk{margin:.6em 0 0;padding:6px 10px;border-radius:8px;background:var(--okbg);font-weight:600}
+.scroll{overflow-x:auto}
+.err{display:grid;gap:2px;padding:9px 0;border-top:.5px solid var(--sep)}
+.err:first-child{border-top:0}
+.err s{color:var(--red);text-decoration-thickness:1px;font-size:.88rem}
+.err span{padding-left:10px;border-left:3px solid var(--green)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{background:var(--card2);border-radius:999px;padding:4px 10px;font-size:.85rem}
+ul.bau{list-style:none;padding-left:0}
+ul.bau li{background:var(--card2);border-radius:8px;padding:6px 10px;margin:5px 0;font-family:var(--serif)}
+td.num,.tl td:first-child{white-space:nowrap;font-weight:600;font-variant-numeric:tabular-nums;color:var(--orange)}
+tr.kern td{background:var(--kernbg)}
+.quiz details{background:transparent;border-top:.5px solid var(--sep);border-radius:0;margin:0}
+.quiz details:first-child{border-top:0}
+.quiz summary{color:var(--ink)}
+.quiz details p{margin:0 0 4px;color:var(--ink2)}
+.center{text-align:center;justify-content:center}
+.big{font-size:2.4rem;font-weight:700;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+<nav id="tabs">
+<button data-t="morgen">Morgen 15 min</button>
+<button data-t="crash" aria-current="page">Crashkurs</button>
+<button data-t="methode">Schema</button>
+<button data-t="fehler">Fehler &amp; Tipps</button>
+<button data-t="rede">Rede</button>
+<button data-t="stoff">Stoff</button>
+<button data-t="aufg">Aufgaben</button>
+<button data-t="karten">Karten</button>
+<button data-t="probe">Probeklausur</button>
+</nav>
+<button id="theme" aria-label="Hell oder dunkel">◐</button>
+</div></header>
+<main>
+
+<!-- ================= MORGEN ================= -->
+<section id="morgen">
+<h1>15 Minuten vor der Klausur</h1>
+<p class="muted">Fünf Blöcke à 3 Minuten. Nur lesen und laut aufsagen, nichts Neues lernen.</p>
+<div class="card center"><div id="mtimer" class="big">15:00</div>
+<div class="row center"><button class="btn pri" id="mgo">Start</button><button class="btn" id="mreset">Zurücksetzen</button></div>
+<p class="small muted" id="mblock">Block 1 von 5</p></div>
+
+<h2>1 · Der rote Faden <span class="muted small">3 min</span></h2>
+<div class="card">
+<p><b>Einheit + Freiheit</b> wollen die Deutschen. 1848 von unten: beides scheitert. 1871 von oben: Einheit ja, Freiheit nur halb.</p>
+<div class="scroll"><table class="tl">
+<tr><td>1815</td><td>Wiener Kongress, Deutscher Bund, 39 Staaten, lose</td></tr>
+<tr><td>1848/49</td><td>Paulskirche, Friedrich Wilhelm IV. (König!) lehnt Krone ab, Armeen beenden Revolution</td></tr>
+<tr><td>1850</td><td>Olmütz, Deutscher Bund zurück; Preußen wird reich (Zollverein)</td></tr>
+<tr><td>1862</td><td>Verfassungskonflikt, 30.9. Blut-und-Eisen-Rede, Lückentheorie</td></tr>
+<tr><td>1864</td><td>Dänemark (mit Österreich)</td></tr>
+<tr><td>1866</td><td>Österreich, Königgrätz → Norddeutscher Bund (<b>Norden</b>), Indemnität</td></tr>
+<tr><td>1870/71</td><td>Frankreich, Emser Depesche, Sedan → <b>Süden</b> tritt bei</td></tr>
+<tr><td>18.1.1871</td><td>Versailles, Kaiser Wilhelm I., Kanzler Bismarck</td></tr>
+</table></div></div>
+
+<h2>2 · Drei Begriffe, die sitzen müssen <span class="muted small">3 min</span></h2>
+<div class="card">
+<p><b>Lückentheorie:</b> Die Verfassung regelt nicht, was passiert, wenn König und Parlament sich nicht einigen. In dieser Lücke entscheidet der König, also regiert Bismarck ohne bewilligtes Budget weiter.</p>
+<p><b>Indemnität (1866):</b> Das Parlament genehmigt nachträglich die Ausgaben von 1862–66. Die Liberalen stellen Einheit über Freiheit.</p>
+<p><b>Reichsgründung von oben:</b> durch Fürsten, Militär und Bismarcks Kriege, nicht durch Volk und Parlament wie 1848. Beleg: Versailles, nur Fürsten und Offiziere.</p>
+</div>
+
+<h2>3 · Die Rede in 30 Sekunden <span class="muted small">3 min</span></h2>
+<div class="card">
+<p><b>Wer, wann, wo:</b> Bismarck, 30.9.1862, nichtöffentliche Budgetkommission, Protokoll (teils indirekte Rede), vor liberalen Abgeordneten im Streit um die Heeresreform.</p>
+<p><b>Kern:</b> „Ihr wollt Einheit? Die kommt nicht durch Reden wie 1848, sondern durch Militär. Also bewilligt das Geld.“</p>
+<div class="scroll"><table>
+<tr><th>Stelle</th><th>Mittel</th><th>Wirkung</th></tr>
+<tr><td>„keine Schande, sondern eine Ehre“ (Z. 6 f.)</td><td>Umdeutung, Antithese</td><td>Krise = Standhaftigkeit</td></tr>
+<tr><td>zu „gebildet“ (Z. 7)</td><td>Ironie</td><td>verspottet die Kritiker</td></tr>
+<tr><td>„katilinarischer Existenzen“ (Z. 10 f.)</td><td>Diffamierung</td><td>Opposition = Verschwörer</td></tr>
+<tr><td>„zu große Rüstung für unsern schmalen Leib“ (Z. 21 f.)</td><td>Metapher</td><td>Missverhältnis Anspruch/Größe, Armee nutzen</td></tr>
+<tr><td>„nicht durch Reden … sondern durch Eisen und Blut“ (Z. 30–33)</td><td>Antithese, Pointe, Metonymie</td><td>Krieg als einziger Weg; Eisen = Waffen, Blut = Opfer</td></tr>
+<tr><td>„der große Fehler von 1848 und 1849“ (Z. 32)</td><td>Negativbeispiel</td><td>hält Liberalen ihr Scheitern vor</td></tr>
+<tr><td>„Weg der Verständigung“ (Z. 34 f.)</td><td>versöhnlicher Schluss</td><td>Schuld fürs Scheitern beim Parlament</td></tr>
+</table></div>
+<p><b>Absicht:</b> Heeresreform durchsetzen, Einheit als Köder, König über Parlament. Hat nicht geklappt, Bismarck regierte ohne Budget.</p>
+</div>
+
+<h2>4 · Das Schema <span class="muted small">3 min</span></h2>
+<div class="card"><ol>
+<li><b>Einleitung:</b> wer, was (Gattung), <b>wann</b>, wo, <b>an wen</b>, Anlass, Thema, <b>Absicht</b>.</li>
+<li><b>Inhalt:</b> Gedankengang, Konjunktiv I, Zeilen.</li>
+<li><b>Sprache:</b> Mittel + Zitat (Z.) + Wirkung.</li>
+<li><b>Kontext:</b> Wissen immer an eine Textstelle binden.</li>
+<li><b>Urteil:</b> Sachurteil, Einschränkung (Protokoll, Taktik, kein Masterplan), Werturteil, Fazit.</li>
+</ol>
+<p class="quote">Bei der vorliegenden Quelle handelt es sich um …, die … am … vor … hielt. Anlass ist … . Thema ist … . Er verfolgt die Absicht, … .</p></div>
+
+<h2>5 · Nicht vergessen <span class="muted small">3 min</span></h2>
+<div class="card"><ul>
+<li>Operatoren unterstreichen, jeden Spiegelstrich abhaken.</li>
+<li>Friedrich Wilhelm IV. = <b>König</b>. 1866 <b>Norden</b>, 1871 <b>Süden</b>. Krieg <b>1870</b>/71.</li>
+<li>Missver<b>hältnis</b>, nicht Missverständnis. <b>Staaten</b>, nicht Nationen.</li>
+<li>Bismarck regiert 1862 <b>Preußen</b>, nicht Deutschland.</li>
+<li>Hinter jede Aussage <b>(Z. …)</b>.</li>
+<li>Erst 15 Minuten planen, dann schreiben.</li>
+</ul>
+<p class="merk">Du kannst das.</p></div>
+</section>
+
+<!-- ================= CRASHKURS ================= -->
+<section id="crash" class="on">
+<h1>Crashkurs 1815–1871</h1>
+<p class="muted">Klausur morgen. Alles aus dem Chat vom 19. und 20.11. an einem Ort.</p>
+
+<div class="card"><b>Heute Abend, dann schlafen</b>
+<label class="task"><input type="checkbox" data-k="n1"><div class="body"><b>Schema und Formulierungen</b><br><span class="small muted">Reiter „Schema“: die vier Teile und die Satzbausteine laut lesen.</span></div><span class="min">20 min</span></label>
+<label class="task"><input type="checkbox" data-k="n2"><div class="body"><b>Deine Fehler</b><br><span class="small muted">Reiter „Fehler“: jeden Fehler einmal richtig aufsagen.</span></div><span class="min">10 min</span></label>
+<label class="task"><input type="checkbox" data-k="n3"><div class="body"><b>Story einmal lesen</b><br><span class="small muted">Diese Seite, Kapitel 1–6.</span></div><span class="min">10 min</span></label>
+<label class="task"><input type="checkbox" data-k="n4"><div class="body"><b>Quiz unten abdecken und beantworten</b></div><span class="min">10 min</span></label>
+<label class="task"><input type="checkbox" data-k="n5"><div class="body"><b>Morgen früh</b><br><span class="small muted">Lückentheorie-Satz, 1866 Norden / 1871 Süden, Einleitungs-Bausteine. Mehr nicht.</span></div><span class="min">15 min</span></label>
+<div class="prog"><i id="pbar"></i></div><span class="small muted" id="ptxt"></span>
+</div>
+
+<div class="card hl"><b>Der rote Faden:</b> Die Deutschen wollen zwei Dinge, <b>Einheit</b> (ein Staat statt vieler) und <b>Freiheit</b> (Verfassung, Parlament, Grundrechte). 1848 scheitert beides. 1871 kommt die Einheit, aber von oben und durch Krieg, die Freiheit nur zur Hälfte.</div>
+
+<h2>Kapitel 1 · 1815: Kein Deutschland</h2>
+<div class="card"><ul>
+<li>Napoleon ist besiegt. In den <b>Befreiungskriegen 1813</b> kämpften die Deutschen gemeinsam, seitdem fühlen sich viele als <b>eine Nation</b>.</li>
+<li><b>Wiener Kongress 1815</b>: Statt eines Staates entsteht der <b>Deutsche Bund</b>, <b>39 Staaten</b> mit eigenen Fürsten, nur lose verbunden.</li>
+<li>Die zwei Großen: <b>Österreich</b> und <b>Preußen</b>. Preußen ist in zwei Teile zerrissen (Osten und Rheinland/Westfalen).</li>
+<li>Die Fürsten regieren allein, Zensur gegen Kritik.</li>
+</ul><p class="merk">Bürger wollen Einheit und Freiheit, Fürsten keins von beiden.</p></div>
+
+<h2>Kapitel 2 · 1848/49: Revolution von unten</h2>
+<div class="card"><ul>
+<li><b>März 1848</b>: Aufstände in vielen Städten, Barrikaden in Berlin. Die Fürsten geben nach.</li>
+<li><b>Paulskirche Frankfurt</b>: erste gewählte Nationalversammlung. Grundrechte, Verfassung.</li>
+<li>Streit: <b>großdeutsch</b> (mit Österreich) oder <b>kleindeutsch</b> (ohne, unter Preußen). Am Ende kleindeutsch.</li>
+<li><b>1849</b>: Der preußische <b>König Friedrich Wilhelm IV.</b> lehnt die Kaiserkrone ab.</li>
+<li>Die Fürsten schlagen die Revolution mit ihren <b>Armeen</b> nieder.</li>
+<li>Dunkle Seiten (Gall): judenfeindliche Ausschreitungen, expansiver Nationalismus.</li>
+</ul><p class="merk">Gescheitert, weil das Parlament keine Macht und keine Armee hatte, nur Reden und Beschlüsse.</p></div>
+
+<h2>Kapitel 3 · 1850er: Rückschritt, aber Preußen wird stark</h2>
+<div class="card"><ul>
+<li><b>Olmütz 1850</b>: Preußen muss Österreich nachgeben, der Deutsche Bund ist zurück. Wieder Zensur.</li>
+<li>Preußen wird reich: Industrie und <b>Zollverein</b> (ohne Österreich). Geld für eine starke Armee.</li>
+<li>Österreich: arm, agrarisch, Vielvölkerstaat.</li>
+<li>Die Liberalen werden wieder aktiv: <b>Nationalverein 1859</b>, <b>Fortschrittspartei 1861</b>.</li>
+<li>Krimkrieg 1853–56: Machtvakuum in Europa, das Preußen nutzt.</li>
+</ul><p class="merk">Wirtschaftlich ist Preußen jetzt der Stärkere.</p></div>
+
+<h2>Kapitel 4 · 1862: Verfassungskonflikt</h2>
+<div class="card"><ul>
+<li><b>König Wilhelm I.</b> will eine größere Armee (150.000 → 220.000 Mann, drei Jahre Dienst).</li>
+<li>Über das Geld entscheidet das <b>Parlament</b> (Budgetrecht). Die liberale Mehrheit sagt <b>Nein</b>.</li>
+<li>Im Kern: <b>Wer ist der Chef, König oder Parlament?</b></li>
+<li><b>23.9.1862</b> Bismarck wird Ministerpräsident, <b>30.9.1862</b> Blut-und-Eisen-Rede.</li>
+<li>Die Abgeordneten bleiben beim Nein. Bismarck regiert weiter mit der <b>Lückentheorie</b>:</li>
+</ul>
+<p class="quote">Die Verfassung regelt nicht, was passiert, wenn König und Parlament sich nicht einigen. In dieser <b>Lücke</b> entscheidet der König, also regiert Bismarck ohne bewilligtes Budget weiter.</p>
+<ul><li>Die Steuern laufen weiter, das Heer wird trotzdem vergrößert. Damit gewinnt Preußen 1864 und 1866.</li></ul>
+<p class="merk">Bismarck stellt Macht über das Parlament.</p></div>
+
+<h2>Kapitel 5 · Drei Kriege: D – Ö – F</h2>
+<div class="card scroll"><table>
+<tr><th>Jahr</th><th>Gegner</th><th>Was passiert</th><th>Ergebnis</th></tr>
+<tr><td><b>1864</b></td><td><b>D</b>änemark</td><td>Dänemark will Schleswig. Preußen und Österreich kämpfen <b>gemeinsam</b>.</td><td>Schleswig-Holstein gemeinsam verwaltet</td></tr>
+<tr><td><b>1866</b></td><td><b>Ö</b>sterreich</td><td>Streit um Schleswig-Holstein, Preußen gegen Österreich. <b>Königgrätz</b>.</td><td>Österreich raus, Deutscher Bund aufgelöst, Annexion Hannover u. a., <b>Norddeutscher Bund</b> (nur der <b>Norden</b>)</td></tr>
+<tr><td><b>1870/71</b></td><td><b>F</b>rankreich</td><td><b>Emser Depesche</b>, Frankreich erklärt den Krieg. Die Südstaaten kämpfen mit. <b>Sedan</b> (2.9.1870).</td><td>Bayern, Württemberg, Baden treten bei: der <b>Süden</b> kommt dazu</td></tr>
+</table>
+<p><b>Indemnität 1866:</b> Das Parlament genehmigt <b>nachträglich</b> die Ausgaben von 1862 bis 1866. Die meisten Liberalen sagen Ja, weil der Erfolg sie überzeugt: <b>Einheit vor Freiheit</b>. Die Fortschrittspartei spaltet sich, die Nationalliberalen entstehen.</p>
+<p class="merk">1866 der Norden, 1871 der Süden.</p></div>
+
+<h2>Kapitel 6 · 18. Januar 1871: Kaiserreich</h2>
+<div class="card"><ul>
+<li>Ausrufung im <b>Spiegelsaal von Versailles</b>, mitten im besiegten Frankreich.</li>
+<li><b>Wilhelm I.</b> wird Kaiser, <b>Bismarck</b> Reichskanzler.</li>
+<li>Im Saal Fürsten und Offiziere, das Volk und das Parlament spielen keine Rolle: <b>Reichsgründung von oben</b>.</li>
+<li>Frankfurter Frieden: 5 Milliarden Franc, Elsass-Lothringen.</li>
+</ul></div>
+
+<h2>1848 und 1871 im Vergleich</h2>
+<div class="card scroll"><table>
+<tr><th></th><th>1848</th><th>1871</th></tr>
+<tr><td><b>Wer?</b></td><td>Volk, Parlament (von unten)</td><td>Fürsten, Bismarck, Armee (von oben)</td></tr>
+<tr><td><b>Womit?</b></td><td>Reden, Abstimmungen</td><td>Krieg, „Eisen und Blut“</td></tr>
+<tr><td><b>Einheit</b></td><td>❌ gescheitert</td><td>✅ erreicht (kleindeutsch)</td></tr>
+<tr><td><b>Freiheit</b></td><td>✅ Ziel (Grundrechte)</td><td>⚠️ halb: Reichstag mit Männerwahlrecht, aber Kaiser und Kanzler bestimmen</td></tr>
+</table>
+<p class="quote">1871 wurde das Ziel der Einheit erreicht, aber nicht auf dem Weg von 1848 durch das Volk, sondern von oben durch Bismarcks Machtpolitik und drei Kriege; die Freiheit blieb dabei auf der Strecke.</p></div>
+
+<h2>Quiz</h2>
+<p class="muted small">Erst selbst antworten, dann aufklappen.</p>
+<div class="card quiz">
+<details><summary>Welche zwei Dinge wollten die Deutschen im 19. Jahrhundert?</summary><p>Einheit (ein Nationalstaat) und Freiheit (Verfassung, Parlament, Grundrechte).</p></details>
+<details><summary>Was war der Deutsche Bund?</summary><p>Ab 1815 (Wiener Kongress) ein loser Bund von 39 selbstständigen Staaten mit eigenen Fürsten, kein gemeinsamer Staat.</p></details>
+<details><summary>Warum ist 1848 gescheitert?</summary><p>Der preußische König Friedrich Wilhelm IV. lehnte 1849 die Kaiserkrone ab, die Fürsten schlugen die Revolution mit ihren Armeen nieder. Das Parlament hatte keine eigene Macht und keine Armee.</p></details>
+<details><summary>Worüber streiten König und Parlament 1862?</summary><p>Über das Geld für die Heeresreform. Eigentlich darüber, wer der Chef ist: König oder Parlament.</p></details>
+<details><summary>Erkläre die Lückentheorie.</summary><p>Die Verfassung regelt nicht, was bei Uneinigkeit von König und Parlament passiert. In dieser Lücke entscheidet der König, also regiert Bismarck ohne bewilligtes Budget weiter.</p></details>
+<details><summary>Was ist die Indemnität, und warum sagen die Liberalen 1866 Ja?</summary><p>Die nachträgliche Genehmigung der Ausgaben von 1862 bis 1866. Die Liberalen sind vom Sieg über Österreich beeindruckt und stellen die Einheit über die Freiheit.</p></details>
+<details><summary>Drei Kriege mit Jahr und Gegner, und was kam wann zusammen?</summary><p>1864 Dänemark, 1866 Österreich, 1870/71 Frankreich. 1866 der Norden (Norddeutscher Bund), 1871 der Süden (Bayern, Württemberg, Baden).</p></details>
+<details><summary>Wann und wo wurde das Kaiserreich ausgerufen? Kaiser? Kanzler?</summary><p>18. Januar 1871, Spiegelsaal von Versailles. Kaiser Wilhelm I., Reichskanzler Bismarck.</p></details>
+<details><summary>Was heißt „Reichsgründung von oben“?</summary><p>Das Reich entstand durch Fürsten, Militär und Bismarcks Machtpolitik, nicht durch Volk und Parlament wie 1848. Beleg: In Versailles standen nur Fürsten und Offiziere.</p></details>
+<details><summary>Vor wem spricht Bismarck, und warum ist die nichtöffentliche Sitzung wichtig?</summary><p>Vor den Abgeordneten der Budgetkommission, mehrheitlich Liberale. Weil er glaubte, niemand außerhalb höre zu, sprach er besonders offen. Die Rede zeigt daher unverstellt sein Politikverständnis. Sie wurde trotzdem bekannt und löste Empörung aus.</p></details>
+<details><summary>Was meint „zu große Rüstung für unsern schmalen Leib“?</summary><p>Teil 1: Preußen will mehr sein, als es ist (Großmacht, Führung in Deutschland), ist dafür aber zu klein und hat schlechte Grenzen. Missverhältnis von Anspruch und Größe. Teil 2: Die Rüstung, also die Armee, soll man auch benutzen („utilisieren“).</p></details>
+<details><summary>Was ist „der große Fehler von 1848 und 1849“?</summary><p>Die Einheit über „Reden und Majoritätsbeschlüsse“ erreichen zu wollen, also über das Parlament ohne Macht. Damit hält er den Liberalen ihr eigenes Scheitern vor.</p></details>
+<details><summary>Was bedeuten „Eisen“ und „Blut“?</summary><p>Eisen = Waffen, Armee, Rüstung. Blut = Opfer und Tote. Gemeint ist Krieg, ohne das Wort zu sagen. Anspielung auf Schenkendorf und die Befreiungskriege.</p></details>
+<details><summary>Was will Bismarck kurzfristig erreichen? Hat es geklappt?</summary><p>Die Bewilligung des Geldes für die Heeresreform. Er verknüpft das Ziel der Liberalen (Einheit) mit seinem Mittel (Armee). Es klappte nicht, er regierte danach ohne Budget weiter.</p></details>
+<details><summary>Was gehört in die Einleitung?</summary><p>Wer (Autor und Funktion), was (Gattung), wann (Datum), wo (Ort), an wen (Adressat), Anlass, Thema, vorläufige Absicht.</p></details>
+<details><summary>Zwei Einschränkungen für die Beurteilung der Rede?</summary><p>Nur ein Protokoll, teils in indirekter Rede. Taktische Werbung für die Heeresreform vor feindlichem Publikum, kein Kriegsplan. Die Einigung folgte keinem fertigen Plan, Bismarck nutzte Gelegenheiten (1864, 1870).</p></details>
+<details><summary>Warum ist der Streit für Bismarck eine „Ehre“?</summary><p>Er dreht den Vorwurf um: Die Krise zeige nicht Versagen, sondern Standhaftigkeit der Regierung gegenüber dem Parlament (monarchisches Prinzip).</p></details>
+<details><summary>Was meint „Revision der Grenzen“?</summary><p>Änderung der Grenzen von 1815, die Preußen in zwei Teile zerrissen. 1866 annektiert Preußen Hannover, Kurhessen, Nassau und Frankfurt und hat erstmals ein geschlossenes Gebiet.</p></details>
+</div>
+</section>
+
+<!-- ================= FEHLER ================= -->
+<section id="fehler">
+<h1>Deine Fehler und Tipps</h1>
+<p class="muted">Aus den Quizrunden und deinen Stichpunkten vom 20.11. Jeder Fehler mit der richtigen Fassung.</p>
+
+<h2>Fakten</h2>
+<div class="card">
+<div class="err"><s>39 Nationen, vereint im Deutschen Bund</s><span>39 <b>Staaten</b> einer Nation, nur <b>lose verbunden</b>, jeder blieb selbstständig.</span></div>
+<div class="err"><s>Kaiser Friedrich Wilhelm IV.</s><span><b>König</b> von Preußen. Kaiser wird erst 1871 <b>Wilhelm I.</b></span></div>
+<div class="err"><s>Lückentheorie = König und Parlament streiten</s><span>Die <b>Lücke</b> erklären: Verfassung regelt den Streitfall nicht, also entscheidet der König, Bismarck regiert ohne Budget.</span></div>
+<div class="err"><s>1866 haben sich Nord und Süd vereint</s><span>1866 nur der <b>Norden</b> (Norddeutscher Bund). Der <b>Süden</b> erst 1870/71.</span></div>
+<div class="err"><s>Krieg gegen Frankreich 1871</s><span><b>1870/71</b>. Kaiserproklamation am <b>18. Januar 1871</b>.</span></div>
+<div class="err"><s>Bismarck regiert Deutschland (1862)</s><span>Er regiert <b>Preußen</b>. Deutschland als Staat gibt es noch nicht.</span></div>
+<div class="err"><s>Preußen hatte vorher schon am meisten Macht</s><span>Preußen <b>wollte</b> die Vorherrschaft erst bekommen, vor allem gegen Österreich.</span></div>
+<div class="err"><s>1848 hat man einen Teil Deutschlands verloren</s><span>Verloren ging die <b>Chance auf Einheit</b>, danach war alles wie vorher.</span></div>
+</div>
+
+<h2>Rede</h2>
+<div class="card">
+<div class="err"><s>Nichtöffentlich, damit niemand den Streit sieht</s><span>Der Streit war bekannt. Wichtig: Bismarck sprach <b>besonders offen</b>, die Rede zeigt sein echtes Denken.</span></div>
+<div class="err"><s>Rüstung = Preußen könnte mehr Macht ausschöpfen</s><span><b>Zwei Teile</b>: Anspruch größer als tatsächliche Größe (Missverhältnis) <b>und</b> die Armee auch einsetzen.</span></div>
+<div class="err"><s>Missverständnis von Anspruch und Größe</s><span><b>Missverhältnis</b>.</span></div>
+<div class="err"><s>Ironie: das deutsche Volk braucht keine Verfassung</s><span>Er spricht vom <b>preußischen</b> Volk. Wirkung: Er <b>verspottet die liberalen Kritiker</b>.</span></div>
+<div class="err"><s>Bismarck sieht sich gezwungen, Preußen zu retten</s><span>Er sieht sich als <b>Diener des preußischen Staates</b>, über Parteien und Parlament.</span></div>
+</div>
+
+<h2>Handwerk</h2>
+<div class="card">
+<div class="err"><s>Einleitung: wer, was, wo, Thema</s><span>Es fehlten <b>wann</b> (30.9.1862), <b>an wen</b> (Budgetkommission) und die <b>Absicht</b>.</span></div>
+<div class="err"><s>Stichpunkte ohne Zeilenangaben</s><span>Hinter jede Aussage <b>(Z. …)</b>. Fehlende Belege kosten Punkte.</span></div>
+<div class="err"><s>Teil 1 ohne Bewertung von 1848, Teil 3 ohne „Eisen und Blut“</s><span>Beides fragt der Lehrer <b>ausdrücklich</b>. Jeden Spiegelstrich der Aufgabe abhaken.</span></div>
+<div class="err"><s>Nur das Ergebnis, kein Weg</s><span>Immer: <b>Mittel + Zitat mit Zeile + Wirkung</b>, und beim Urteil <b>begründen</b>.</span></div>
+</div>
+
+<h2>Top-Tipps für morgen</h2>
+<div class="card"><ol>
+<li><b>Operator lesen und unterstreichen.</b> Analysieren ≠ erläutern ≠ beurteilen. Der Operator bestimmt, was Punkte gibt.</li>
+<li><b>Aufgabe in Spiegelstriche zerlegen</b> und am Ende abhaken, ob jeder bearbeitet ist.</li>
+<li><b>Erst 15 Minuten planen</b>: Quelle zweimal lesen, mit Farben markieren, Gliederung in Stichpunkten.</li>
+<li><b>Nicht nacherzählen</b>, sondern deuten: Was sagt er, wie sagt er es, warum sagt er es?</li>
+<li><b>Konjunktiv I</b> für Aussagen des Autors: er behauptet, Preußen <i>müsse</i> …, die Presse <i>sei</i> …</li>
+<li><b>Kontext immer an die Quelle binden</b>: „Bismarcks Hinweis auf … (Z. …) bezieht sich auf …“</li>
+<li><b>Fachbegriffe</b> benutzen (Liste unten).</li>
+<li><b>Ein Absatz pro Gedanke</b>, Überleitungen zwischen den Teilen.</li>
+<li><b>Klares Fazit</b>: Einerseits, andererseits, insgesamt.</li>
+<li><b>Zeit im Blick</b>: Bei der letzten Aufgabe nicht mit leeren Händen dastehen. Lieber Stichpunkte als nichts.</li>
+</ol></div>
+
+<h2>Fachbegriffe, die du benutzen solltest</h2>
+<div class="card chips">
+<span>Verfassungskonflikt</span><span>Heeresreform</span><span>Budgetrecht</span><span>Lückentheorie</span><span>Indemnität</span><span>monarchisches Prinzip</span><span>Realpolitik</span><span>Machtpolitik</span><span>preußische Staatsräson</span><span>kleindeutsche Lösung</span><span>Dualismus</span><span>Deutscher Bund</span><span>Norddeutscher Bund</span><span>Einigungskriege</span><span>Emser Depesche</span><span>Reichsgründung von oben</span><span>Revolution von oben</span><span>Nationalliberale</span><span>Standortgebundenheit</span></div>
+
+<h2>Wenn eine Karikatur drankommt</h2>
+<div class="card"><ol>
+<li><b>Einleitung:</b> Zeichner, Zeitschrift (Land!), Datum, Titel und Bildunterschrift.</li>
+<li><b>Beschreiben:</b> was man sieht, von groß nach klein, ohne Deutung.</li>
+<li><b>Deuten:</b> Wofür stehen Figuren und Symbole? (Pickelhaube = preußisches Militär, Hand von oben = Macht/Bismarck, kleine Figuren = Einzelstaaten.) Wortspiele in der Unterschrift erklären.</li>
+<li><b>Einordnen:</b> Welches Ereignis ist gemeint?</li>
+<li><b>Beurteilen:</b> Position des Zeichners und Standort (z. B. Österreich nach 1866, Frankreich 1867).</li>
+</ol></div>
+</section>
+
+<!-- ================= METHODE ================= -->
+<section id="methode">
+<h1>Schema und Formulierungen</h1>
+<p class="muted">Die Aufgabe deines Lehrers zur Bismarck-Rede folgt genau diesem Aufbau. Rechne damit, dass die Klausur ähnlich aussieht: analysieren (Teil 1), in den Kontext einordnen (Teil 2), beurteilen oder erörtern (Teil 3).</p>
+<div class="card hl"><b>Klausur in 180 Minuten</b> (wenn drei Aufgaben)
+<div class="scroll"><table>
+<tr><td class="num">15 min</td><td>Aufgaben lesen, Operatoren unterstreichen, Quelle zweimal lesen und markieren, Gliederung</td></tr>
+<tr><td class="num">70 min</td><td>Aufgabe 1: Analyse (Einleitung, Inhalt mit Zeilen, Sprache, Absicht)</td></tr>
+<tr><td class="num">40 min</td><td>Aufgabe 2: Einordnen / Erläutern</td></tr>
+<tr><td class="num">40 min</td><td>Aufgabe 3: Beurteilen / Erörtern</td></tr>
+<tr><td class="num">15 min</td><td>Durchlesen: Zeilen, Konjunktiv, jeder Spiegelstrich bearbeitet?</td></tr>
+</table></div></div>
+
+<h2>Klausurformulierungen</h2>
+
+<div class="card"><h3>1 · Einleitung</h3>
+<p class="quote">Bei der vorliegenden Quelle handelt es sich um [Gattung: das Protokoll einer Rede / einen Brief / eine Karikatur], die [Autor, Funktion] am [Datum] in/vor [Ort, Adressat] [gehalten / verfasst] hat. Anlass ist [Anlass]. Die Quelle thematisiert [Thema]. [Autor] verfolgt dabei vermutlich die Absicht, [Absicht].</p>
+<details><summary>Fertige Einleitung zur Bismarck-Rede</summary>
+<p class="quote">Bei der vorliegenden Quelle handelt es sich um das Protokoll einer Rede, die Otto von Bismarck am 30. September 1862, eine Woche nach seiner Ernennung zum preußischen Ministerpräsidenten, vor der nichtöffentlichen Budgetkommission des preußischen Abgeordnetenhauses hielt. Anlass ist der Verfassungskonflikt um die Heeresreform, in dem die liberale Mehrheit die Bewilligung der Mittel verweigert. Bismarck thematisiert, mit welchen Mitteln Preußen die deutsche Frage lösen soll, und will die Abgeordneten dazu bewegen, der Heeresreform zuzustimmen.</p></details>
+</div>
+
+<div class="card"><h3>2 · Inhalt und Gedankengang</h3>
+<ul class="bau">
+<li>Zu Beginn stellt Bismarck fest, dass … (Z. …).</li>
+<li>Daran anknüpfend kritisiert er …</li>
+<li>Im Anschluss begründet er seine Position damit, dass …</li>
+<li>Den Höhepunkt seiner Argumentation bildet die These, …</li>
+<li>Abschließend bietet er … an (Z. …).</li>
+</ul>
+<p class="small"><b>Verben statt „sagt“:</b> behauptet, betont, kritisiert, fordert, wirft vor, unterstellt, wertet ab, rechtfertigt, warnt, deutet um, appelliert an, räumt ein.</p>
+<p class="small"><b>Konjunktiv I:</b> er sei, er habe, er müsse, er könne, es werde, sie hätten (wenn Konjunktiv I gleich Indikativ: Konjunktiv II).</p>
+<p class="quote">Bismarck behauptet, nicht der Liberalismus, sondern die Macht Preußens sei für Deutschland entscheidend (Z. 22–24).</p>
+</div>
+
+<div class="card"><h3>3 · Sprachliche Mittel</h3>
+<p class="small">Muster: <b>Mittel + Zitat mit Zeile + Wirkung/Funktion</b></p>
+<ul class="bau">
+<li>Durch die Metapher „…“ (Z. …) veranschaulicht Bismarck …, wodurch …</li>
+<li>Mit der Antithese „nicht … sondern …“ (Z. …) stellt er … gegenüber und suggeriert, dass es keine Alternative gibt.</li>
+<li>Die rhetorische Frage „…“ (Z. …) soll die Zuhörer dazu bringen, …</li>
+<li>Indem er „…“ ironisch in Anführungszeichen setzt (Z. …), macht er sich über … lustig.</li>
+<li>Die Wir-Form (Z. …) schafft Nähe zu den Abgeordneten und vereinnahmt sie.</li>
+<li>Der knappe, parataktische Satzbau (Z. …) lässt seine Aussagen wie unumstößliche Tatsachen wirken.</li>
+</ul>
+<details><summary>Fertiger Absatz zu „Eisen und Blut“</summary>
+<p class="quote">Den Höhepunkt der Rede bildet die Antithese „nicht durch Reden und Majoritätsbeschlüsse […], sondern durch Eisen und Blut“ (Z. 30–33). Die Paarformel steht metonymisch für Waffen und die Opfer der Soldaten, also für Krieg, ohne dass Bismarck das Wort ausspricht. Durch die Stellung am Satzende wirkt sie wie eine einprägsame Pointe. Zugleich spielt sie auf ein Gedicht Schenkendorfs aus den Befreiungskriegen an und appelliert damit an das Nationalgefühl gerade der liberalen Abgeordneten. Der Einschub „das ist der große Fehler von 1848 und 1849 gewesen“ (Z. 31 f.) hält ihnen ihr eigenes Scheitern vor.</p></details>
+</div>
+
+<div class="card"><h3>4 · Absicht und Kontext</h3>
+<ul class="bau">
+<li>Um die Rede zu verstehen, muss man sie in den Kontext des preußischen Verfassungskonflikts einordnen: …</li>
+<li>Bismarcks Hinweis auf … (Z. …) bezieht sich auf …</li>
+<li>Vor diesem Hintergrund wird deutlich, dass Bismarck vor allem das Ziel verfolgt, …</li>
+<li>Geschickt verknüpft er das Ziel der Liberalen, die nationale Einheit, mit seinem eigenen Mittel, der Armee.</li>
+</ul></div>
+
+<div class="card"><h3>5 · Beurteilung</h3>
+<ul class="bau">
+<li><b>Sachurteil:</b> Die Rede lässt deutlich erkennen, dass … Dafür spricht …</li>
+<li><b>Einschränkung:</b> Einschränkend ist zu berücksichtigen, dass die Rede nur als Protokoll und teils in indirekter Rede überliefert ist.</li>
+<li><b>Standort:</b> Als neuer Ministerpräsident im Konflikt mit dem Parlament hatte Bismarck ein Interesse daran, …</li>
+<li><b>Abwägen:</b> Zwar …, jedoch … / Einerseits …, andererseits …</li>
+<li><b>Werturteil:</b> Aus heutiger Sicht ist … kritisch zu bewerten, da …</li>
+<li><b>Fazit:</b> Insgesamt lässt sich festhalten, dass …</li>
+</ul></div>
+
+<div class="card"><h3>6 · Erörterung (falls gefragt)</h3>
+<ul class="bau">
+<li>Die These, dass …, lässt sich unter mehreren Gesichtspunkten prüfen.</li>
+<li>Für die These spricht zunächst, dass …</li>
+<li>Darüber hinaus …</li>
+<li>Dagegen lässt sich jedoch einwenden, dass …</li>
+<li>Wägt man die Argumente ab, so zeigt sich, dass …</li>
+</ul></div>
+
+<h2>Die Grundlagen</h2>
+
+
+<div class="card">
+<h3>1 · Einleitung (formale Merkmale)</h3>
+<p>Ein bis drei Sätze mit allen W-Fragen:</p>
+<div class="kv"><b>Wer?</b><span>Autor/Sprecher und seine Stellung zu dieser Zeit</span>
+<b>Was?</b><span>Quellengattung (Rede, Protokoll, Tagebuch, Brief, Karikatur …)</span>
+<b>Wann, wo?</b><span>Datum, Ort, Anlass</span>
+<b>An wen?</b><span>Adressat, öffentlich oder privat</span>
+<b>Worüber?</b><span>Thema in einem Satz</span>
+<b>Wozu?</b><span>Intention, vorläufig</span></div>
+<p class="quote">Bei der vorliegenden Quelle handelt es sich um den Bericht über eine Rede, die Otto von Bismarck eine Woche nach seiner Ernennung zum preußischen Ministerpräsidenten am 30. September 1862 vor der Budgetkommission des preußischen Abgeordnetenhauses hielt. Thema ist die Frage, mit welchen Mitteln Preußen die deutsche Frage lösen soll; Bismarck will die liberale Mehrheit zur Zustimmung zur Heeresreform bewegen.</p>
+</div>
+
+<div class="card">
+<h3>2 · Inhalt und Argumentation (Hauptteil)</h3>
+<ul>
+<li>Nicht nacherzählen, sondern <b>Gedankengang</b> strukturieren: These → Begründung → Beispiel → Schlussfolgerung.</li>
+<li>Jede Aussage mit <b>Zeilenangabe</b> belegen (vgl. Z. 7–9).</li>
+<li>Den Autor in <b>indirekter Rede</b> wiedergeben (Konjunktiv I): „Bismarck behauptet, Preußen müsse seine Kraft zusammenfassen.“</li>
+<li><b>Sprachliche Mittel</b> immer mit Funktion: Mittel + Beleg + Wirkung. Nur „Er benutzt eine Metapher“ bringt keine Punkte.</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>3 · Historischer Kontext (Einordnung)</h3>
+<p>Was musste man 1862 (bzw. zum Zeitpunkt der Quelle) wissen, um die Quelle zu verstehen? Vorgeschichte, aktuelle Lage, Folgen. Wissen aus dem Unterricht immer <b>mit der Quelle verbinden</b>: „Bismarcks Hinweis auf den ‚Fehler von 1848 und 1849‘ bezieht sich auf …“</p>
+</div>
+
+<div class="card">
+<h3>4 · Beurteilung</h3>
+<ul>
+<li><b>Sachurteil:</b> Ist die Aussage historisch zutreffend? Was lässt der Autor weg? Standortgebundenheit (wer spricht, in welcher Rolle, mit welchem Interesse)?</li>
+<li><b>Werturteil:</b> Deine eigene, begründete Bewertung aus heutiger Sicht, mit Kriterien (z. B. Freiheit, Rechtsstaat, Menschenleben).</li>
+<li>Abwägen: „Einerseits … andererseits …“, am Ende ein klares Fazit.</li>
+</ul>
+</div>
+
+<h2>Operatoren</h2>
+<div class="card"><table>
+<tr><th>Operator</th><th>AFB</th><th>Was erwartet wird</th></tr>
+<tr><td>beschreiben, zusammenfassen, herausarbeiten</td><td><span class="tag t1">I</span></td><td>Inhalt geordnet und mit eigenen Worten wiedergeben, ohne Wertung</td></tr>
+<tr><td>analysieren</td><td><span class="tag t2">II</span></td><td>Quelle methodisch erschließen: formal, inhaltlich, sprachlich, Absicht</td></tr>
+<tr><td>erläutern, erklären, einordnen</td><td><span class="tag t2">II</span></td><td>mit Kontextwissen verständlich machen, Zusammenhänge zeigen</td></tr>
+<tr><td>vergleichen</td><td><span class="tag t2">II</span></td><td>Gemeinsamkeiten und Unterschiede nach Kriterien</td></tr>
+<tr><td>beurteilen</td><td><span class="tag t3">III</span></td><td>Sachurteil: Stimmigkeit prüfen, begründet entscheiden</td></tr>
+<tr><td>bewerten, Stellung nehmen</td><td><span class="tag t3">III</span></td><td>zusätzlich Werturteil mit offengelegten Maßstäben</td></tr>
+<tr><td>erörtern, diskutieren</td><td><span class="tag t3">III</span></td><td>Pro und Contra abwägen, eigenes Urteil am Ende</td></tr>
+</table>
+<p class="small muted">Vollständige Liste im Buch S. 476–479, Klausurtipps S. 470 f.</p></div>
+</section>
+
+<!-- ================= STOFF ================= -->
+<section id="stoff">
+<h1>Vom Scheitern 1849 zur Reichsgründung 1871</h1>
+<p class="muted">Kurz gefasst aus S. 284–287 (neu) und S. 58–59 (gelb).</p>
+
+<h2>Zeitleiste</h2>
+<div class="card"><table class="tl">
+<tr><td>1849</td><td>Friedrich Wilhelm IV. lehnt die Kaiserkrone der Paulskirche ab, die Revolution scheitert.</td></tr>
+<tr><td>1850</td><td>Vertrag von Olmütz: Preußen gibt seinen Unionsplan auf, der Deutsche Bund wird wiederhergestellt. Die Mittelstaaten fürchten preußische Vorherrschaft.</td></tr>
+<tr><td>1851/54</td><td>Reaktion: Bundesreaktionsbeschluss gegen die Pressefreiheit, Bundes-Vereinsgesetz gegen Parteien.</td></tr>
+<tr><td>1853–56</td><td>Krimkrieg: Preußen bleibt neutral, Österreich isoliert sich. Später entsteht ein Machtvakuum in Europa, das Preußen nutzt.</td></tr>
+<tr><td>1858–61</td><td>„Neue Ära“ unter Wilhelm I. (König ab 1861), Politisierung: Nationalverein 1859 (kleindeutsch), Fortschrittspartei 1861, ADAV 1863.</td></tr>
+<tr><td>1862</td><td><b>Verfassungskonflikt</b> um die Heeresreform. 23.9. Bismarck wird Ministerpräsident, 30.9. Blut-und-Eisen-Rede. Er regiert bis 1866 ohne bewilligtes Budget (Lückentheorie).</td></tr>
+<tr><td>1864</td><td>Deutsch-Dänischer Krieg um Schleswig und Holstein (Preußen und Österreich gegen Dänemark).</td></tr>
+<tr><td>1866</td><td>Preußisch-Österreichischer Krieg, Königgrätz (3.7.), Prager Frieden (23.8.): Deutscher Bund aufgelöst, Annexion von Hannover, Kurhessen, Hessen-Nassau und Frankfurt. <b>Indemnitätsvorlage</b>: Das Parlament billigt nachträglich die Ausgaben, die Fortschrittspartei spaltet sich (Nationalliberale).</td></tr>
+<tr><td>1867</td><td>Norddeutscher Bund mit Verfassung und Reichstag (allgemeines Männerwahlrecht), von Preußen dominiert. Süddeutsche Staaten über Schutz- und Trutzbündnisse und den Zollverein angebunden.</td></tr>
+<tr><td>1870</td><td>Spanische Thronkandidatur eines Hohenzollern, <b>Emser Depesche</b> (13.7., von Bismarck verkürzt und zugespitzt), Frankreich erklärt den Krieg. Sedan (2.9.), Napoleon III. gefangen. Im November treten die süddeutschen Staaten bei, unter Druck und mit Zugeständnissen.</td></tr>
+<tr><td>18.1.1871</td><td>Kaiserproklamation im Spiegelsaal von Versailles, Wilhelm I. wird „Deutscher Kaiser“. Frankfurter Frieden 10.5.1871: 5 Milliarden Franc, Elsass-Lothringen.</td></tr>
+</table></div>
+
+<h2>Die fünf Kernpunkte</h2>
+<div class="card"><h3>1 · Nach 1849: Unterdrückung und Aufbruch</h3>
+<p>Die Fürsten stellen die alte Ordnung wieder her, doch Bevölkerung, Industrie und Vereinsleben (Sänger, Schützen, Turner) wachsen. Die nationale Idee lebt weiter. Aber: Viele ordnen ihre liberalen Ideen bald dem „machtpolitischen Kalkül Preußens“ unter.</p></div>
+
+<div class="card"><h3>2 · Dualismus Preußen–Österreich</h3>
+<p>Preußen führt den Zollverein, wächst wirtschaftlich und kann ein starkes Heer bezahlen. Österreich ist agrarisch, hat wenig Steuereinnahmen, ist ein Vielvölkerstaat und will den Status quo bewahren. Das läuft auf die <b>kleindeutsche Lösung</b> ohne Österreich hinaus.</p></div>
+
+<div class="card"><h3>3 · Der preußische Verfassungskonflikt (1862–1866)</h3>
+<ul>
+<li>Wilhelm I. will das Heer reformieren: Friedensstärke 150.000 → 220.000 Mann, drei Jahre Dienstzeit, Landwehr (Bürgermiliz) wird abgewertet.</li>
+<li>Die liberale Fortschrittspartei stimmt mehr Soldaten zu, lehnt aber Dienstzeit und Entmachtung der Landwehr ab, weil das die Idee vom wehrhaften Bürger aushöhlt. Sie droht, den ganzen Haushalt abzulehnen.</li>
+<li>Im Kern geht es darum, <b>wer im Staat entscheidet</b>: Krone (monarchisches Prinzip, Heer als Stütze des Königs) oder Parlament (Budgetrecht).</li>
+<li>Bismarck, ein Gegner jeder liberalen Modernisierung, wird als „Retter“ des Königs berufen. Mit der <b>Lückentheorie</b> argumentiert er: Wenn Krone und Parlament sich nicht einigen, schweigt die Verfassung, und der König darf weiterregieren. Er regiert vier Jahre ohne Budget.</li>
+<li>Nach dem Sieg 1866 bittet er mit der <b>Indemnitätsvorlage</b> nachträglich um Zustimmung, ein indirektes Eingeständnis des Verfassungsbruchs. Die Mehrheit stimmt zu: „Einheit vor Freiheit“ (Realpolitik).</li>
+</ul></div>
+
+<div class="card"><h3>4 · Drei Einigungskriege: Plan oder Gelegenheit?</h3>
+<ul>
+<li><b>1864</b> kaum geplant. Bismarck nutzt die nationale Empörung über Dänemark für Preußens Interesse.</li>
+<li><b>1866</b> vorbereitet: Verträge mit Italien, Frankreich und Russland sichern Handlungsfreiheit. Nach dem Sieg ist er milde zu Österreich, um es nicht zum Dauerfeind zu machen.</li>
+<li><b>1870</b> nicht von langer Hand geplant, aber entschlossen ausgelöst (Emser Depesche).</li>
+<li>Burckhardt: „Ich werde es selbst tun“, die Kriege 64, 66, 70 als logische Kette. Das Buch hält dagegen: Bismarck nutzte Spielräume, reagierte aber ebenso oft.</li>
+<li>Jacoby (Liberaldemokrat): 1866 sei ein <b>Bruderkrieg</b>, „Einheit ohne Freiheit“ habe keinen Wert. Baumgarten (1866): Die Einheit habe „ein anderes Gesicht, als die liberale Fantasie sich ausgemalt hatte“.</li>
+</ul></div>
+
+<div class="card"><h3>5 · Reichsgründung „von oben“</h3>
+<p>Das Reich entsteht durch Fürsten, Militär und Diplomatie, nicht durch das Volk wie 1848. Inszenierung: Versailles (Demütigung Frankreichs), 18. Januar ist der Gründungstag des preußischen Königtums 1701, Abgeordnete spielen kaum eine Rolle. Werner: „in prunklosester Weise und außerordentlicher Kürze“. Nipperdey: Das Kaiserreich war „vieles zugleich“: Bundesstaat, konstitutioneller Verfassungsstaat, Kaiserstaat, preußischer Hegemonialstaat, Macht- und Militärstaat, vor allem ein Nationalstaat. Im Volk wird lange der <b>Sedanstag</b> (2.9.) gefeiert, nicht der 18.1.</p></div>
+
+<h2>Bezug zu 1848: Freiheit verloren, Einheit gewonnen?</h2>
+<div class="card">
+<table><tr><th></th><th>1848/49</th><th>1871</th></tr>
+<tr><td><b>Weg</b></td><td>von unten (Volk, Parlament)</td><td>von oben (Fürsten, Krieg)</td></tr>
+<tr><td><b>Einheit</b></td><td>gescheitert (Krone abgelehnt)</td><td>erreicht, kleindeutsch</td></tr>
+<tr><td><b>Freiheit</b></td><td>Grundrechte, Volkssouveränität</td><td>Reichstag mit allg. Wahlrecht, aber Kanzler nur dem Kaiser verantwortlich, keine Grundrechte in der Verfassung</td></tr>
+<tr><td><b>Träger</b></td><td>Bürgertum, Liberale, Demokraten</td><td>Monarchie, Militär, Bismarck; Liberale passen sich an</td></tr>
+</table>
+</div>
+<h2>Lothar Gall: „Die dunklen Seiten von 1848“</h2>
+<div class="card">
+<p class="small muted">Interview, DER SPIEGEL 7/1998 (8.2.1998), zum 150. Jahrestag der Revolution. Gall (damals 61) war Professor für Neuere Geschichte in Frankfurt, leitete die Frankfurter Ausstellung „Aufbruch zur Freiheit“ und schrieb 1980 die Biografie „Bismarck. Der weiße Revolutionär“. Gattung: <b>Darstellung</b> (Historikerurteil), keine Quelle aus der Zeit.</p>
+<h3>Galls Kernthesen</h3>
+<ol>
+<li><b>Kein Sonderweg:</b> Deutsche Geschichte ist keine „Einbahnstraße ins Dritte Reich“. Die These vom zwangsläufigen Weg Bismarck → Wilhelm II. → Hitler sei unter Historikern aufgegeben. Jede Generation trägt eigene Verantwortung.</li>
+<li><b>1848 wirkt fort:</b> Grundrechte, Parlamentarismus und demokratische Legitimation gehen auf 1848 zurück. Die Bundesrepublik kann und soll sich darauf berufen.</li>
+<li><b>Bismarck setzt 1848 teilweise um:</b> Er musste „zum Schrecken seiner Standesgenossen“ viele Forderungen von 1848 erfüllen, um sich zu behaupten (Nationalstaat, allgemeines Wahlrecht, Reichstag). Daher der Titel „weißer Revolutionär“: ein Konservativer, der revolutionär handelt.</li>
+<li><b>Dunkle Seiten:</b> judenfeindliche Ausschreitungen, vor allem auf dem Land, und ein massiver, expansiver Nationalismus (Träume vom großdeutschen Reich „zwischen Nordsee und Schwarzem Meer“). Gall unterscheidet den alten, religiös geprägten Judenhass vom späteren völkisch-rassistischen Antisemitismus.</li>
+<li><b>Zwei Seiten der Nation:</b> eine dunkle (militant, intolerant, expansiv) und eine helle (verschiedene Gruppen über gemeinsame Ideen zu einem freien Gemeinwesen vereinen).</li>
+<li><b>Bismarck nutzt das:</b> Er stellt sich gegenüber den Großmächten als „Bändiger des deutschen Nationalismus“ dar.</li>
+<li><b>Warum 1848 scheiterte:</b> nicht am langen Debattieren (gegen Engels) und nicht am Volk, sondern an den Gegnern der Revolution, vor allem dem Adel, der anders als in England nicht reformbereit war. Die Gegenrevolution der Großmächte Österreich und Preußen gab den Ausschlag. Die Begeisterung ließ erst im Herbst 1848 nach, als viele ihre Existenz bedroht sahen.</li>
+<li><b>Gemäßigte Ziele:</b> Aus Angst vor einer Schreckensherrschaft wie 1789 wollten die meisten Bürger keine Dauerrevolution, sondern Ordnung durch Parlament und Verfassung.</li>
+</ol>
+</div>
+
+<div class="card"><b>Wie du Gall in der Klausur nutzt</b>
+<ul class="small">
+<li>Bei Fragen wie „Erfüllung von 1848?“: Gall liefert das Argument, dass Bismarck Forderungen von 1848 umsetzte, die Freiheitsideen aber erst später (Bundesrepublik) voll wirksam wurden.</li>
+<li>Bei Bismarck/Blut und Eisen: „weißer Revolutionär“ und „Bändiger des Nationalismus“ als Gegenbild zum reinen Machtpolitiker.</li>
+<li>Bei Bewertungen der Reichsgründung: Vorsicht vor der Sonderweg-These. Nicht schreiben „1871 führte direkt zu Hitler“, sondern abwägen.</li>
+<li>Standort Galls: 1998, Ausstellungsmacher zum Jubiläum, deshalb eher positive Deutung von 1848 („Aufbruch zur Freiheit“).</li>
+</ul></div>
+
+<div class="card"><b><span class="tag t1">I</span> G1 · Fassen Sie Galls Position zur These vom deutschen Sonderweg zusammen.</b>
+<details><summary>Lösung</summary><p class="small">Gall lehnt die Sonderweg-These ab. Das Scheitern von 1848 und die Wiederherstellung der alten Mächte hätten zwar „manche verhängnisvolle Entwicklung begünstigt“, aber Menschen seien „nicht bloße Marionetten der Geschichte“. Es gab nach 1849 weiter Chancen für Demokratie, weil die Ideen von 1848 fortlebten und die Liberalen ab Ende der 1850er wieder erstarkten.</p></details></div>
+
+<div class="card"><b><span class="tag t2">II</span> G2 · Erläutern Sie, was Gall mit den „dunklen Seiten“ von 1848 meint, und ordnen Sie sie historisch ein.</b>
+<details><summary>Lösung</summary><div class="small"><ul>
+<li>Antijüdische Ausschreitungen 1848, vor allem auf dem Land. Hintergrund: alter, religiös geprägter Judenhass, dazu wirtschaftliche Not und Vorurteile gegen jüdische Geldverleiher. Gall grenzt das vom späteren rassistischen Antisemitismus ab.</li>
+<li>Expansiver Nationalismus: großdeutsche Träume, im Unterricht konkret die Polendebatte der Paulskirche (Jordan: „gesunder Volksegoismus“), der Krieg um Schleswig, die Ablehnung tschechischer Ansprüche.</li>
+<li>Einordnung: Nationalismus war 1848 zugleich Freiheitsidee und Abgrenzung gegen andere. Diese doppelte Seite wirkt bis ins Kaiserreich (Imperialismus unter Wilhelm II.).</li>
+</ul></div></details></div>
+
+<div class="card"><b><span class="tag t3">III</span> G3 · „Bismarck – der weiße Revolutionär.“ Beurteilen Sie Galls Urteil mithilfe der Blut-und-Eisen-Rede und der Reichsgründung.</b>
+<details><summary>Tipp</summary><p class="small">„Weiß“ ist die Farbe der Konservativen und Royalisten (Gegenfarbe zu Rot). Prüfe: Was war daran revolutionär, was konservativ?</p></details>
+<details><summary>Lösung</summary><div class="small">
+<p><b>Revolutionär:</b> Er zerschlug die Ordnung von 1815 (Deutscher Bund aufgelöst, Fürsten abgesetzt: Hannover, Kurhessen, Nassau), schuf den Nationalstaat, den 1848 nicht erreicht hatte, und führte das allgemeine Männerwahlrecht ein. Disraeli nannte das 1871 sogar „die deutsche Revolution“ (Q10).</p>
+<p><b>Konservativ („weiß“):</b> Ziel war die Stärkung der Monarchie und Preußens, nicht Volkssouveränität. Die Blut-und-Eisen-Rede verachtet Mehrheitsbeschlüsse und Parlament, er regierte ohne Budget. Das Reich entstand von oben, durch Fürsten und Militär (Q5, Q6).</p>
+<p><b>Urteil:</b> Treffend. Bismarck nutzte revolutionäre Mittel und Ziele von 1848 (Einheit, Wahlrecht), um eine konservative Ordnung zu sichern und einer Revolution von unten zuvorzukommen (vgl. Burckhardt Q7). Einheit ja, Freiheit nur begrenzt.</p>
+</div></details></div>
+
+<div class="card"><b><span class="tag t3">III</span> G4 · Engels warf der Paulskirche vor, „das deutsche Volk zu langweilen, statt es mit sich fortzureißen“. Erörtern Sie, warum die Revolution 1848/49 scheiterte, und beziehen Sie Gall ein.</b>
+<details><summary>Lösung</summary><div class="small">
+<p><b>Für Engels:</b> Lange Grundrechtsdebatten, während die alten Mächte sich erholten; die Paulskirche hatte kein eigenes Heer und keine Verwaltung; das Bündnis mit den Unterschichten fehlte.</p>
+<p><b>Für Gall:</b> Eine Verfassung ließ sich „nicht im Handumdrehen“ schaffen. Entscheidend war die Gegenrevolution in Österreich und Preußen und ein reformunwilliger Adel. Die Bürger wollten bewusst keine gewaltsame Revolution (Angst vor 1789). Das Volk wandte sich erst ab Herbst 1848 ab, aus wirtschaftlicher Not.</p>
+<p><b>Weitere Gründe aus dem Unterricht:</b> Uneinigkeit über groß- oder kleindeutsch, Spaltung zwischen Liberalen und Demokraten, Ablehnung der Kaiserkrone durch Friedrich Wilhelm IV. 1849.</p>
+<p><b>Fazit:</b> Mehrere Ursachen; ausschlaggebend war die Machtfrage. Das passt ironischerweise zu Bismarcks Satz, die großen Fragen würden „nicht durch Reden und Majoritätsbeschlüsse“ entschieden.</p>
+</div></details></div>
+</section>
+
+<!-- ================= REDE ================= -->
+<section id="rede">
+<h1>Bismarcks „Blut und Eisen“-Rede</h1>
+<p class="muted">Q1, Buch S. 288 f. In der <b>nichtöffentlichen</b> Budgetkommission des preußischen Abgeordnetenhauses antwortete Bismarck am 30. September 1862 auf einen Beitrag zu Bewilligungsrecht und Verfassung. „Eisen und Blut“ verweist auf ein Gedicht Schenkendorfs aus der Zeit der Befreiungskriege. Wiedergabe anhand des Protokolls.</p>
+
+<div class="card src">
+<span>Von der „Nüchternheit“ des preußischen Volkes sei die</span>
+<span>Rede gewesen. Ja, die große Selbstständigkeit des einzelnen</span>
+<span>mache es schwierig in Preußen, mit der Verfassung zu re-</span>
+<span>gieren (oder die Verfassung zu konsolidieren?); in Frank-</span>
+<span>reich sei das anders, da fehle diese individuelle Selbststän-</span>
+<span>digkeit. Eine Verfassungskrisis sei keine Schande, sondern</span>
+<span>eine Ehre. – Wir sind ferner vielleicht zu „gebildet“, um eine</span>
+<span>Verfassung zu tragen; wir sind zu kritisch; die Befähigung,</span>
+<span>Regierungsmaßregeln, Akte der Volksvertretung zu beurtei-</span>
+<span>len, ist zu allgemein; im Lande gibt es eine Menge katili-</span>
+<span>narischer¹ Existenzen, die ein großes Interesse an Umwäl-</span>
+<span>zungen haben. Das mag paradox klingen, beweist aber doch</span>
+<span>alles, wie schwer in Preußen verfassungsmäßiges Leben ist.</span>
+<span>– Man ist ferner zu empfindlich gegen Fehler der Regierung;</span>
+<span>als wenn es genug wäre, zu sagen, der und der Minister hat</span>
+<span>Fehler gemacht, als wenn man nicht selbst mitlitte? – Die</span>
+<span>öffentliche Meinung wechsle, die Presse sei nicht die öffent-</span>
+<span>liche Meinung; man wisse, wie die Presse entstände; die Ab-</span>
+<span>geordneten hätten die höhere Aufgabe, die Stimmung zu lei-</span>
+<span>ten, über ihr zu stehen. Wir haben zu heißes Blut, wir haben</span>
+<span>die Vorliebe, eine zu große Rüstung für unsern schmalen</span>
+<span>Leib zu tragen; nur sollen wir sie auch utilisieren². Nicht auf</span>
+<span>Preußens Liberalismus sieht Deutschland, sondern auf seine</span>
+<span>Macht; Bayern, Württemberg, Baden mögen dem Liberalis-</span>
+<span>mus indulgieren³, darum wird ihnen doch keiner Preußens</span>
+<span>Rolle anweisen; Preußen muss seine Kraft zusammenfassen</span>
+<span>und zusammenhalten auf den günstigen Augenblick, der</span>
+<span>schon einige Male verpasst ist; Preußens Grenzen nach den</span>
+<span>Wiener Verträgen sind zu einem gesunden Staatsleben nicht</span>
+<span>günstig; nicht durch Reden und Majoritätsbeschlüsse wer-</span>
+<span>den die großen Fragen der Zeit entschieden – das ist der</span>
+<span>große Fehler von 1848 und 1849 gewesen – sondern durch</span>
+<span>Eisen und Blut. Die vorjährige Bewilligung sei erfolgt; aus</span>
+<span>welchen Gründen, sei gleichgültig; er suche aufrichtig den</span>
+<span>Weg der Verständigung; ob er ihn finde, hänge nicht allein</span>
+<span>von ihm ab.</span>
+</div>
+<p class="small muted">Wilhelm Schüßler (Hg.), Otto von Bismarck, Reden 1847–1869, Bd. 10 der Gesammelten Werke, Berlin 1924–35, S. 139 f. · ¹ katilinarisch: verschwörerisch (nach Catilina, der mit einer Verschwörung gegen den römischen Staat scheiterte) · ² utilisieren: gebrauchen · ³ indulgieren: nachgiebig reagieren, dulden · Zeilen wie im Buch.</p>
+
+<div class="card hl"><b>Situation in vier Sätzen:</b> Preußen 1862. König Wilhelm I. will eine größere Armee, das liberale Parlament verweigert das Geld, eigentlich geht es darum, wer der Chef ist. Bismarck ist seit einer Woche Regierungschef und spricht in der nichtöffentlichen Budgetkommission vor diesen Abgeordneten. Seine Botschaft: „Ihr wollt ein einiges Deutschland. Das schafft man nicht mit Parlamentsreden wie 1848, sondern nur mit Militär. Also gebt mir das Geld für die Armee.“</div>
+<details open><summary>Die Rede in einfachen Worten</summary>
+<div class="scroll"><table>
+<tr><th>Z.</th><th>Was Bismarck eigentlich sagt</th></tr>
+<tr><td class="num">1–13</td><td>Die Preußen sind so eigenständig und kritisch, dass man mit einer Verfassung schwer regieren kann, und es gibt viele Umstürzler. Der Streit um die Verfassung ist <b>keine Schande, sondern eine Ehre</b>.</td></tr>
+<tr><td class="num">14–16</td><td>Ihr regt euch zu sehr über Fehler der Regierung auf, als würden wir nicht selbst darunter leiden.</td></tr>
+<tr><td class="num">16–20</td><td>Zeitung ist nicht Volksmeinung. Abgeordnete sollen <b>über der Stimmung stehen</b>.</td></tr>
+<tr><td class="num">20–22</td><td>Preußen will mehr sein, als es ist (<b>zu große Rüstung</b>). Dann soll es die Armee auch benutzen.</td></tr>
+<tr><td class="num">22–26</td><td>Deutschland schaut auf Preußens <b>Macht</b>, nicht auf seinen Liberalismus. Die Südstaaten können liberal sein, führen werden sie nicht.</td></tr>
+<tr><td class="num">26–30</td><td>Kraft sammeln, auf den <b>richtigen Moment</b> warten. Grenzen seit 1815 schlecht.</td></tr>
+<tr class="kern"><td class="num">30–33</td><td>Große Fragen löst man nicht mit Reden und Abstimmungen, <b>das war der Fehler von 1848</b>, sondern mit <b>Waffen und Krieg</b>.</td></tr>
+<tr><td class="num">33–36</td><td>Letztes Jahr habt ihr ja auch bewilligt. Ich will mich einigen, aber das <b>hängt auch von euch ab</b>.</td></tr>
+</table></div></details>
+
+<h2>Die Aufgabe deines Lehrers</h2>
+<div class="card small">
+<p>Analysiere die Rede. Arbeite dabei heraus, …</p>
+<ol>
+<li>welche Problemlage Bismarck bei der deutschen Frage beschreibt und wie er die bisherige Politik bewertet,</li>
+<li>welches Verständnis von Politik und Macht dahintersteht (militärische Stärke, Entschlossenheit, Parlament),</li>
+<li>mit welchen sprachlichen und argumentativen Mitteln er überzeugen will, besonders das Bild „Blut und Eisen“,</li>
+<li>welche Absichten er im Kontext von Verfassungskonflikt und Einigungsbestrebungen verfolgt.</li>
+</ol>
+<p>Beurteile abschließend, inwiefern die Rede Bismarcks Selbstverständnis und machtpolitischen Ansatz erkennen lässt.</p>
+<p class="muted">Erst selbst schreiben (ca. 55 min), dann aufklappen.</p>
+</div>
+
+<details><summary>Tipp: Gliederung der Quelle in vier Abschnitte</summary>
+<ol class="small">
+<li><b>Z. 1–16:</b> Warum Verfassungsleben in Preußen schwer ist (zu selbstständig, zu kritisch, Umstürzler, zu empfindlich gegenüber der Regierung). Die Krise sei eine „Ehre“.</li>
+<li><b>Z. 16–20:</b> Öffentliche Meinung und Presse zählen nicht. Abgeordnete sollen über der Stimmung stehen.</li>
+<li><b>Z. 20–33:</b> Kern: Preußens Rolle in Deutschland beruht auf Macht. Kritik an 1848/49, „Eisen und Blut“.</li>
+<li><b>Z. 33–36:</b> Versöhnlicher Schluss mit einem Angebot zur Verständigung.</li>
+</ol></details>
+
+<details><summary>Musterlösung 1 · Einleitung und Problemlage</summary>
+<div class="small">
+<p><b>Einleitung:</b> Die Quelle ist die Wiedergabe einer Rede anhand des Protokolls, großteils in indirekter Rede. Otto von Bismarck hielt sie am 30.9.1862 in der nichtöffentlichen Budgetkommission des preußischen Abgeordnetenhauses, eine Woche nach seiner Ernennung zum Ministerpräsidenten mitten im Verfassungskonflikt um die Heeresreform. Er antwortet auf einen Beitrag zu Bewilligungsrecht und Verfassung. Adressaten sind die Kommissionsmitglieder, mehrheitlich Liberale der Fortschrittspartei, die das Budget verweigern. Thema: Verfassungskonflikt und Weg zur Lösung der deutschen Frage.</p>
+<p><b>Problemlage innen:</b> In Preußen sei Regieren mit der Verfassung schwer, weil die Bürger zu selbstständig, zu „gebildet“ und zu kritisch seien und es viele Umstürzler gebe (Z. 2–13). Man sei zu empfindlich gegenüber Fehlern der Regierung (Z. 14–16).</p>
+<p><b>Problemlage deutsche Frage:</b></p>
+<ul>
+<li>Preußen ist im Verhältnis zu seinem Anspruch zu schwach („zu große Rüstung für unsern schmalen Leib“, Z. 21 f.) und hat seit 1815 ungünstige Grenzen (Z. 28–30).</li>
+<li>Günstige Augenblicke wurden „schon einige Male verpasst“ (Z. 27 f.), gemeint sind vor allem 1849/50 (Kaiserkrone abgelehnt, Olmütz).</li>
+<li>Deutschland erwartet von Preußen Macht, nicht Liberalismus (Z. 22–24).</li>
+</ul>
+<p><b>Bewertung der bisherigen Politik:</b> Der Weg von 1848/49 über „Reden und Majoritätsbeschlüsse“, also Paulskirche und Parlamentarismus, war „der große Fehler“ (Z. 30–32). Der Liberalismus der süddeutschen Staaten wird als bedeutungslos abgetan (Z. 24–26).</p>
+</div></details>
+
+<details><summary>Musterlösung 2 · Politik- und Machtverständnis</summary>
+<div class="small">
+<ul>
+<li><b>Machtpolitik und Realpolitik:</b> Entscheidend sind Machtmittel, nicht Ideen, Recht oder Mehrheiten. Politik ist Kampf um Macht zwischen Staaten.</li>
+<li><b>Militär</b> ist das entscheidende Mittel („Eisen und Blut“, Z. 33). Die vorhandene „Rüstung“ soll man auch „utilisieren“ (Z. 21 f.), also einsetzen. Deshalb braucht Preußen die Heeresreform.</li>
+<li><b>Entschlossenheit:</b> Kraft „zusammenfassen und zusammenhalten auf den günstigen Augenblick“ (Z. 26 f.). Politik heißt, Gelegenheiten abzuwarten und zu nutzen.</li>
+<li><b>Parlament und Öffentlichkeit:</b> Abgeordnete sollen die Stimmung „leiten“ und „über ihr […] stehen“ (Z. 18–20), also nicht dem Volkswillen folgen. Presse und öffentliche Meinung sind wechselhaft und gemacht (Z. 16–18). Kritik an der Regierung erscheint als übertriebene Empfindlichkeit (Z. 14–16), Verfassungstreue sogar als Problem. Ein Konflikt mit dem Parlament ist „keine Schande, sondern eine Ehre“ (Z. 6 f.). Das Parlament soll mitziehen, nicht entscheiden.</li>
+<li>Höchster Wert ist der <b>preußische Staat</b>. Die Einheit Deutschlands ist Mittel zur Machterweiterung Preußens, kein Selbstzweck.</li>
+</ul></div></details>
+
+<details><summary>Musterlösung 3 · Sprachliche und argumentative Mittel</summary>
+<div class="small"><table>
+<tr><th>Mittel</th><th>Beleg</th><th>Funktion</th></tr>
+<tr><td>Umwertung, Antithese</td><td>„keine Schande, sondern eine Ehre“ (Z. 6 f.)</td><td>deutet den Verfassungskonflikt positiv um, die Regierung erscheint standhaft</td></tr>
+<tr><td>Ironie</td><td>zu „gebildet“ in Anführungszeichen (Z. 7), „Nüchternheit“ (Z. 1)</td><td>macht sich über die liberalen Kritiker lustig</td></tr>
+<tr><td>Diffamierung</td><td>„katilinarischer Existenzen“ (Z. 10 f.)</td><td>rückt die Opposition in die Nähe von Verschwörern und Umstürzlern</td></tr>
+<tr><td>Vergleich</td><td>Frankreich (Z. 4–6)</td><td>stellt preußische Eigenart als Grund für die Schwierigkeiten hin</td></tr>
+<tr><td>rhetorische Frage</td><td>„als wenn man nicht selbst mitlitte?“ (Z. 16)</td><td>stellt die Regierung als Teil der Gemeinschaft dar, Kritik als unfair</td></tr>
+<tr><td>Metapher</td><td>„zu große Rüstung für unsern schmalen Leib“ (Z. 21 f.)</td><td>macht das Missverhältnis von Anspruch und Größe anschaulich; Rüstung verweist schon aufs Militär</td></tr>
+<tr><td>Antithese „nicht … sondern“</td><td>Liberalismus ↔ Macht (Z. 22–24); Reden/Mehrheiten ↔ Eisen und Blut (Z. 30–33)</td><td>stellt den liberalen Weg als falsche Alternative hin, eine Mitte gibt es nicht</td></tr>
+<tr><td>Schlusspointe, Klimax</td><td>„sondern durch Eisen und Blut“ am Ende der langen Satzkette (Z. 32 f.)</td><td>einprägsam wie ein Merksatz, alles läuft auf den Krieg zu</td></tr>
+<tr><td>„Eisen und Blut“ (Paarformel, Metonymie, Anspielung)</td><td>Z. 33</td><td>Eisen = Waffen, Rüstung, Industrie; Blut = Opfer der Soldaten. Krieg wird nicht ausgesprochen, aber unmissverständlich angekündigt. Die Anspielung auf Schenkendorf und die Befreiungskriege appelliert an das Nationalgefühl der Liberalen: Wie 1813 gegen Napoleon soll die Nation durch Kampf entstehen. Später als „Blut und Eisen“ zum Schlagwort.</td></tr>
+<tr><td>historisches Negativbeispiel</td><td>„der große Fehler von 1848 und 1849“ (Z. 32)</td><td>Erfahrungsargument, trifft die Liberalen an ihrer wunden Stelle</td></tr>
+<tr><td>Wir-Form</td><td>„Wir haben zu heißes Blut“ (Z. 20)</td><td>schafft Gemeinsamkeit mit den Abgeordneten und vereinnahmt sie</td></tr>
+<tr><td>Generalisierung</td><td>„die großen Fragen der Zeit“ (Z. 31)</td><td>macht seine These zum allgemeinen Gesetz</td></tr>
+<tr><td>Parataxe mit Semikolons</td><td>Z. 22–33</td><td>knappe Behauptungen ohne Begründung, wirkt apodiktisch und selbstsicher</td></tr>
+<tr><td>abwertendes Fremdwort</td><td>„indulgieren“ (Z. 25)</td><td>Liberalismus erscheint als Luxus, als Schwäche</td></tr>
+<tr><td>versöhnlicher Schluss</td><td>„er suche aufrichtig den Weg der Verständigung“ (Z. 34 f.)</td><td>Zuckerbrot nach der Peitsche: Bismarck gibt sich kompromissbereit und schiebt die Verantwortung fürs Scheitern dem Parlament zu („hänge nicht allein von ihm ab“)</td></tr>
+</table>
+<p><b>Argumentativ:</b> Er verknüpft das Ziel der Liberalen (nationale Einheit) mit seinem Mittel (Heer): Wer die Einheit will, muss die Armee bewilligen.</p></div></details>
+
+<details><summary>Musterlösung 4 · Absichten im Kontext</summary>
+<div class="small">
+<ul>
+<li><b>Kurzfristig:</b> Die Budgetkommission soll der Heeresreform zustimmen. Bismarck bietet den Liberalen die nationale Einheit als Lockmittel an und verbindet das mit einem Verständigungsangebot (Z. 33–36).</li>
+<li><b>Innenpolitisch:</b> Stärkung der Krone gegen das Parlament (monarchisches Prinzip). Das Heer bleibt Sache des Königs, der Verfassungskonflikt wird als „Ehre“ durchgestanden.</li>
+<li><b>Außen- und Deutschlandpolitik:</b> preußische Vorherrschaft in Deutschland, Revision der Grenzen von 1815, letztlich gegen Österreich.</li>
+<li><b>Wirkung:</b> Die Rede scheiterte zunächst. Obwohl die Kommission nichtöffentlich tagte, wurde die Rede bekannt und löste Empörung aus. Die Liberalen blieben bei der Ablehnung, Bismarck regierte ohne Budget (Lückentheorie). Erst nach den Siegen 1864/66 schwenkte die Mehrheit um (Indemnität 1866).</li>
+</ul></div></details>
+
+<details><summary>Musterlösung 5 · Beurteilung</summary>
+<div class="small">
+<p><b>Dafür, dass die Rede sein Selbstverständnis zeigt:</b> Bismarck sieht sich als Diener des preußischen Staates, der über Parteien und Parlament steht. Er setzt auf Macht und Militär, die späteren Kriege 1864, 1866 und 1870/71 scheinen die Rede zu bestätigen. Sein Umgang mit der Verfassung (Lückentheorie) passt zur Abwertung von Mehrheitsbeschlüssen und Kritik.</p>
+<p><b>Einschränkungen:</b></p>
+<ul>
+<li>Überliefert ist ein Protokoll, großteils in indirekter Rede, also nicht sein genauer Wortlaut.</li>
+<li>Die Rede fiel in einer nichtöffentlichen Kommission und war taktisch auf ein feindliches Publikum zugeschnitten. Der versöhnliche Schluss zeigt: Sie war Werbung für die Heeresreform, kein Kriegsplan.</li>
+<li>Laut Buch (S. 286 f.) war der Weg zur Einheit kein fertiger Plan: 1864 eine Gelegenheit, 1870 kaum langfristig geplant. Bismarck „reagierte ebenso oft“. Die Rede zeigt also eher die <b>Methode</b> (Macht, Gelegenheit, Entschlossenheit) als einen Fahrplan.</li>
+<li>Diplomatie war ihm mindestens ebenso wichtig wie Krieg: Bündnisse 1866, Milde gegen Österreich.</li>
+</ul>
+<p><b>Fazit:</b> Die Rede zeigt deutlich Bismarcks machtpolitischen, antiparlamentarischen Ansatz. Die nationale Frage ordnet er der preußischen Staatsräson unter. Als „Programm“ der Reichsgründung wurde sie aber erst im Rückblick nach 1871 gelesen, etwa von Burckhardt (Q7: „ipse faciam“).</p>
+</div></details>
+</section>
+
+<!-- ================= AUFGABEN ================= -->
+<section id="aufg">
+<h1>Aufgaben aus dem Unterricht</h1>
+<p class="muted">S. 293 Nr. 2–6 und 10, Quellen Q1–Q10 (S. 288–292). Erst Stichpunkte selbst, dann aufklappen.</p>
+
+<div class="card"><b><span class="tag t2">II</span> A1 · Nr. 3: Erläutern Sie Inhalt und Funktion der Eisen-und-Blut-Rede im Kontext des Jahres 1862.</b>
+<details><summary>Lösung</summary><div class="small"><p>Inhalt siehe Reiter „Blut und Eisen“. <b>Funktion</b> im Verfassungskonflikt: Bismarck will die Blockade um die Heeresreform lösen, indem er Militär und nationale Einheit verknüpft und so die Liberalen umstimmt. Zugleich stellt er klar, dass die Regierung sich nicht dem Parlament unterwirft. Eine Machtdemonstration des neuen Ministerpräsidenten in seiner ersten Woche.</p></div></details></div>
+
+<div class="card"><b><span class="tag t2">II</span> A2 · Nr. 4: Erläutern Sie die mögliche Bedeutung der Rede seit dem Jahr 1871.</b>
+<details><summary>Lösung</summary><div class="small"><ul>
+<li>Nach drei gewonnenen Kriegen erscheint sie als <b>Prophezeiung</b>: Die Einheit kam tatsächlich durch Eisen und Blut.</li>
+<li>Sie wird zum Kern des Mythos vom „Eisernen Kanzler“ und vom genialen Masterplan (vgl. Burckhardt).</li>
+<li>Sie rechtfertigt im Nachhinein den Verfassungsbruch und den Weg „von oben“. Die Liberalen erscheinen widerlegt.</li>
+<li>Sie stärkt Militarismus und Machtstaatsdenken in der politischen Kultur des Kaiserreichs: Militär als Garant der Nation, Sedanstag statt Verfassungstag.</li>
+<li>Aus heutiger Sicht ein Schlüsselsatz für einen deutschen Sonderweg: Einheit vor Freiheit, Krieg als Mittel der Politik.</li>
+</ul></div></details></div>
+
+<div class="card"><b><span class="tag t3">III</span> A3 · Q8 (S. 292): Analysieren Sie die Karikatur „Deutschlands Zukunft“ und erarbeiten Sie ihre Position zur Reichsgründung.</b>
+<details><summary>Tipp</summary><p class="small">Bildbeschreibung → Deutung der Symbole → Bildunterschrift (Wortspiel!) → Standort des Zeichners (österreichische Zeitschrift 1870, nach 1866).</p></details>
+<details><summary>Lösung</summary><div class="small">
+<p><b>Formal:</b> Karikatur aus der österreichischen Satirezeitschrift „Kikeriki“, 1870, also während des Deutsch-Französischen Krieges kurz vor der Reichsgründung.</p>
+<p><b>Beschreibung:</b> Eine Hand im Anzugärmel hält eine riesige preußische Pickelhaube mit Reichsadler an der Spitze und stülpt sie über viele kleine Menschen. Von ihnen sieht man nur noch die Beine. Unterschrift: „Kommt es unter einen Hut? Ich glaube, ’s kommt eher unter eine Pickelhaube!“</p>
+<p><b>Deutung:</b></p><ul>
+<li>„Unter einen Hut bringen“ steht für die Einigung der deutschen Staaten. Die Pickelhaube ist das Symbol preußischen Militärs.</li>
+<li>Die Hand steht für Bismarck bzw. die preußische Führung, die von oben handelt.</li>
+<li>Die kleinen Figuren sind die Deutschen bzw. die Einzelstaaten. Sie werden nicht gefragt, sondern zugedeckt und verlieren Sichtbarkeit und Freiheit.</li></ul>
+<p><b>Position:</b> Kritisch. Die Einheit kommt nicht als freiwilliger Zusammenschluss, sondern als preußische Militärherrschaft. Deutschland wird ein Militärstaat, Freiheit und Eigenständigkeit gehen verloren.</p>
+<p><b>Standort:</b> Österreich ist seit 1866 aus Deutschland ausgeschlossen und Verlierer gegen Preußen. Daraus folgen Misstrauen und Ressentiment gegen Preußen. Die Sicht ist einseitig, trifft aber einen wahren Kern (Reichsgründung von oben, Dominanz Preußens, Nipperdey: „Macht- und Militärstaat“).</p>
+</div></details></div>
+
+<div class="card"><b><span class="tag t3">III</span> A4 · Nr. 5: Diskutieren Sie Ziele und Merkmale der bismarckschen Politik.</b>
+<details><summary>Lösung</summary><div class="small">
+<p><b>Ziele:</b> Preußens Vorherrschaft in Deutschland, kleindeutsche Einheit ohne Österreich, Stärkung der Monarchie gegen das Parlament, Großmachtstellung Preußens in Europa sichern.</p>
+<p><b>Merkmale:</b> Realpolitik, Krieg als Mittel, Gelegenheiten nutzen (Schleswig-Holstein, Emser Depesche), Gegner diplomatisch isolieren (Verträge 1866), Mäßigung nach dem Sieg (Prager Frieden), „Revolution von oben“ mit liberalen Elementen als Werkzeug (allgemeines Wahlrecht im Norddeutschen Bund), Druck und Bestechung (bayerischer König 1870).</p>
+<table><tr><th>Für zielstrebigen Plan</th><th>Dagegen</th></tr>
+<tr><td>Rede 1862 kündigt den Weg an; drei Kriege in kurzer Folge; Burckhardt: „64, 66, 70“ als logische Folge</td><td>1864 kaum geplant; 1870 eher entschlossen genutzt als vorbereitet; Bismarck „reagierte ebenso oft“ (VT)</td></tr>
+<tr><td>Erfolg: Einheit 1871, Liberale bekehrt (Indemnität)</td><td>Preis: Verfassungsbruch, Kriegstote, Einheit ohne Freiheit, Elsass-Lothringen als Dauerkonflikt mit Frankreich</td></tr></table>
+<p><b>Urteil (Beispiel):</b> Bismarck verfolgte ein klares Ziel, Preußens Vormacht, aber keinen festen Fahrplan. Seine Stärke war, Gelegenheiten entschlossen zu nutzen. Die nationale Einheit war dabei Mittel, nicht Zweck. Gemessen an 1848 wurde die Einheit erreicht, die Freiheit aber nur teilweise.</p>
+</div></details></div>
+
+<div class="card"><b><span class="tag t2">II</span> A5 · Nr. 2a/b: Jacoby („Bruderkrieg“, Einheit ohne Freiheit) gegen die liberale Mehrheit. Erläutern Sie die Problematik und diskutieren Sie den Charakter der Einigungskriege je nach Perspektive.</b>
+<details><summary>Lösung</summary><div class="small">
+<p><b>a)</b> Die Liberalen stehen vor dem Dilemma Einheit oder Freiheit. Jacoby hält an 1848 fest: Einheit nur mit Freiheit. Die Mehrheit lässt sich vom Erfolg überzeugen und akzeptiert den Verfassungsbruch (Indemnität). Die Fortschrittspartei spaltet sich, die Nationalliberalen entstehen.</p>
+<p><b>b)</b></p><ul>
+<li>Bismarck/Preußen: Machtmittel zur Hegemonie, „Kabinettskriege“ mit begrenzten Zielen.</li>
+<li>Andere Fürstenhäuser (Hannover, Kurhessen): Eroberung und Verlust der Herrschaft.</li>
+<li>Österreich: Ausschluss aus Deutschland.</li>
+<li>Nationale Bewegung: 1866 umstritten (Bruderkrieg), 1870 als nationaler Krieg gefeiert.</li>
+<li>Bevölkerung: Opfer und Tote, aber 1870 Begeisterung und Jubel.</li>
+</ul></div></details></div>
+
+<div class="card"><b><span class="tag t1">I</span><span class="tag t2">II</span><span class="tag t3">III</span> A6 · Nr. 6a–c: Vergleichen Sie die Perspektiven auf den Einigungsprozess zur Zeit des zweiten Einigungskrieges (Q2–Q4): a) Rolle Preußens, b) Vorstellung der Zukunft, c) Einschätzung unter Einbezug der Standortgebundenheit beurteilen.</b>
+<details><summary>Tipp</summary><p class="small">Erst für jede Quelle einzeln Wer, Wann, Was, An wen klären. Dann eine Tabelle mit den drei Kriterien. Bei c immer fragen: Welches Interesse hat der Verfasser oder Zeichner, und hat sich seine Sicht bis 1871 bestätigt?</p></details>
+<details><summary>Die drei Quellen kurz</summary><div class="small">
+<p><b>Q2, Thronrede Wilhelms I., 20.2.1867</b>, zur Eröffnung des verfassunggebenden Reichstags des Norddeutschen Bundes, also öffentlich und offiziell. Erzählt Geschichte als Niedergang: Das alte Reich war mächtig, „weil einig“, und versank in „Zerrissenheit und Ohnmacht“ (Z. 1–4). Deutschland wurde zum Schlachtfeld fremder Mächte (Z. 5–7). Die Sehnsucht des Volkes nach Größe sei geblieben (Z. 8–12). Die Einigung sei friedlich: „Nur zur Abwehr, nicht zum Angriff einigen sich die deutschen Stämme“ (Z. 19 f.).</p>
+<p><b>Q3, Karikatur von Cham in „Le Charivari“ (Paris), 4.3.1867</b>, nach Abschluss der geheimen Schutz- und Trutzbündnisse mit den Südstaaten. Wilhelm I. mit Pickelhaube kommt zur Weltausstellung, unter den Armen zwei riesige Kanonen, am Gürtel ein Säbel. Die Garderobenfrau: „Pardon, mein Herr, bitte die Waffen an der Garderobe abgeben!“ Preußen kann nicht einmal zu einem friedlichen Völkerfest ohne Waffen erscheinen.</p>
+<p><b>Q4, Wilhelm Scholz im „Kladderadatsch“ (Berlin), 9.9.1866</b>, kurz nach dem Prager Frieden. „Reichsprognostikon“ in vier Bildern: <i>Wie es bisher war</i>: Österreich und Preußen sitzen sich gegenüber, die kleinen Staaten zerren dazwischen an einem Seil (Dualismus, Deutscher Bund). <i>Wie es dann wurde</i>: Preußen packt zu, die Kleinstaaten fliehen oder werden umgerissen, Österreich sitzt abgewandt (Krieg 1866). <i>Wie es kommen wird</i>: Ein großer Preuße hält die norddeutschen Staaten im Arm, ringsum Pickelhauben (Norddeutscher Bund unter Preußen). <i>Und was nicht ausbleiben kann</i>: Im Hintergrund der „Norddeutsche Bund“, vorn verbeugen sich Figuren voreinander, wohl die Südstaaten auf dem Weg zum Beitritt. <span class="muted">(Details im Foto klein, im Buch genau nachsehen.)</span></p>
+</div></details>
+<details><summary>Lösung a–c als Tabelle</summary><div class="small"><table>
+<tr><th></th><th>Q2 Thronrede 1867</th><th>Q3 Charivari 1867</th><th>Q4 Kladderadatsch 1866</th></tr>
+<tr><td><b>a) Rolle Preußens</b></td><td>indirekt die „starken Hände“, die Deutschland wieder einig und groß machen; Preußen erfüllt die Sehnsucht des Volkes</td><td>militaristischer Unruhestifter, schwer bewaffnet, eine Bedrohung für Europa</td><td>Hauptakteur, der Österreich verdrängt und die Kleinstaaten zusammenführt, auch mit Gewalt</td></tr>
+<tr><td><b>b) Zukunft</b></td><td>Wiederherstellung alter Größe, Einheit „zur Abwehr, nicht zum Angriff“, also friedlich</td><td>Gefahr eines Krieges, Preußen rüstet weiter (Krieg mit Frankreich angedeutet)</td><td>Einheit unter Preußen ist zwangsläufig, auch die Südstaaten werden folgen</td></tr>
+<tr><td><b>c) Standort</b></td><td>König, offizielle Rede: will die Reichsgründung legitimieren, die Südstaaten gewinnen und das Ausland (Frankreich) beruhigen; verschweigt, dass 1866 Deutsche gegen Deutsche kämpften. Die Friedensbeteuerung widerlegt 1870/71 teilweise.</td><td>französisches Satireblatt: Angst vor dem gewachsenen Nachbarn nach Königgrätz und den geheimen Bündnissen (Luxemburgkrise 1867). Einseitig, aber 1870 trat der Krieg tatsächlich ein.</td><td>Berliner Satireblatt mit nationalliberaler, propreußischer Linie: Spott über Kleinstaaterei, Zustimmung zur preußischen Lösung. Prognose trifft 1870/71 ein, die Pickelhauben zeigen aber auch den militärischen Charakter.</td></tr>
+</table>
+<p><b>Urteil (Beispiel):</b> Alle drei sehen Preußen als treibende Kraft. Die preußische Selbstdarstellung betont Frieden und nationale Sehnsucht, die französische Sicht militärische Bedrohung, die deutsche Satire die Zwangsläufigkeit. Am nächsten an der späteren Entwicklung liegen Q3 und Q4: Einheit kam durch einen weiteren Krieg, und der Beitritt der Südstaaten „blieb nicht aus“.</p>
+</div></details></div>
+
+<div class="card"><b><span class="tag t2">II</span> A8 · Q5 und Q7: Zwei Blicke auf die Reichsgründung</b>
+<details><summary>Lösung</summary><div class="small">
+<p><b>Q5, Wilhelm I. an Augusta, 18.1.1871</b> (privater Brief am Tag der Proklamation): Er war „moros“ (missmutig) wegen der Verantwortung und vor allem aus Schmerz, „den preußischen Titel verdrängt zu sehen“ (Z. 2–7). Er wollte sogar zurücktreten (Z. 8–10). Erst Gebet gab ihm Kraft (Z. 10 f.). Er beschreibt eine militärisch-religiöse Feier: Fahnen, Offiziere, Altar, „Nun danket alle Gott“. Volksvertreter kommen nicht vor. <b>Bedeutung:</b> Der neue Kaiser fühlt sich als Preuße, nicht als Deutscher. Die Reichsgründung ist ein Akt der Fürsten und des Militärs.</p>
+<p><b>Q7, Jacob Burckhardt an Friedrich von Preen, 26.4.1872</b> (Basler Historiker, privater Brief): Bismarck habe nur „in eigene Hand genommen“, was ohnehin geschehen wäre, aus Angst vor der „demokratisch-sozialen Woge“, und deshalb „ipse faciam“ gesagt und die drei Kriege 64, 66, 70 geführt (Z. 1–8). Er erwartet eine Militarisierung aller Lebensbereiche (Staat, Schule, Arbeit „in Uniform“, Z. 12–28). <b>Bedeutung:</b> Kritische Außensicht eines Schweizers. Er sieht Bismarcks Politik als Revolution von oben, die einer Revolution von unten zuvorkommt, und warnt vor dem Militärstaat. Seine Deutung als planvolle Kette der Kriege ist umstritten (VT S. 287).</p>
+</div></details></div>
+
+
+<div class="card"><b><span class="tag t2">II</span> A7 · Nr. 10 (Teil): Positionen von Q9 (Spitzemberg) und Q10 (Disraeli) in einer Tabelle vergleichen.</b>
+<details><summary>Lösung</summary><div class="small"><table>
+<tr><th>Kriterium</th><th>Q9 Spitzemberg, 3.3.1871</th><th>Q10 Disraeli, 9.2.1871</th></tr>
+<tr><td>Gattung, Adressat</td><td>Tagebuch, privat</td><td>Parlamentsrede, öffentlich (Unterhaus)</td></tr>
+<tr><td>Bewertung</td><td>euphorisch: „Herrlicher und glorreicher als wir je einen geschlossen!“</td><td>besorgt: „deutsche Revolution“, größer als die Französische Revolution</td></tr>
+<tr><td>Rolle Preußens/Bismarcks</td><td>nicht kritisiert, Reich „groß durch seine physische Macht“</td><td>neue, unberechenbare Großmacht</td></tr>
+<tr><td>Bevölkerung</td><td>Volksjubel, Taumel wie nach Sedan</td><td>kein Thema</td></tr>
+<tr><td>Zukunft</td><td>Hoffnung auf ein friedliches „Reich des Lichts, der Freiheit“</td><td>Gleichgewicht der Mächte zerstört, England verliert am meisten</td></tr>
+<tr><td>Standort</td><td>württembergische Adlige in der Berliner Hofgesellschaft, Frau eines Diplomaten</td><td>britischer Konservativer in der Opposition, denkt in Gleichgewicht der Mächte</td></tr>
+</table></div></details></div>
+</section>
+
+<!-- ================= KARTEN ================= -->
+<section id="karten">
+<h1>Karteikarten</h1>
+<p class="muted">Antippen zum Umdrehen.</p>
+<div class="row"><button class="btn" id="mix">Mischen</button><button class="btn" id="allback">Alle zudecken</button></div>
+<div class="cards" id="deck"></div>
+</section>
+
+<!-- ================= PROBE ================= -->
+<section id="probe">
+<h1>Probeklausur</h1>
+<p class="muted">75 Minuten (in der echten Klausur hast du mehr Zeit, aber das Tempo ist das Training). Material: <b>Q10, Disraeli im Unterhaus, 9.2.1871</b> (Buch S. 292). Ohne Hilfsmittel außer dem Buchtext der Quelle.</p>
+<div class="card" style="text-align:center"><div id="timer">75:00</div>
+<div class="row" style="justify-content:center"><button class="btn pri" id="tgo">Start</button><button class="btn" id="treset">Zurücksetzen</button></div></div>
+
+<div class="card">
+<p><b>Aufgabe 1</b> <span class="tag t1">I</span><span class="tag t2">II</span> Analysieren Sie die Quelle. Berücksichtigen Sie dabei Gattung, Adressaten, Argumentation und sprachliche Gestaltung. <span class="muted">(28 P)</span></p>
+<p><b>Aufgabe 2</b> <span class="tag t2">II</span> Ordnen Sie die Quelle in den historischen Kontext des Einigungsprozesses 1862–1871 ein. <span class="muted">(24 P)</span></p>
+<p><b>Aufgabe 3</b> <span class="tag t3">III</span> „Die Reichsgründung 1871 war die Erfüllung der Ziele von 1848.“ Erörtern Sie diese These. <span class="muted">(28 P)</span></p>
+<p class="small muted">Insgesamt 80 Punkte, dazu bis zu 8 Punkte für Darstellung (Fachsprache, Zitieren, Gliederung).</p>
+</div>
+
+<details><summary>Erwartungshorizont Aufgabe 1 (28 P)</summary><div class="small"><table>
+<tr><th>Der Prüfling …</th><th>P</th></tr>
+<tr><td>nennt Gattung (Parlamentsrede), Sprecher (Disraeli, Führer der Konservativen, damals Opposition), Datum (9.2.1871, kurz nach Kaiserproklamation und Waffenstillstand), Ort (britisches Unterhaus), Adressaten (Abgeordnete, britische Öffentlichkeit), Thema</td><td>5</td></tr>
+<tr><td>gibt die These wieder: Der Krieg sei kein gewöhnlicher Krieg, sondern „die deutsche Revolution“, größer als die Französische Revolution (Z. 7–10)</td><td>4</td></tr>
+<tr><td>arbeitet die Begründung heraus: Alle Grundsätze der Außenpolitik und diplomatischen Traditionen seien hinfällig (Z. 12–17), eine „neue Welt“ mit unbekannten Gefahren (Z. 17–19)</td><td>5</td></tr>
+<tr><td>erläutert die Schlussfolgerung: Das Gleichgewicht der Macht sei zerstört, England leide am meisten (Z. 24–28); Rückgriff auf Palmerston als Autorität</td><td>5</td></tr>
+<tr><td>analysiert sprachliche Mittel mit Funktion, z. B. Vergleich mit der Französischen Revolution (Dramatisierung), Negationen „nicht ein einziger … keine einzige“ (Totalität des Umbruchs), Antithese früher/jetzt, rhetorische Frage „Aber was ist jetzt wirklich geschehen?“, Aufzählung „neue Welt, neue Einflüsse … Gefahren“</td><td>6</td></tr>
+<tr><td>benennt die Intention: Warnung, Alarm wecken; indirekt Kritik an der Regierung Gladstone, die untätig blieb</td><td>3</td></tr>
+</table></div></details>
+
+<details><summary>Erwartungshorizont Aufgabe 2 (24 P)</summary><div class="small"><table>
+<tr><td>Ausgangslage: Scheitern 1849, Dualismus Preußen–Österreich, Machtvakuum nach dem Krimkrieg</td><td>4</td></tr>
+<tr><td>Verfassungskonflikt 1862, Bismarck, Blut-und-Eisen-Rede, Realpolitik</td><td>4</td></tr>
+<tr><td>Kriege 1864 und 1866: Schleswig-Holstein, Königgrätz, Ende des Deutschen Bundes, Norddeutscher Bund</td><td>5</td></tr>
+<tr><td>1870/71: Emser Depesche, Sedan, Beitritt der Südstaaten, Versailles 18.1.1871, Frankfurter Frieden</td><td>5</td></tr>
+<tr><td>Verbindung zur Quelle: „Revolution“ meint die Umwälzung des europäischen Mächtesystems von 1815 (Wiener Ordnung). In der Mitte Europas entsteht eine neue Großmacht, Frankreich ist geschlagen, Österreich verdrängt.</td><td>6</td></tr>
+</table></div></details>
+
+<details><summary>Erwartungshorizont Aufgabe 3 (28 P)</summary><div class="small"><table>
+<tr><td>klärt die Ziele von 1848: Einheit und Freiheit (Grundrechte, Verfassung, Volkssouveränität), Lösung „von unten“</td><td>4</td></tr>
+<tr><td><b>Pro:</b> Einheit erreicht (Nationalstaat, Kaiser, sogar kleindeutsch wie in der Reichsverfassung 1849); Reichstag mit allgemeinem Männerwahlrecht; Verfassung; Rechts- und Wirtschaftseinheit</td><td>7</td></tr>
+<tr><td><b>Contra:</b> Gründung von oben durch Fürsten und Krieg, Abgeordnete ohne Rolle; keine Grundrechte in der Reichsverfassung; Kanzler nicht dem Parlament verantwortlich; Militär außerhalb parlamentarischer Kontrolle; preußische Dominanz; Verfassungsbruch 1862–66; Jacoby: „Einheit ohne Freiheit“</td><td>9</td></tr>
+<tr><td>Differenzierung, z. B. Nationalismus und Machtdenken gab es schon 1848 (Polendebatte, Jordan); viele Liberale stimmten 1866/71 zu; Gall: Bismarck setzte als „weißer Revolutionär“ Forderungen von 1848 um, die Freiheitsideen wirkten langfristig (Bundesrepublik)</td><td>4</td></tr>
+<tr><td>begründetes Fazit, etwa: Das Ziel Einheit wurde erfüllt, das Ziel Freiheit nur teilweise. Die These trifft also nur halb zu.</td><td>4</td></tr>
+</table></div></details>
+
+<div class="card small"><b>Notenschlüssel (88 P)</b>
+<table><tr><th>Punkte</th><th>NP</th><th>Punkte</th><th>NP</th></tr>
+<tr><td>84–88</td><td>15</td><td>48–52</td><td>07</td></tr>
+<tr><td>79–83</td><td>14</td><td>44–47</td><td>06</td></tr>
+<tr><td>75–78</td><td>13</td><td>40–43</td><td>05</td></tr>
+<tr><td>70–74</td><td>12</td><td>35–39</td><td>04</td></tr>
+<tr><td>66–69</td><td>11</td><td>30–34</td><td>03</td></tr>
+<tr><td>62–65</td><td>10</td><td>25–29</td><td>02</td></tr>
+<tr><td>57–61</td><td>09</td><td>18–24</td><td>01</td></tr>
+<tr><td>53–56</td><td>08</td><td>0–17</td><td>00</td></tr></table></div>
+</section>
+</main>
+
+<script>
+(function(){
+  var S={get:function(k){try{return localStorage.getItem('gesch2-'+k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem('gesch2-'+k,v)}catch(e){}}};
+  // Tabs
+  var tabs=document.querySelectorAll('#tabs button');
+  function show(id){tabs.forEach(function(b){if(b.dataset.t===id)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+    document.querySelectorAll('main>section').forEach(function(s){s.classList.toggle('on',s.id===id)});S.set('tab',id);window.scrollTo(0,0)}
+  tabs.forEach(function(b){b.onclick=function(){show(b.dataset.t)}});
+  if(S.get('tab')&&document.getElementById(S.get('tab')))show(S.get('tab'));
+  // Theme
+  var th=S.get('theme');if(th)document.documentElement.dataset.theme=th;
+  document.getElementById('theme').onclick=function(){var cur=document.documentElement.dataset.theme||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');var n=cur==='light'?'dark':'light';document.documentElement.dataset.theme=n;S.set('theme',n)};
+  // Checkboxes
+  var boxes=document.querySelectorAll('.task input');
+  function prog(){var d=0;boxes.forEach(function(x){if(x.checked)d++;x.closest('.task').classList.toggle('done',x.checked)});
+    document.getElementById('pbar').style.width=(100*d/boxes.length)+'%';document.getElementById('ptxt').textContent=d+' von '+boxes.length+' Schritten erledigt'}
+  boxes.forEach(function(x){x.checked=S.get('c-'+x.dataset.k)==='1';x.onchange=function(){S.set('c-'+x.dataset.k,x.checked?'1':'0');prog()}});prog();
+  // Cards
+  var C=[
+  ['Verfassungskonflikt: Worum ging es?','Heeresreform (150.000→220.000 Mann, 3 Jahre Dienst, Landwehr abgewertet). Das Parlament verweigerte das Budget. Kern: Wer entscheidet, Krone oder Parlament?'],
+  ['Lückentheorie','Einigen sich König und Parlament nicht, hat die Verfassung eine „Lücke“, dann entscheidet der König. Bismarck regiert so 1862–66 ohne Budget.'],
+  ['Indemnitätsvorlage 1866','Nachträgliche Billigung der Ausgaben seit 1862 durch das Abgeordnetenhaus nach dem Sieg über Österreich. Indirektes Eingeständnis des Verfassungsbruchs, Spaltung der Fortschrittspartei.'],
+  ['Realpolitik','Politik nach Machtverhältnissen statt nach Idealen. Liberale akzeptierten Bismarcks Weg als einzig möglichen und opferten Freiheitsansprüche der Einheit.'],
+  ['Datum Blut-und-Eisen-Rede','30. September 1862, Budgetkommission des preußischen Abgeordnetenhauses, eine Woche nach Bismarcks Ernennung (23.9.).'],
+  ['Kernsatz der Rede','„Nicht durch Reden und Majoritätsbeschlüsse werden die großen Fragen der Zeit entschieden – das ist der große Fehler von 1848 und 1849 gewesen –, sondern durch Eisen und Blut.“'],
+  ['Quellengattung der Rede','Protokollbericht in indirekter Rede, also nicht der exakte Wortlaut. Quellenkritisch erwähnen!'],
+  ['Vertrag von Olmütz 1850','Preußen gibt die Unionspolitik auf, der Deutsche Bund wird unter österreichischer Führung wiederhergestellt („Schmach von Olmütz“).'],
+  ['Krimkrieg 1853–56: Folge','Preußen neutral, Österreich isoliert, Russland geschwächt. Machtvakuum in Europa, das Preußen nutzen kann.'],
+  ['Deutscher Nationalverein','1859 gegründet, fordert einen kleindeutschen Nationalstaat unter preußischer Führung.'],
+  ['Deutsch-Dänischer Krieg','1864. Dänemark will Schleswig eingliedern. Preußen und Österreich siegen, verwalten Schleswig und Holstein gemeinsam (1865 aufgeteilt).'],
+  ['Königgrätz','3. Juli 1866, entscheidender preußischer Sieg über Österreich (Zündnadelgewehr, Telegrafie, Eisenbahn).'],
+  ['Prager Frieden','23.8.1866: Deutscher Bund aufgelöst, Österreich ausgeschlossen, aber kaum Gebietsverlust (nur Venetien). Preußen annektiert Hannover, Kurhessen, Nassau, Frankfurt.'],
+  ['Norddeutscher Bund','1866/67, alle Staaten nördlich der Mainlinie. Verfassung 1867, Reichstag nach allgemeinem Männerwahlrecht, von Preußen dominiert.'],
+  ['Schutz- und Trutzbündnisse','Militärbündnisse der süddeutschen Staaten mit Preußen nach 1866, entscheidend 1870.'],
+  ['Emser Depesche','13.7.1870: Bismarck verkürzt und spitzt den Bericht über Wilhelms Treffen mit dem französischen Botschafter zu. Er wirkt als Demütigung, Frankreich erklärt den Krieg.'],
+  ['Sedan','2. September 1870, Kapitulation, Napoleon III. gefangen. Später Nationalfeiertag („Sedanstag“).'],
+  ['Kaiserproklamation','18. Januar 1871, Spiegelsaal Versailles. Gründungstag des preußischen Königtums (1701), Fürsten und Militärs statt Volksvertreter.'],
+  ['Frankfurter Frieden','10.5.1871: Frankreich zahlt 5 Milliarden Franc und tritt Elsass-Lothringen ab.'],
+  ['„Revolution von oben“','Die Einheit wird durch Monarchen, Diplomatie und Krieg geschaffen, nicht durch eine Volksbewegung wie 1848.'],
+  ['Nipperdey über das Kaiserreich','„Vieles zugleich“: Bundesstaat, konstitutioneller Verfassungsstaat, Kaiserstaat, preußischer Hegemonialstaat, Macht- und Militärstaat, vor allem Nationalstaat.'],
+  ['Jacoby 1866','Liberaldemokrat: Der Krieg gegen Österreich war ein „Bruderkrieg“. Einheit ohne Freiheit hat weder Wert noch Bestand.'],
+  ['Baumgarten 1866','Die Einheit habe „ein anderes Gesicht, als die liberale Fantasie sich ausgemalt hatte“. Liberale Selbstkritik und Einlenken.'],
+  ['Burckhardt über Bismarck','Q7, Brief 1872: „ipse faciam“ (ich werde es selbst tun). Bismarck kam der demokratisch-sozialen Woge zuvor, die Kriege 64, 66 und 70 seien logische Folge eines Plans. Das Buch widerspricht teilweise.'],
+  ['Q1: Adressat und Rahmen der Rede','Nichtöffentliche Budgetkommission, Antwort auf einen Beitrag zu Bewilligungsrecht und Verfassung. Wiedergabe nach Protokoll.'],
+  ['„katilinarische Existenzen“','Q1 Z. 10 f.: Bismarck nennt Teile der Opposition Verschwörer und Umstürzler (nach Catilina). Diffamierung.'],
+  ['Verfassungskrise in Q1','„keine Schande, sondern eine Ehre“ (Z. 6 f.): Bismarck deutet den Konflikt mit dem Parlament positiv um.'],
+  ['Schluss von Q1','Versöhnliches Angebot: Er suche „aufrichtig den Weg der Verständigung“, ob er ihn finde, hänge „nicht allein von ihm ab“.'],
+  ['Woher kommt „Eisen und Blut“?','Anspielung auf ein Gedicht Max von Schenkendorfs aus den Befreiungskriegen. Appell ans Nationalgefühl.'],
+  ['Q2 Thronrede 1867: Kernaussage','Deutschland war mächtig, weil einig, zerfiel und wurde Schlachtfeld fremder Mächte. Einigung „nur zur Abwehr, nicht zum Angriff“.'],
+  ['Q3 Charivari 1867','Französische Karikatur: Wilhelm I. kommt mit Kanonen zur Pariser Weltausstellung, „bitte die Waffen an der Garderobe abgeben“. Preußen als Bedrohung.'],
+  ['Q4 Kladderadatsch 1866','„Reichsprognostikon“ in vier Bildern: Dualismus, Krieg 1866, Norddeutscher Bund unter Preußen, Beitritt des Südens „kann nicht ausbleiben“.'],
+  ['Q5 Wilhelm I. an Augusta','18.1.1871: missmutig, Schmerz über den verdrängten preußischen Titel, wollte fast zurücktreten. Feier militärisch und religiös.'],
+  ['Q6 Anton von Werner','Gemälde der Kaiserproklamation, 2. von 3 Fassungen (1882, für die Ruhmeshalle). Inszenierung je nach Auftraggeber.'],
+  ['Lothar Gall (Spiegel 1998)','Historiker, „Bismarck. Der weiße Revolutionär“. Gegen die Sonderweg-These, 1848 als Wurzel von Grundrechten und Parlamentarismus.'],
+  ['Sonderweg-These','Annahme eines zwangsläufigen deutschen Wegs von Bismarck über Wilhelm II. zu Hitler. Laut Gall von Historikern aufgegeben.'],
+  ['„Weißer Revolutionär“','Galls Bild für Bismarck: Konservativer (weiß), der revolutionäre Mittel nutzt und Forderungen von 1848 umsetzt (Einheit, Wahlrecht), um die Monarchie zu sichern.'],
+  ['Dunkle Seiten von 1848 (Gall)','Judenfeindliche Ausschreitungen vor allem auf dem Land; expansiver Nationalismus mit großdeutschen Träumen.'],
+  ['Woran scheiterte 1848 laut Gall?','Nicht am Debattieren (gegen Engels), sondern an der Gegenrevolution Österreichs und Preußens und am reformunwilligen Adel.'],
+  ['Zwei Seiten der Nation (Gall)','Dunkel: militant, intolerant, expansiv. Hell: Gruppen einer Gesellschaft über gemeinsame Ideen zu einem freien Gemeinwesen vereinen.'],
+  ['Kleindeutsch vs. großdeutsch','Kleindeutsch: ohne Österreich, unter Preußen (1871 verwirklicht). Großdeutsch: mit den deutschsprachigen Gebieten Österreichs.'],
+  ['Karikatur Q8 „Deutschlands Zukunft“','Kikeriki (Österreich) 1870: Pickelhaube statt „unter einen Hut“, Einheit als preußische Militärherrschaft über die Deutschen.']
+  ];
+  var deck=document.getElementById('deck');
+  function render(list){deck.innerHTML='';list.forEach(function(c){var b=document.createElement('button');b.className='fc';b.innerHTML='<span class="q"></span><span class="a"></span>';b.children[0].textContent=c[0];b.children[1].textContent=c[1];b.onclick=function(){b.classList.toggle('flip')};deck.appendChild(b)})}
+  render(C);
+  document.getElementById('mix').onclick=function(){var a=C.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}render(a)};
+  document.getElementById('allback').onclick=function(){deck.querySelectorAll('.fc').forEach(function(x){x.classList.remove('flip')})};
+  // Timer
+  var left=75*60,iv=null,el=document.getElementById('timer'),go=document.getElementById('tgo');
+  function draw(){var m=Math.floor(left/60),s=left%60;el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;el.style.color=left<600?'var(--orange)':''}
+  go.onclick=function(){if(iv){clearInterval(iv);iv=null;go.textContent='Weiter'}else{iv=setInterval(function(){if(left>0){left--;draw()}else{clearInterval(iv);iv=null;el.textContent='Zeit!'}},1000);go.textContent='Pause'}};
+  document.getElementById('treset').onclick=function(){clearInterval(iv);iv=null;left=75*60;go.textContent='Start';draw()};
+  // Morgen-Timer
+  var ml=15*60,miv=null,mel=document.getElementById('mtimer'),mgo=document.getElementById('mgo'),mb=document.getElementById('mblock');
+  function mdraw(){var m=Math.floor(ml/60),s=ml%60;mel.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;var blk=Math.min(5,Math.floor((900-ml)/180)+1);mb.textContent=ml>0?'Block '+blk+' von 5':'Fertig. Viel Erfolg!'}
+  mgo.onclick=function(){if(miv){clearInterval(miv);miv=null;mgo.textContent='Weiter'}else{miv=setInterval(function(){if(ml>0){ml--;mdraw()}else{clearInterval(miv);miv=null}},1000);mgo.textContent='Pause'}};
+  document.getElementById('mreset').onclick=function(){clearInterval(miv);miv=null;ml=15*60;mgo.textContent='Start';mdraw()};
+})();
+</script>
+</body>
+</html>
