@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Präsis">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="../manifest.webmanifest">
+<title>Bio LK Neuro-Klausur</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<!-- Stand: 2026-11-24 11:21 (Claude), Handy/iPad-Ansicht. Lernseite Bio LK Neurobiologie, Klausur Do 26.11.2026 -->
+<style>
+:root{
+  --bg:#000; --card:#1c1c1e; --card2:#2c2c2e; --sep:#38383a; --ink:#fff; --ink2:#a1a1a8;
+  --acc:#ff6b8b; --acc2:#64d2ff; --green:#30d158; --red:#ff453a; --orange:#ff9f0a; --purple:#bf5af2; --yellow:#ffd60a;
+  --bar:rgba(22,22,24,.84); --thumb:#636366;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,Roboto,sans-serif;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#f2f2f7; --card:#fff; --card2:#efeff4; --sep:#d1d1d6; --ink:#000; --ink2:#6c6c70;
+  --acc:#d6336c; --acc2:#0071a4; --green:#1f8a3b; --red:#d70015; --orange:#b25000; --purple:#8944ab; --yellow:#8a6d00;
+  --bar:rgba(249,249,249,.86); --thumb:#fff; color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font:15px/1.5 var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
+h1,h2,h3{margin:0;letter-spacing:-.01em}
+h1{font-size:1.65rem;margin:6px 0 4px}
+h2{font-size:1.15rem;margin:0 0 8px}
+h3{font-size:1rem;margin:14px 0 6px}
+p{margin:.45em 0} ul,ol{margin:.35em 0;padding-left:1.25em} li{margin:.18em 0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;touch-action:manipulation}
+:focus-visible{outline:2px solid var(--acc2);outline-offset:2px;border-radius:8px}
+.muted{color:var(--ink2)} .small{font-size:.83rem}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bar);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--sep)}
+.bar-in{max-width:780px;margin:0 auto;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:8px}
+.brand{font-weight:650;font-size:.92rem;white-space:nowrap;margin-right:auto}
+.brand b{color:var(--acc)}
+nav.tabs{display:flex;gap:2px;background:var(--card2);border-radius:9px;padding:2px;overflow-x:auto;scrollbar-width:none}
+nav.tabs button{padding:6px 10px;border-radius:7px;font-size:.82rem;font-weight:550;white-space:nowrap;min-height:32px}
+nav.tabs button[aria-current="page"]{background:var(--thumb);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ghost{width:34px;height:34px;border-radius:50%;background:var(--card2);display:grid;place-items:center;flex:none}
+main{max-width:780px;margin:0 auto;padding-block:12px 90px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:25;background:var(--bar)}
+section.view{display:none} section.view.on{display:block}
+.card{background:var(--card);border-radius:14px;padding:14px 16px;margin:10px 0}
+.hero{background:linear-gradient(135deg,rgba(255,107,139,.22),rgba(100,210,255,.14));border-radius:18px;padding:16px 18px;margin:8px 0 14px}
+.count{font-size:2.6rem;font-weight:800;line-height:1;letter-spacing:-.03em}
+.pill{display:inline-block;font-size:.72rem;font-weight:650;padding:2px 8px;border-radius:99px;background:var(--card2);margin-right:4px;white-space:nowrap}
+.t-grund{--tc:#64d2ff} .t-sinn{--tc:#30d158} .t-stress{--tc:#ff9f0a} .t-lernen{--tc:#bf5af2} .t-drogen{--tc:#ff6b8b}
+.tag{color:var(--tc);background:color-mix(in srgb,var(--tc) 16%,transparent)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.seg button{padding:7px 13px;border-radius:99px;background:var(--card2);font-weight:600;font-size:.86rem}
+.seg button.on{background:var(--acc);color:#fff}
+.day{margin:18px 0 6px;display:flex;align-items:baseline;gap:8px}
+.day h2{margin:0}
+.block{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:.5px solid var(--sep)}
+.block:first-child{border-top:0}
+.chk{width:26px;height:26px;border-radius:50%;border:2px solid var(--ink2);flex:none;display:grid;place-items:center;margin-top:2px}
+.chk.on{background:var(--green);border-color:var(--green)}
+.chk.on::after{content:"✓";color:#fff;font-weight:800;font-size:.85rem}
+.block .min{font-weight:700;color:var(--acc2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.block.done .what{opacity:.5;text-decoration:line-through}
+.opt{font-size:.72rem;color:var(--ink2);border:1px dashed var(--sep);border-radius:99px;padding:1px 7px;margin-left:4px}
+details{background:var(--card);border-radius:14px;margin:8px 0;overflow:hidden}
+details>summary{list-style:none;padding:13px 16px;cursor:pointer;font-weight:600;display:flex;gap:8px;align-items:center}
+details>summary::-webkit-details-marker{display:none}
+details>summary::after{content:"›";margin-left:auto;color:var(--ink2);font-size:1.3rem;transition:transform .2s}
+details[open]>summary::after{transform:rotate(90deg)}
+.dbody{padding:0 16px 14px}
+.sol{background:var(--card2);border-radius:10px;padding:10px 12px;margin:8px 0}
+.sol h4{margin:0 0 4px;font-size:.82rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
+.btnrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.btn{padding:7px 12px;border-radius:9px;background:var(--card2);font-weight:600;font-size:.85rem}
+.btn.good.on{background:var(--green);color:#fff} .btn.bad.on{background:var(--red);color:#fff}
+.chain{counter-reset:s;list-style:none;padding:0;margin:6px 0}
+.chain li{counter-increment:s;position:relative;padding:6px 10px 6px 36px;margin:0;border-left:2px solid var(--tc,var(--acc2));margin-left:12px}
+.chain li::before{content:counter(s);position:absolute;left:-13px;top:6px;width:24px;height:24px;border-radius:50%;background:var(--tc,var(--acc2));color:#000;font-size:.75rem;font-weight:800;display:grid;place-items:center}
+table{border-collapse:collapse;width:100%;font-size:.86rem;margin:6px 0}
+th,td{border-bottom:.5px solid var(--sep);padding:6px 6px;text-align:left;vertical-align:top}
+th{color:var(--ink2);font-weight:600}
+.warn{border-left:3px solid var(--orange);padding:6px 10px;background:color-mix(in srgb,var(--orange) 10%,transparent);border-radius:0 8px 8px 0;margin:8px 0}
+.key{border-left:3px solid var(--acc);padding:6px 10px;background:color-mix(in srgb,var(--acc) 10%,transparent);border-radius:0 8px 8px 0;margin:8px 0}
+.filter{display:flex;gap:6px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.filter button{padding:6px 11px;border-radius:99px;background:var(--card2);font-size:.8rem;font-weight:600;white-space:nowrap}
+.filter button.on{background:var(--ink);color:var(--bg)}
+.flash{background:var(--card);border-radius:18px;min-height:220px;padding:22px;display:flex;flex-direction:column;justify-content:center;text-align:center;cursor:pointer;margin:10px 0}
+.flash .q{font-size:1.15rem;font-weight:650}
+.flash .a{margin-top:14px;text-align:left;display:none}
+.flash.flip .a{display:block}
+.prog{height:6px;background:var(--card2);border-radius:99px;overflow:hidden;margin:6px 0}
+.prog i{display:block;height:100%;background:var(--green);width:0}
+input.pts{width:56px;padding:6px;border-radius:8px;border:1px solid var(--sep);background:var(--card2);color:var(--ink);font:inherit;text-align:center}
+.np{font-size:2rem;font-weight:800}
+.mat{background:var(--card2);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:.9rem}
+.afb{font-size:.7rem;font-weight:700;padding:1px 6px;border-radius:5px;border:1px solid var(--ink2);color:var(--ink2)}
+@media (max-width:560px){ .brand span{display:none} nav.tabs button{padding:6px 8px} }
+
+/* ---- Handy & iPad ---- */
+nav.tabs svg{width:18px;height:18px;display:none}
+nav.tabs .sm{display:none}
+.btn,.seg button,.filter button{min-height:40px}
+.chk{width:30px;height:30px}
+input.pts{font-size:16px}
+table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+details>summary{min-height:48px}
+.flash{user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.swipehint{display:none}
+@media (hover:none){ .swipehint{display:inline} }
+@media (max-width:699px){
+  body{font-size:16px}
+  .bar-in{padding-block:6px}
+  .brand{font-size:1rem}
+  .brand span{display:inline}
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;border-radius:0;padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));
+    background:var(--bar);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--sep);justify-content:space-around;gap:0;overflow:visible}
+  nav.tabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;font-size:.66rem;min-height:48px;color:var(--ink2);border-radius:10px}
+  nav.tabs button[aria-current="page"]{background:none;box-shadow:none;color:var(--acc)}
+  nav.tabs svg{display:block;width:23px;height:23px}
+  nav.tabs .lg{display:none} nav.tabs .sm{display:block}
+  main{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  h1{font-size:1.5rem}
+  .card{padding:14px}
+  .dbody{padding:0 14px 14px}
+  .flash{min-height:300px}
+  .btnrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #v-karten .btnrow .btn{min-height:48px}
+}
+@media (min-width:900px){
+  .bar-in,main{max-width:1080px}
+  body{font-size:16px}
+  #chains,#sheets,#tasks,#exam{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-items:start}
+  #chains details,#sheets details,#tasks>details{margin:7px 0}
+  #exam .card{margin:7px 0}
+  #planDays{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-items:start}
+  #planDays .day{grid-column:auto}
+  .flash{max-width:720px;margin:14px auto;min-height:300px}
+  .flash .q{font-size:1.35rem}
+  #v-karten .btnrow{max-width:720px;margin:0 auto}
+  #v-plan>.card{max-width:none}
+}
+</style>
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+  <div class="brand"><b>Bio LK</b> <span>· Neuro 26.11.</span></div>
+  <nav class="tabs" id="tabs">
+    <button data-v="plan" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg><span class="lg">Plan</span><span class="sm">Plan</span></button>
+    <button data-v="ketten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="12" r="2"/><path d="M6 7v10M8 6l8 5M8 18l8-5"/></svg><span class="lg">Ketten</span><span class="sm">Ketten</span></button>
+    <button data-v="zettel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h3"/></svg><span class="lg">Lernzettel</span><span class="sm">Zettel</span></button>
+    <button data-v="aufg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="lg">Aufgaben</span><span class="sm">Aufgaben</span></button>
+    <button data-v="karten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="15" height="12" rx="2"/><path d="M7 3h13a2 2 0 0 1 2 2v10"/></svg><span class="lg">Karten</span><span class="sm">Karten</span></button>
+    <button data-v="probe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg><span class="lg">Probeklausur</span><span class="sm">Probe</span></button>
+  </nav>
+  <button class="ghost" id="theme" aria-label="Hell/Dunkel">◐</button>
+</div></header>
+
+<main>
+<!-- ===================== PLAN ===================== -->
+<section class="view on" id="v-plan">
+  <div class="hero">
+    <div class="muted small">Klausur Neurobiologie · Donnerstag, 26.11.2026</div>
+    <div style="display:flex;align-items:flex-end;gap:12px;margin-top:6px">
+      <div class="count" id="cd">2</div><div style="padding-bottom:4px"><b id="cdtxt">Lerntage bis zur Klausur</b><br><span class="muted small">Heute Di + Mi, Do früh 15 min</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Wie viele Stunden pro Tag?</h2>
+    <div class="seg" id="hours"></div>
+    <p class="muted small" id="hoursNote"></p>
+  </div>
+
+  <div class="card">
+    <h2>Worum es geht</h2>
+    <p class="small">Laut Themenliste „Klausurthemen 26. November“:</p>
+    <ul class="small">
+      <li><span class="pill tag t-grund">Grundlagen</span> Ionenbewegungen und Membranpotenzial (De-/Hyperpolarisation), erregende und hemmende Synapsen</li>
+      <li><span class="pill tag t-sinn">Reize</span> Signaltransduktion und Second Messenger, primäre und sekundäre Sinneszellen, Rezeptorpotenzial</li>
+      <li><span class="pill tag t-stress">Stress</span> hormonelle und neuronale Stressachse, Cortisol und Adrenalin</li>
+      <li><span class="pill tag t-lernen">Lernen</span> neuronale Plastizität und Lernen (LTP, Aplysia, NMDA, Gedächtnis)</li>
+      <li><span class="pill tag t-drogen">Anwendung</span> Morphin, Endorphine, THC: stehen nicht auf der Liste, nutzen aber genau dieselben Mechanismen (cAMP, G-Protein, Synapsen). Gut möglich als Material in der Klausur.</li>
+    </ul>
+    <div class="key small"><b>Das Wichtigste in einem Satz:</b> Fast alles in dieser Klausur ist eine <b>Kette</b> (Reiz → Rezeptor → G-Protein → cAMP → Kanal → Ionen → Potenzial). Wer die 8 Ketten im Reiter „Ketten“ aus dem Kopf aufschreiben kann, hat die halbe Klausur.</div>
+  </div>
+
+  <div id="planDays"></div>
+
+  <div class="card small muted">
+    <b>So lernst du mit dem Plan:</b> Erst selbst versuchen (Kette aufschreiben, Aufgabe lösen), dann Lösung aufklappen und vergleichen. Was nicht klappt, als „wiederholen“ markieren. Abends 10 min nur die rot markierten Karten. Alles wird in diesem Browser gespeichert.
+  </div>
+</section>
+
+<!-- ===================== KETTEN ===================== -->
+<section class="view" id="v-ketten">
+  <h1>Die 8 Ketten</h1>
+  <p class="muted small">Zum Auswendig-Aufschreiben. Methode: Kette abdecken, auf Papier schreiben, aufklappen, vergleichen. In der Klausur heißt das „Stellen Sie … in einem Flussdiagramm dar“.</p>
+  <div id="chains"></div>
+</section>
+
+<!-- ===================== LERNZETTEL ===================== -->
+<section class="view" id="v-zettel">
+  <h1>Lernzettel</h1>
+  <p class="muted small">Kurz und klausurnah. Begriffe in <b>fett</b> sind die, die in einer guten Antwort fallen müssen.</p>
+  <div id="sheets"></div>
+</section>
+
+<!-- ===================== AUFGABEN ===================== -->
+<section class="view" id="v-aufg">
+  <h1>Aufgaben</h1>
+  <p class="muted small">Viele davon sind genau die Buchaufgaben aus euren Seiten. AFB I = wiedergeben, II = erklären/anwenden, III = beurteilen/übertragen.</p>
+  <div class="filter" id="afilter"></div>
+  <div class="prog"><i id="aprog"></i></div>
+  <p class="small muted" id="astat"></p>
+  <div id="tasks"></div>
+</section>
+
+<!-- ===================== KARTEN ===================== -->
+<section class="view" id="v-karten">
+  <h1>Karteikarten</h1>
+  <div class="filter" id="kfilter"></div>
+  <div class="seg"><button id="konlybad">Nur „nochmal“</button><button id="kshuffle">Mischen</button></div>
+  <p class="small muted" id="kstat"></p>
+  <div class="flash" id="flash"><div class="q" id="fq"></div><div class="a" id="fa"></div><div class="muted small" style="margin-top:12px" id="fhint">Tippen zum Umdrehen<span class="swipehint"> · wischen zum Blättern</span></div></div>
+  <div class="btnrow" style="justify-content:center">
+    <button class="btn" id="kprev">‹ Zurück</button>
+    <button class="btn bad" id="kbad">Nochmal</button>
+    <button class="btn good" id="kgood">Kann ich</button>
+    <button class="btn" id="knext">Weiter ›</button>
+  </div>
+</section>
+
+<!-- ===================== PROBEKLAUSUR ===================== -->
+<section class="view" id="v-probe">
+  <h1>Probeklausur</h1>
+  <p class="muted small">90 Minuten · 60 Punkte · Hilfsmittel: keine. Alle Materialien sind ausgedacht, die Mechanismen entsprechen dem Unterricht. Erst komplett schreiben, dann den Erwartungshorizont aufklappen und Punkte eintragen.</p>
+  <div id="exam"></div>
+  <div class="card">
+    <h2>Auswertung</h2>
+    <div id="ptsIn"></div>
+    <p>Summe: <b id="psum">0</b> / 60 · <span class="np" id="pnp">–</span> <span class="muted">Notenpunkte</span></p>
+    <p class="muted small">Schlüssel: 15 ab 95 %, 14 ab 90 %, 13 ab 85 %, 12 ab 80 %, 11 ab 75 %, 10 ab 70 %, 9 ab 65 %, 8 ab 60 %, 7 ab 55 %, 6 ab 50 %, 5 ab 45 %, 4 ab 39 %, 3 ab 33 %, 2 ab 27 %, 1 ab 20 %.</p>
+  </div>
+</section>
+</main>
+
+<script>
+/* ---------- Grunddaten ---------- */
+const TH = {
+  grund:{n:"Grundlagen",c:"t-grund"}, sinn:{n:"Reize & Sinneszellen",c:"t-sinn"},
+  stress:{n:"Stress",c:"t-stress"}, lernen:{n:"Lernen",c:"t-lernen"}, drogen:{n:"Anwendung Drogen",c:"t-drogen"}
+};
+const tag = t => `<span class="pill tag ${TH[t].c}">${TH[t].n}</span>`;
+const LS = {get:(k,d)=>{try{return JSON.parse(localStorage.getItem("bio26_"+k))??d}catch(e){return d}}, set:(k,v)=>{try{localStorage.setItem("bio26_"+k,JSON.stringify(v))}catch(e){}}};
+
+/* ---------- Ketten ---------- */
+const CHAINS = [
+ {t:"sinn",n:"1 · Riechzelle: Second-Messenger-Weg (Buch S. 60)",s:[
+  "Duftstoff bindet an <b>G-Protein-gekoppelten Rezeptor</b> in der Membran der Riechsinneszelle",
+  "<b>G-Protein</b> wird aktiviert: GDP wird gegen <b>GTP</b> ausgetauscht, eine Untereinheit löst sich ab",
+  "Untereinheit aktiviert das Enzym <b>Adenylatzyklase</b>",
+  "Adenylatzyklase wandelt viele ATP in <b>cAMP</b> um (≈ 10 000 cAMP pro Duftmolekül → <b>Verstärkung</b>)",
+  "cAMP (<b>Second Messenger</b>) bindet an Natrium-Calcium-Ionenkanäle → diese öffnen sich",
+  "<b>Na⁺ und Ca²⁺ strömen ein</b> → Membran wird <b>depolarisiert</b>",
+  "Ca²⁺ öffnet <b>Chloridionenkanäle</b> → <b>Cl⁻ strömt aus</b> → Depolarisation wird nochmals verstärkt",
+  "Rezeptorpotenzial → <b>Aktionspotenziale</b> am Axon der Riechsinneszelle (primäre Sinneszelle)"]},
+ {t:"sinn",n:"2 · Haarsinneszelle im Innenohr (Arbeitsblatt)",s:[
+  "Schallwellen lenken die <b>Cilien</b> aus → <b>Tip-Links</b> werden gespannt",
+  "Tip-Links öffnen mechanisch gesteuerte <b>K⁺-Kanäle</b> → <b>K⁺ strömt ein</b> (Besonderheit: außen sehr viel K⁺)",
+  "Haarsinneszelle wird <b>depolarisiert</b> (= Rezeptorpotenzial, keine eigenen APs)",
+  "Spannungsgesteuerte <b>Ca²⁺-Kanäle</b> öffnen → Ca²⁺ strömt ein",
+  "Ca²⁺ (mit <b>Otoferlin</b>) bewirkt Verschmelzung der Vesikel → <b>Transmitter</b>-Ausschüttung",
+  "Transmitter erregt das <b>nachgeschaltete Neuron</b> → Aktionspotenziale zum Gehirn (sekundäre Sinneszelle)"]},
+ {t:"stress",n:"3 · Neuronale Stressachse (schnell)",s:[
+  "Stressor → <b>Hypothalamus</b>",
+  "→ <b>Sympathikus</b> (vegetatives Nervensystem)",
+  "→ <b>Nebennierenmark</b>",
+  "→ <b>Adrenalin</b> (und Noradrenalin) ins Blut: Sekunden",
+  "Wirkung: Herzfrequenz und Blutdruck ↑, Bronchien weiter, Glucose ↑, Verdauung ↓, Pupillen weiter → <b>Kampf oder Flucht</b>"]},
+ {t:"stress",n:"4 · Hormonelle Stressachse (langsam, HHN-Achse)",s:[
+  "Stressor → <b>Hypothalamus</b> schüttet <b>CRH</b> aus (Freisetzungshormon)",
+  "→ <b>Hypophyse</b> schüttet <b>ACTH</b> ins Blut aus",
+  "→ <b>Nebennierenrinde</b> bildet <b>Cortisol</b> (Minuten, hält lange an)",
+  "Wirkung: Blutzucker ↑ (Glucoseneubildung), Blutdruck ↑, Entzündung und Immunsystem ↓, Schlafrhythmus gestört",
+  "<b>Negative Rückkopplung:</b> viel Cortisol hemmt Hypothalamus und Hypophyse → weniger CRH/ACTH → Stressreaktion wird gebremst"]},
+ {t:"lernen",n:"5 · Kurzzeitsensitivierung bei Aplysia (S. 100)",s:[
+  "Erregendes Interneuron schüttet <b>Serotonin</b> aus",
+  "Serotonin bindet an Rezeptor in der präsynaptischen Membran des <b>sensorischen Neurons</b>",
+  "Rezeptor aktiviert <b>G-Protein</b> → G-Protein aktiviert <b>Adenylatzyklase</b>",
+  "Adenylatzyklase bildet <b>cAMP</b> aus ATP → cAMP aktiviert die <b>Proteinkinase</b>",
+  "Proteinkinase <b>schließt K⁺-Kanäle</b> → weniger K⁺-Ausstrom → <b>Repolarisation verlangsamt</b>, AP dauert länger",
+  "Spannungsgesteuerte Ca²⁺-Kanäle länger offen → <b>mehr Ca²⁺</b> strömt ein",
+  "<b>Mehr Vesikel</b> verschmelzen → mehr Transmitter an das Motoneuron → <b>stärkerer Reflex</b> (Minuten bis Stunden)"]},
+ {t:"lernen",n:"6 · Langzeitsensitivierung (Fortsetzung ab Proteinkinase)",s:[
+  "Bei <b>wiederholtem</b> Training: Proteinkinasen gelangen in den <b>Zellkern</b>",
+  "Sie aktivieren <b>CREB-Proteine</b> (Transkriptionsfaktoren)",
+  "CREB bewirkt <b>Genexpression</b> neuer Proteine",
+  "Folge a: <b>dauerhaft aktive Proteinkinasen</b>; Folge b: <b>Synapsen wachsen</b> und <b>neue Synapsen</b> entstehen",
+  "→ dauerhafte Verstärkung der Übertragung (Tage bis Wochen)"]},
+ {t:"lernen",n:"7 · NMDA-Rezeptor und LTP (S. 101, Material B)",s:[
+  "Präsynapse schüttet <b>Glutamat</b> aus",
+  "Glutamat öffnet <b>Na⁺-Kanäle</b> → Na⁺ strömt ein → Postsynapse wird depolarisiert",
+  "<b>Erst bei starker Depolarisation</b> wird das <b>Mg²⁺</b> aus dem NMDA-Rezeptor gedrängt",
+  "NMDA-Rezeptor (bindet Glutamat) öffnet → <b>Ca²⁺ strömt ein</b>",
+  "Ca²⁺ aktiviert <b>Proteinkinasen</b> → mehr Rezeptoren, höhere Leitfähigkeit; <b>Genaktivierung</b> → neue Synapsen",
+  "<b>Zurückwirkender Botenstoff</b> → Präsynapse schüttet mehr Transmitter aus → <b>LTP</b>"]},
+ {t:"drogen",n:"8 · Morphin hemmt Schmerz (S. 86–87)",s:[
+  "Morphin bindet (wie Endorphin) an den <b>Opioid-Rezeptor</b>",
+  "G-Protein <b>hemmt</b> die <b>Adenylatzyklase</b> → <b>weniger cAMP</b>",
+  "Proteinkinase phosphoryliert die <b>Ca²⁺-Kanäle</b> nicht → sie öffnen beim AP <b>nicht</b>",
+  "Kein Ca²⁺-Einstrom → <b>keine Transmitterfreisetzung</b> → Schmerzsignal wird nicht weitergeleitet",
+  "<b>Toleranz:</b> cAMP-Mangel → Transkriptionsfaktor löst sich → Adenylatzyklase-Gen wird abgelesen → <b>mehr Adenylatzyklase</b> → höhere Dosis nötig",
+  "<b>Entzug:</b> ohne Morphin cAMP-Überschuss → Schmerzüberempfindlichkeit, Entzugssyndrom"]}
+];
+document.getElementById("chains").innerHTML = CHAINS.map(c=>`
+ <details class="${TH[c.t].c}"><summary>${tag(c.t)} ${c.n}</summary><div class="dbody"><ol class="chain">${c.s.map(x=>`<li>${x}</li>`).join("")}</ol></div></details>`).join("");
+
+/* ---------- Lernzettel ---------- */
+const SHEETS = [
+{t:"grund",n:"Membranpotenzial, De- und Hyperpolarisation",h:`
+<p><b>Ruhepotenzial</b> ≈ −70 mV (innen negativ). Ursache: ungleiche Ionenverteilung (innen viel K⁺, außen viel Na⁺ und Cl⁻), Membran in Ruhe v. a. für K⁺ durchlässig, Na⁺-K⁺-Pumpe hält das Gefälle aufrecht.</p>
+<table><tr><th></th><th>Depolarisation</th><th>Hyperpolarisation</th></tr>
+<tr><td>Was</td><td>Potenzial wird <b>weniger negativ</b> (Richtung 0 / positiv)</td><td>Potenzial wird <b>negativer</b> als das Ruhepotenzial</td></tr>
+<tr><td>Ionen</td><td><b>Na⁺ rein</b>, Ca²⁺ rein, (K⁺ rein bei Haarzelle), <b>Cl⁻ raus</b> (Riechzelle), weniger K⁺ raus</td><td><b>K⁺ raus</b>, <b>Cl⁻ rein</b></td></tr>
+<tr><td>Folge</td><td>Erregung, Schwelle (≈ −50 mV) kann erreicht werden → AP</td><td>Hemmung, AP wird unwahrscheinlicher</td></tr></table>
+<div class="key">Merkregel: <b>Positive Ladung rein</b> oder <b>negative Ladung raus</b> = Depolarisation. Umgekehrt = Hyperpolarisation.</div>
+<p><b>Aktionspotenzial</b>: Alles-oder-Nichts, immer gleich hoch. Informationen stecken in der <b>Frequenz</b> (frequenzcodiert). Refraktärzeit begrenzt die maximale Frequenz.</p>`},
+{t:"grund",n:"Erregende und hemmende Synapsen, Summation",h:`
+<table><tr><th></th><th>erregende Synapse</th><th>hemmende Synapse</th></tr>
+<tr><td>Transmitter (Bsp.)</td><td>Acetylcholin, Glutamat</td><td>GABA, Glycin</td></tr>
+<tr><td>Kanäle</td><td>Na⁺-Kanäle öffnen</td><td>Cl⁻- (oder K⁺-)Kanäle öffnen</td></tr>
+<tr><td>Potenzial</td><td><b>EPSP</b>: Depolarisation</td><td><b>IPSP</b>: Hyperpolarisation</td></tr></table>
+<p>PSPs sind <b>amplitudencodiert</b> (abgestuft), werden mit Entfernung schwächer und laufen zum <b>Axonhügel</b>. Dort wird verrechnet:</p>
+<ul><li><b>Räumliche Summation</b>: mehrere Synapsen gleichzeitig (Buch-Abb. A: drei Synapsen).</li>
+<li><b>Zeitliche Summation</b>: eine Synapse feuert schnell hintereinander, das nächste PSP kommt, bevor das vorige abgeklungen ist (Abb. B).</li>
+<li>Wird am Axonhügel die <b>Schwelle</b> erreicht → AP. EPSP und IPSP heben sich teilweise auf.</li></ul>
+<p><b>Mehrfache Umcodierung</b>: AP-Frequenz (elektrisch, frequenzcodiert) → Transmittermenge (chemisch) → PSP-Höhe (elektrisch, amplitudencodiert) → am Axonhügel wieder AP-Frequenz.</p>`},
+{t:"sinn",n:"Rezeptorzellen, adäquater Reiz, Rezeptorpotenzial",h:`
+<ul><li><b>Rezeptorzelle</b>: wandelt einen Reiz in ein elektrisches Signal um (<b>Transduktion</b>).</li>
+<li><b>Reizarten</b>: mechanisch (Haarzelle, Tastsinn), chemisch (Riech-, Geschmackszelle), thermisch, Licht (Stäbchen, Zapfen).</li>
+<li><b>Adäquater Reiz</b>: Reizart, für die eine Rezeptorzelle besonders empfindlich ist (Licht für Fotorezeptoren, Schall für Haarsinneszellen).</li>
+<li><b>Rezeptorpotenzial</b>: Änderung des Membranpotenzials der Sinneszelle durch den Reiz. <b>Abgestuft</b>: je stärker der Reiz, desto größer (amplitudencodiert), kein Alles-oder-Nichts.</li></ul>
+<table><tr><th></th><th>primäre Sinneszelle</th><th>sekundäre Sinneszelle</th></tr>
+<tr><td>Bau</td><td><b>eigenes Axon</b>, ist ein Neuron</td><td><b>kein Axon</b>, kein Neuron</td></tr>
+<tr><td>Ablauf</td><td>Reiz → Rezeptorpotenzial → <b>eigene APs</b> → ZNS</td><td>Reiz → Rezeptorpotenzial → <b>Transmitterausschüttung</b> → AP am nachgeschalteten Neuron</td></tr>
+<tr><td>Beispiele</td><td>Riechsinneszelle, Mechano-, Thermo-, Nozizeptoren</td><td>Stäbchen, Zapfen, <b>Haarsinneszellen</b>, Geschmackszellen</td></tr></table>
+<div class="key"><b>Codierung der Reizstärke:</b> stärkerer Reiz → größeres Rezeptorpotenzial → (primär) höhere AP-Frequenz bzw. (sekundär) mehr Transmitter → höhere AP-Frequenz im nachgeschalteten Neuron. Die einzelnen APs werden <b>nicht größer</b>, nur häufiger.</div>`},
+{t:"sinn",n:"Signaltransduktion und Second Messenger",h:`
+<ul><li><b>Signaltransduktion</b>: Umwandlung eines extrazellulären Signals (Reiz, Hormon, Transmitter) in eine Reaktion in der Zelle. Ablauf: Reiz trifft Rezeptor → Vorgänge in der Zelle → Ionenkanäle öffnen/schließen → Membranspannung ändert sich.</li>
+<li><b>Direkt</b> (ionotrop): Rezeptor ist selbst Ionenkanal (z. B. Na⁺-Kanal mit Acetylcholin). Schnell.</li>
+<li><b>Indirekt</b> (Second-Messenger-Weg): Rezeptor → G-Protein → Enzym (Adenylatzyklase) → <b>cAMP</b> → Kanal / Proteinkinase. Langsamer, aber <b>verstärkt</b>.</li>
+<li><b>First Messenger</b> = Signal von außen (Duftstoff, Serotonin, Morphin). <b>Second Messenger</b> = intrazellulärer Botenstoff, der das Signal innen weitergibt: <b>cAMP</b> (auch Ca²⁺).</li></ul>
+<div class="key"><b>Warum Verstärkung?</b> 1 Duftstoffmolekül → 1 aktiviertes G-Protein → Adenylatzyklase bildet etwa <b>10 000 cAMP</b> → viele Kanäle öffnen. Zusätzlich verstärkt der Cl⁻-Ausstrom die Depolarisation. Deshalb reicht ein schwacher Duftreiz.</div>
+<p class="small muted">Wo cAMP überall vorkommt: Riechzelle (öffnet Kanäle), Aplysia (Proteinkinase schließt K⁺-Kanäle), Morphin (cAMP sinkt), THC/Anandamid (Adenylatzyklase verändert), Lernen (CREB). Immer dieselbe Bauweise.</p>`},
+{t:"sinn",n:"Haarsinneszelle: Lautstärke, Grenzen, Otoferlin",h:`
+<ul><li>Ablauf: siehe Kette 2. <b>Sekundäre</b> Sinneszelle, bildet <b>selbst keine APs</b>.</li>
+<li><b>Lautstärke:</b> größerer Schalldruck → stärkere Auslenkung → <b>mehr K⁺-Kanäle offen</b> → stärkere Depolarisation → mehr Ca²⁺-Kanäle → <b>mehr Transmitter</b> → <b>höhere AP-Frequenz</b> im Hörnerv.</li>
+<li><b>Grenze bei sehr lauten Tönen</b> (zwei Gründe): 1. alle mechanisch gesteuerten K⁺-Kanäle sind schon offen (Sättigung); 2. das Neuron kann wegen der <b>Refraktärzeit</b> keine höhere AP-Frequenz bilden. (Auch möglich: Transmitter-Rezeptoren gesättigt.)</li>
+<li><b>Otoferlin</b> ist an der Ca²⁺-abhängigen Verschmelzung der Vesikel beteiligt. Fehlt es → trotz Schall kaum Transmitter → Hörnerv wird nicht erregt → <b>Taubheit</b>, obwohl die Haarzelle selbst funktioniert.</li></ul>`},
+{t:"stress",n:"Adrenalin, Cortisol, Hormone vs. Neurotransmitter",h:`
+<table><tr><th></th><th>Adrenalin</th><th>Cortisol</th></tr>
+<tr><td>Stoffklasse</td><td>Aminosäure-Abkömmling (aus Tyrosin)</td><td>Steroidhormon (aus Cholesterin), Glukokortikoid</td></tr>
+<tr><td>Bildungsort</td><td>Nebennieren<b>mark</b></td><td>Nebennieren<b>rinde</b></td></tr>
+<tr><td>Auslöser</td><td>Sympathikus (neuronale Achse)</td><td>Hypothalamus → Hypophyse (ACTH) → NNR</td></tr>
+<tr><td>Tempo</td><td><b>schnell, kurz</b> (Sekunden–Minuten)</td><td><b>langsamer, lang</b> (Minuten–Stunden)</td></tr>
+<tr><td>Wirkung</td><td>Puls, Blutdruck ↑, Bronchien weit, Glucose aus Glykogen, Verdauung ↓, Pupillen weit</td><td>Blutzucker ↑, Blutdruck ↑, Entzündung/Immunabwehr ↓, Schlaf gestört; hemmt CRH/ACTH (Rückkopplung)</td></tr></table>
+<h3>Hormone vs. Neurotransmitter</h3>
+<table><tr><th></th><th>Hormon</th><th>Neurotransmitter</th></tr>
+<tr><td>Bildung</td><td>Drüsen / hormonbildende Zellen</td><td>Nervenzellen (Endknöpfchen)</td></tr>
+<tr><td>Transport</td><td>über das <b>Blut</b></td><td>durch den <b>synaptischen Spalt</b></td></tr>
+<tr><td>Wirkort</td><td>Zielzellen, auch weit entfernt</td><td>benachbarte Zelle</td></tr>
+<tr><td>Tempo / Dauer</td><td>langsam, lange (min–h)</td><td>sehr schnell, kurz (ms–s)</td></tr>
+<tr><td>Gemeinsam</td><td colspan="2">beide Botenstoffe, wirken nur auf Zellen mit <b>passendem Rezeptor</b></td></tr>
+<tr><td>Beispiel</td><td>Insulin, Cortisol</td><td>Acetylcholin, Glutamat</td></tr></table>
+<p class="small"><b>Hypothalamus</b> = Schaltstelle zwischen Nervensystem und Hormonsystem: steuert beide Stressachsen (Sympathikus <i>und</i> Hypophyse).</p>`},
+{t:"stress",n:"Material C & D (S. 85): so liest man die Kurven",h:`
+<p><b>Material C (Prüfung):</b></p>
+<ul><li>Alle drei Hormone steigen mit Prüfungsbeginn und sinken danach.</li>
+<li><b>Adrenalin</b> steigt am schnellsten (Gipfel ≈ 15 min) und fällt schnell → neuronale Achse.</li>
+<li><b>ACTH</b> Gipfel ≈ 15 min, <b>Cortisol</b> erst ≈ 30 min und bleibt lange hoch → hormonelle Achse ist eine Kette (ACTH muss erst über das Blut zur NNR).</li>
+<li><b>Stressempfindliche</b>: höhere Gipfel bei ACTH und Cortisol, sinken langsamer. Bei Adrenalin kaum Unterschied.</li>
+<li>Abfall von ACTH: <b>negative Rückkopplung</b> durch Cortisol.</li>
+<li>Ursachen-Vermutungen: Erfahrung/Bewertung der Situation, Veranlagung (Gene), früherer chronischer Stress, schwächere Rückkopplung durch Cortisol.</li></ul>
+<p><b>Material D (chronischer Stress):</b></p>
+<ul><li><b>Cytokin</b> bindet an Rezeptor → <b>Inhibitorprotein wird abgebaut</b> → Transkriptionsfaktor 1 wird frei → im Kern Bildung <b>entzündungsfördernder</b> Stoffe (Interleukin) → Immunabwehr.</li>
+<li><b>Cortisol</b> geht durch die Membran, bindet Transkriptionsfaktor 2 → Bildung <b>entzündungshemmender</b> Proteine <b>und des Inhibitorproteins</b> → das inaktiviert Transkriptionsfaktor 1.</li>
+<li>Diagramm: mit chronischem Stressor ≈ 57–59 % erkältet, ohne ≈ 38–40 %.</li>
+<li><b>Hypothese:</b> Dauerstress → dauerhaft viel Cortisol → Cytokin-Wirkung gehemmt → schwächere Immunabwehr → mehr Infekte.</li>
+<li><b>Diskussion „verursacht“:</b> Daten zeigen einen <b>Zusammenhang (Korrelation)</b>, keinen Beweis. Auch ohne Stress erkranken ≈ 40 %, Ursache bleibt das Virus. Andere Faktoren (Schlaf, Ernährung, Kontakte) möglich. Besser: chronischer Stress <b>begünstigt</b> Infektionen.</li></ul>`},
+{t:"lernen",n:"Gedächtnis (S. 94–95)",h:`
+<p><b>Modell der Gedächtnisfestigung:</b> Reize → <b>sensorischer Speicher</b> (Bewertung mit Hippocampus: wichtig/unwichtig) → <b>Kurzzeitgedächtnis</b> (Sekunden) → <b>Zwischengedächtnis</b> (KZG + Zwischen = <b>Arbeitsgedächtnis</b>) → <b>Langzeitgedächtnis</b> (Jahre). Abrufen ist in jeder Stufe möglich.</p>
+<p><b>Gedächtnissysteme:</b></p>
+<ul><li><b>deklarativ / explizit</b>: autobiografisch (Einschulung, erste Klavierstunde) und Fakten (Hauptstadt, Formel)</li>
+<li><b>prozedural / implizit</b>: Fähigkeiten (Fahrrad, Klavier) und Regeln/Gewohnheiten (Hand geben)</li>
+<li><b>emotional</b>: positiv (erster Kuss) und negativ (Spinnenangst), im limbischen System</li></ul>
+<p>Behalten hängt von der <b>Verarbeitungstiefe</b> ab: viele Sinne, motorische Beteiligung, Emotionen, Wiederholung.</p>`},
+{t:"lernen",n:"Neuronale Plastizität, LTP, Bahnung, Sensitivierung",h:`
+<ul><li><b>Neuronale Plastizität</b>: Fähigkeit des Gehirns, durch Lernen und Erfahrung neue Verbindungen zu bilden und bestehende zu verstärken oder abzuschwächen. Lebenslang.</li>
+<li><b>Langzeitpotenzierung (LTP)</b>: langfristige Steigerung der Übertragungsrate an einer Synapse bei wiederholter Nutzung. Kennzeichen: <b>größere Kontaktfläche</b>, <b>mehr Vesikel</b>, <b>mehr Ionenkanäle/Rezeptoren</b> in der postsynaptischen Membran → Nachneuron reagiert stärker. Zelluläre und molekulare Grundlage des Lernens.</li>
+<li><b>LTD</b> (Langzeitdepression): langfristige Abschwächung (z. B. durch Abbau von Rezeptoren). THC verstärkt LTD im Hippocampus → Gedächtnis schlechter.</li>
+<li><b>Bahnung</b>: häufig genutzte Verbindungen werden „wie Trampelpfade“ ausgebaut, Signale laufen schneller → <b>Gedächtnisspuren</b>.</li>
+<li>Synapsen werden ständig gebildet und abgebaut; bei Lernen entstehen in wenigen Tagen <b>mehr neue als abgebaute</b>. Erwachsene: weniger Synapsen, aber effektiver verschaltet.</li>
+<li><b>Habituation</b>: Gewöhnung, Reaktion auf einen wiederholten harmlosen Reiz wird schwächer (weniger Transmitter).</li>
+<li><b>Sensitivierung</b>: nach einem starken/schädlichen Reiz reagiert das Tier auf harmlose Reize stärker. Kurzzeit = cAMP-Kaskade (Kette 5), Langzeit = CREB und Synapsenwachstum (Kette 6).</li>
+<li><b>NMDA-Rezeptor</b> = „Koinzidenzdetektor“: öffnet nur, wenn <b>gleichzeitig</b> Glutamat gebunden ist <b>und</b> die Membran stark depolarisiert ist (Mg²⁺-Block weg). Dann Ca²⁺-Einstrom → LTP (Kette 7).</li></ul>
+<div class="warn">Material A (S. 101) richtig lesen: Das <b>sensorische</b> Neuron feuert gleich (AP gleich groß), aber das <b>Motoneuron</b> zeigt ein größeres PSP (≈ 0,4 → ≈ 1,05 mV) und der Siphon wird viel länger eingezogen (≈ 15 → ≈ 175 ms). Der Unterschied liegt also an der <b>Synapse</b>, nicht am Reiz.</div>`},
+{t:"drogen",n:"Drogen und Schmerz (S. 86–91, 107)",h:`
+<ul><li><b>Morphin/Heroin</b> ähneln den körpereigenen <b>Endorphinen</b> und binden an <b>Opioid-Rezeptoren</b> (mesolimbisches System, Rückenmark) → Kette 8.</li>
+<li><b>Toleranz</b>: Körper stellt das Gleichgewicht wieder her (mehr Adenylatzyklase, Rezeptoren verändert) → gleiche Dosis wirkt schwächer. <b>Physiologische Abhängigkeit</b>: Entzugssymptome, die der Drogenwirkung entgegengesetzt sind. <b>Psychische Abhängigkeit</b>: Verlangen nach dem Lustgefühl, Suchtgedächtnis (positive Verstärkung).</li>
+<li><b>Endorphine/Enkephalin im Rückenmark</b>: absteigende Bahn → Serotonin → hemmendes Interneuron schüttet Enkephalin aus → bindet am Endknöpfchen des sensorischen Neurons → <b>keine Transmitterausschüttung</b> → Schmerzsignal erreicht den Thalamus nicht.</li>
+<li><b>Autoaggression</b>: Selbstverletzung → Endorphinfreisetzung → kurz weniger negative Gefühle (positive Verstärkung) → Gewöhnung (Toleranz) → „Dosis“ steigt → Suchtkreislauf.</li>
+<li><b>THC</b> bindet an <b>Anandamid-Rezeptoren</b> (Hippocampus, Großhirn, Kleinhirn, Basalganglien) → über G-Protein Adenylatzyklase verändert → <b>präsynaptische Hemmung</b>. An <b>Astrocyten</b>: Glutamat-Freisetzung → postsynaptische Rezeptoren werden zurückgebildet → <b>LTD</b> → Gedächtnis gestört (Mäuse ohne Astrocyten-Rezeptor fanden den Weg trotz THC).</li></ul>`}
+];
+document.getElementById("sheets").innerHTML = SHEETS.map(s=>`<details><summary>${tag(s.t)} ${s.n}</summary><div class="dbody">${s.h}</div></details>`).join("");
+
+/* ---------- Aufgaben ---------- */
+const TASKS = [
+{id:"g1",t:"grund",a:"I",q:"Erklären Sie die Begriffe Depolarisation und Hyperpolarisation und nennen Sie jeweils zwei Ionenbewegungen, die sie auslösen.",
+ l:`<b>Depolarisation</b>: Das Membranpotenzial wird weniger negativ als das Ruhepotenzial (−70 mV) → Richtung Schwelle, Erregung. Auslöser: Na⁺-Einstrom, Ca²⁺-Einstrom, Cl⁻-Ausstrom (Riechzelle), K⁺-Einstrom (Haarzelle).<br><b>Hyperpolarisation</b>: Das Membranpotenzial wird negativer als das Ruhepotenzial → Hemmung. Auslöser: K⁺-Ausstrom, Cl⁻-Einstrom.`},
+{id:"g2",t:"grund",a:"II",q:"Buch Check-up 6a: Erklären Sie den Unterschied zwischen EPSP und IPSP.",
+ l:`An einer <b>erregenden</b> Synapse öffnet der Transmitter (z. B. Glutamat, ACh) Na⁺-Kanäle der postsynaptischen Membran. Na⁺ strömt ein → Depolarisation = <b>EPSP</b>, ein AP am Axonhügel wird wahrscheinlicher.<br>An einer <b>hemmenden</b> Synapse öffnet der Transmitter (z. B. GABA) Cl⁻- oder K⁺-Kanäle. Cl⁻ strömt ein bzw. K⁺ aus → Hyperpolarisation = <b>IPSP</b>, ein AP wird unwahrscheinlicher.<br>Beide sind abgestuft (amplitudencodiert), werden mit der Entfernung schwächer und werden am Axonhügel verrechnet.`},
+{id:"g3",t:"grund",a:"II",q:"Ruhepotenzial −70 mV, Schwelle −55 mV. Synapse A und B erzeugen am Axonhügel je ein EPSP von +8 mV, Synapse C ein IPSP von −5 mV. Entsteht ein AP, wenn (a) A allein, (b) A und B gleichzeitig, (c) A, B und C gleichzeitig, (d) A zweimal kurz hintereinander feuert? Benennen Sie die Summationsart.",
+ tip:"Einfach rechnen: −70 + Summe der PSPs. Mit −55 vergleichen.",
+ l:`(a) −70 + 8 = −62 mV → unter der Schwelle, <b>kein AP</b>.<br>(b) −70 + 16 = −54 mV → Schwelle erreicht, <b>AP</b>. <b>Räumliche Summation</b> (verschiedene Synapsen gleichzeitig).<br>(c) −70 + 16 − 5 = −59 mV → <b>kein AP</b>, das IPSP hebt einen Teil der Erregung auf.<br>(d) Kommt das zweite EPSP, bevor das erste abgeklungen ist: bis −54 mV → <b>AP</b>. <b>Zeitliche Summation</b>. Ist die Pause zu lang, klingt das erste ab und es reicht nicht.`},
+{id:"g4",t:"grund",a:"III",q:"Buch Check-up 6c: Erklären Sie die Aussage „Bei der Erregungsleitung im Nervensystem kommt es zur mehrfachen Umcodierung.“",
+ l:`1. Am Axon wird die Information als <b>Frequenz</b> von Aktionspotenzialen geleitet (frequenzcodiert, elektrisch).<br>2. An der Präsynapse wird sie in eine <b>Transmittermenge</b> übersetzt: mehr APs → mehr Ca²⁺ → mehr Vesikel (chemisch).<br>3. An der Postsynapse entsteht ein <b>PSP</b>, dessen Höhe von der Transmittermenge abhängt (amplitudencodiert).<br>4. Am Axonhügel werden die PSPs summiert und wieder in eine <b>AP-Frequenz</b> umgewandelt.<br>Bei Sinneszellen kommt vorne noch die Umwandlung Reiz → Rezeptorpotenzial (amplitudencodiert) dazu.`},
+{id:"s1",t:"sinn",a:"I",q:"Definieren Sie adäquater Reiz, Rezeptorpotenzial und Signaltransduktion und nennen Sie je ein Beispiel.",
+ l:`<b>Adäquater Reiz</b>: Reizart, für die eine Rezeptorzelle besonders empfindlich ist (Schall für Haarsinneszellen, Licht für Stäbchen).<br><b>Rezeptorpotenzial</b>: durch den Reiz ausgelöste, abgestufte Änderung des Membranpotenzials einer Sinneszelle; je stärker der Reiz, desto größer (z. B. Depolarisation der Haarzelle durch K⁺-Einstrom).<br><b>Signaltransduktion</b>: Umwandlung eines Reizes/extrazellulären Signals in ein Signal in der Zelle bis zur Änderung des Membranpotenzials (z. B. Duftstoff → G-Protein → cAMP → Kanäle öffnen).`},
+{id:"s2",t:"sinn",a:"II",q:"Vergleichen Sie primäre und sekundäre Sinneszellen und ordnen Sie Riechsinneszelle und Haarsinneszelle begründet zu.",
+ l:`<b>Primäre</b> Sinneszellen besitzen ein eigenes Axon (sind Neuronen): Reiz → Rezeptorpotenzial → eigene APs → ZNS.<br><b>Sekundäre</b> Sinneszellen haben kein Axon: Reiz → Rezeptorpotenzial → Transmitterausschüttung → APs erst im nachgeschalteten Neuron.<br><b>Riechsinneszelle = primär</b>: Buch S. 60: „führt in der Riechsinneszelle zur Ausbildung von Aktionspotenzialen“.<br><b>Haarsinneszelle = sekundär</b>: bildet laut Arbeitsblatt selbst keine APs, schüttet Transmitter auf nachgeschaltete Nervenzellen aus.`},
+{id:"s3",t:"sinn",a:"II",q:"Buch S. 60, Nr. 1: Stellen Sie den Second-Messenger-Übertragungsweg der Riechsinneszelle in einem Flussdiagramm dar.",
+ tip:"8 Schritte. Anfang: Duftstoff + Rezeptor. Ende: Aktionspotenziale. Die beiden Ionenschritte nicht vergessen (Na⁺/Ca²⁺ rein, Cl⁻ raus).",
+ l:`Siehe <b>Kette 1</b> im Reiter „Ketten“: Duftstoff bindet an G-Protein-gekoppelten Rezeptor → G-Protein aktiviert (GDP gegen GTP) → Untereinheit aktiviert Adenylatzyklase → ATP → viele cAMP → cAMP öffnet Na⁺-Ca²⁺-Kanäle → Na⁺/Ca²⁺ strömen ein, Depolarisation → Ca²⁺ öffnet Cl⁻-Kanäle → Cl⁻ strömt aus, Depolarisation verstärkt → APs.`},
+{id:"s4",t:"sinn",a:"II",q:"Buch S. 60, Nr. 2: Erklären Sie, wie es zur Verstärkung eines schwachen Duftreizes kommt.",
+ l:`1. <b>Enzymatische Verstärkung</b>: Ein Duftstoffmolekül aktiviert ein G-Protein, dieses eine Adenylatzyklase. Das Enzym bildet in kurzer Zeit sehr viele cAMP (≈ 10 000). Jedes cAMP kann einen Kanal öffnen → sehr viele Kanäle.<br>2. <b>Ionale Verstärkung</b>: Einströmendes Ca²⁺ öffnet zusätzlich Cl⁻-Kanäle. Cl⁻ strömt aus → Depolarisation wird nochmals größer.<br>→ Auch wenige Duftmoleküle reichen, um die Schwelle zu erreichen und APs auszulösen.`},
+{id:"s5",t:"sinn",a:"II",q:"Arbeitsblatt Innenohr Nr. 1 und 2: Beschreiben Sie die Vorgänge in einer Haarsinneszelle bei Schall und erklären Sie, wie die Lautstärke an das Gehirn weitergegeben wird.",
+ l:`<b>Vorgänge</b>: Auslenkung der Cilien → Tip-Links gespannt → mechanisch gesteuerte K⁺-Kanäle öffnen → K⁺-Einstrom → Depolarisation (Rezeptorpotenzial) → spannungsgesteuerte Ca²⁺-Kanäle öffnen → Ca²⁺-Einstrom → Vesikel verschmelzen → Transmitter → APs im nachgeschalteten Neuron. Mechanischer Reiz → elektrisches Signal.<br><b>Lautstärke</b>: lauter = stärkere Auslenkung → mehr K⁺-Kanäle offen → größeres Rezeptorpotenzial (Haarzelle: amplitudencodiert) → mehr Ca²⁺ → mehr Transmitter → nachgeschaltetes Neuron bildet <b>mehr APs pro Zeit</b> (frequenzcodiert). Die einzelnen APs werden nicht größer.`},
+{id:"s6",t:"sinn",a:"III",q:"Arbeitsblatt Nr. 3 und 4: Nennen Sie zwei Gründe, warum ab einer bestimmten Lautstärke keine Unterschiede mehr weitergegeben werden, und erklären Sie, wie Otoferlin-Mangel zu Taubheit führt.",
+ l:`<b>Gründe</b>: 1. Alle mechanisch gesteuerten K⁺-Kanäle sind bereits geöffnet, stärkere Auslenkung öffnet keine weiteren (Sättigung). 2. Wegen der <b>Refraktärzeit</b> kann das Neuron nur eine begrenzte Zahl APs pro Zeit bilden (maximale Frequenz).<br><b>Otoferlin</b> wird für die Ca²⁺-abhängige Verschmelzung der Vesikel mit der Membran gebraucht. Fehlt es, wird die Haarzelle zwar depolarisiert, schüttet aber kaum Transmitter aus → das nachgeschaltete Neuron bildet keine APs → keine Information im Gehirn → Taubheit.`},
+{id:"s7",t:"sinn",a:"III",q:"Ein Gift hält das G-Protein der Riechsinneszelle dauerhaft im GTP-gebundenen (aktiven) Zustand. Stellen Sie begründet eine Vermutung auf, wie sich das auf das Riechen auswirkt.",
+ tip:"Was passiert mit cAMP, wenn das G-Protein nie mehr abschaltet?",
+ l:`Das G-Protein aktiviert die Adenylatzyklase ununterbrochen → dauerhaft viel cAMP → die Na⁺-Ca²⁺-Kanäle bleiben offen → die Zelle ist dauerhaft depolarisiert und sendet ständig APs (bzw. die Membran bleibt so depolarisiert, dass keine neuen APs mehr entstehen).<br>Folge: Die Riechzelle meldet „Duft“ ohne Duftstoff, echte Duftreize können nicht mehr unterschieden werden. Der Geruchssinn ist gestört.`},
+{id:"st1",t:"stress",a:"I",q:"Stellen Sie die neuronale und die hormonelle Stressachse jeweils als Flussdiagramm dar und nennen Sie je drei Wirkungen von Adrenalin und Cortisol.",
+ l:`<b>Neuronal</b>: Hypothalamus → Sympathikus → Nebennierenmark → Adrenalin. Wirkungen: Herzfrequenz und Blutdruck ↑, Bronchien erweitert, Glucose ↑, Verdauung ↓, Pupillen weit.<br><b>Hormonell</b>: Hypothalamus (CRH) → Hypophyse → ACTH → Nebennierenrinde → Cortisol. Wirkungen: Blutzucker ↑, Blutdruck ↑, Immunsystem/Entzündung ↓, Schlafrhythmus gestört.`},
+{id:"st2",t:"stress",a:"II",q:"Buch S. 85, Material C, Nr. 1: Vergleichen Sie die Kurvenverläufe von Stressempfindlichen und Stressunempfindlichen.",
+ l:`<b>Gemeinsam</b>: Bei beiden Gruppen steigen ACTH, Cortisol und Adrenalin mit Prüfungsbeginn an und sinken danach wieder.<br><b>Unterschiede</b>: Bei Stressempfindlichen ist der Gipfel von ACTH (fast doppelt so hoch) und Cortisol deutlich höher und die Werte bleiben länger erhöht. Bei Adrenalin ist der Unterschied gering (leicht höherer Gipfel, danach fast gleich).<br><b>Zeitlich</b>: Adrenalin und ACTH erreichen ihr Maximum nach etwa 15 min, Cortisol erst nach etwa 30 min und sinkt am langsamsten.`},
+{id:"st3",t:"stress",a:"II",q:"Material C, Nr. 2: Erklären Sie die Konzentrationsveränderungen von ACTH, Cortisol und Adrenalin mithilfe der beiden Stressachsen.",
+ l:`<b>Adrenalin</b>: neuronale Achse, Hypothalamus aktiviert über Nervenbahnen (Sympathikus) das Nebennierenmark → sehr schneller Anstieg; Adrenalin wird schnell abgebaut → schneller Abfall.<br><b>ACTH</b>: Hypothalamus → CRH → Hypophyse gibt ACTH ins Blut → steigt schnell.<br><b>Cortisol</b>: ACTH muss erst über das Blut zur Nebennierenrinde, die Cortisol bilden muss → Anstieg <b>verzögert</b>; Steroidhormon wirkt lange → bleibt lange erhöht.<br><b>Abfall von ACTH</b>: Cortisol hemmt Hypothalamus und Hypophyse (<b>negative Rückkopplung</b>).`},
+{id:"st4",t:"stress",a:"III",q:"Material D, Nr. 1–3: Beschreiben Sie die Wirkung von Cytokinen und Cortisol, stellen Sie eine Hypothese zu Stress, Cortisol und Infektionen auf und diskutieren Sie die Aussage „Chronischer Stress verursacht Infektionskrankheiten“.",
+ l:`<b>Cytokine</b> binden an einen Membranrezeptor des Leukocyten → Inhibitorprotein wird abgebaut → Transkriptionsfaktor 1 wird frei, gelangt in den Kern → Transkription entzündungsfördernder Stoffe (Interleukin) → Immunabwehr wird angeregt.<br><b>Cortisol</b> gelangt durch die Membran, bindet an Transkriptionsfaktor 2 → Transkription entzündungshemmender Proteine und des Inhibitorproteins → Inhibitor bindet Transkriptionsfaktor 1 und inaktiviert ihn → Cytokin-Wirkung gehemmt.<br><b>Hypothese</b>: Chronischer Stress → dauerhaft erhöhtes Cortisol → Immunabwehr gehemmt → Krankheitserreger werden schlechter bekämpft → mehr Erkältungen (Diagramm: ≈ 58 % gegen ≈ 40 %).<br><b>Diskussion</b>: Pro: Daten zeigen deutlich mehr Erkrankte, Mechanismus plausibel. Contra: Korrelation ist kein Beweis; auch ohne Stressor erkranken ≈ 40 %; die Ursache ist der Erreger; andere Faktoren (Schlaf, Ernährung, Kontakte) nicht ausgeschlossen. <b>Fazit</b>: Stress verursacht keine Infektion, begünstigt sie aber.`},
+{id:"st5",t:"stress",a:"II",q:"Buch Check-up 8b: Erklären Sie die Bedeutung des Hypothalamus am Beispiel der Stressreaktion.",
+ l:`Der Hypothalamus ist die Verbindung zwischen Nervensystem und Hormonsystem. Er empfängt Informationen über den Stressor und startet beide Achsen: über den <b>Sympathikus</b> die schnelle Adrenalin-Ausschüttung im Nebennierenmark und über <b>CRH → Hypophyse → ACTH</b> die langsame Cortisol-Ausschüttung in der Nebennierenrinde. Außerdem ist er Ziel der negativen Rückkopplung durch Cortisol und kann so die Stressreaktion beenden.`},
+{id:"l1",t:"lernen",a:"I",q:"Buch Check-up 9a/b: Erklären Sie, wie die Steigerung der Übertragungsrate an Synapsen zustande kommt (Fachbegriff!), und was man unter neuronaler Plastizität versteht.",
+ l:`Wird eine Synapse wiederholt genutzt, vergrößert sich die Kontaktfläche, es werden mehr Vesikel gebildet und mehr Ionenkanäle/Rezeptoren in die postsynaptische Membran eingebaut. Das Nachneuron reagiert stärker auf jedes Signal. Fachbegriff: <b>Langzeitpotenzierung (LTP)</b>.<br><b>Neuronale Plastizität</b>: Fähigkeit des Gehirns, durch Lernen und Erfahrung neue Verbindungen zu bilden und bestehende zu verstärken oder abzubauen; lebenslang. Häufig genutzte Wege werden gebahnt (Bahnung).`},
+{id:"l2",t:"lernen",a:"II",q:"Buch S. 100, Nr. 2: Stellen Sie Kurzzeit- und Langzeitsensitivierung in einem Flussdiagramm dar, beginnend bei der Serotoninausschüttung.",
+ l:`Siehe <b>Kette 5</b> und <b>Kette 6</b>. Gemeinsamer Start: Serotonin → Rezeptor → G-Protein → Adenylatzyklase → cAMP → Proteinkinase.<br>Kurzzeit: Proteinkinase schließt K⁺-Kanäle → Repolarisation verlangsamt → mehr Ca²⁺ → mehr Transmitter → stärkerer Reflex.<br>Langzeit: Proteinkinase in den Zellkern → CREB → Genexpression → dauerhaft aktive Proteinkinasen + Synapsenwachstum/neue Synapsen.`},
+{id:"l3",t:"lernen",a:"II",q:"Buch S. 100, Nr. 3: Erläutern Sie die Kaskadenwirkung bei der Kurzzeitsensitivierung.",
+ l:`Kaskade = jede Stufe aktiviert viele Moleküle der nächsten: ein Serotonin-Rezeptor → G-Protein → eine Adenylatzyklase bildet viele cAMP → jedes cAMP aktiviert Proteinkinasen → jede Proteinkinase schließt viele K⁺-Kanäle. So wird ein kleines Signal (wenig Serotonin) stark verstärkt und hält Minuten bis Stunden an, weil cAMP und aktivierte Kinasen erst nach und nach abgebaut werden.`},
+{id:"l4",t:"lernen",a:"II",q:"Buch S. 101, Material A: Beschreiben Sie die Auswirkungen des Trainings und erklären Sie sie zellulär und molekular.",
+ l:`<b>Beschreibung</b>: Das AP des sensorischen Neurons ist bei Kontroll- und sensitivierten Tieren gleich. Das PSP im Motoneuron ist bei sensitivierten Tieren deutlich größer (Skala 2 mV statt 1 mV; Mittel ≈ 1,05 mV statt ≈ 0,4 mV). Die Dauer des Siphon-Einzugs steigt von ≈ 15 ms auf ≈ 175 ms.<br><b>Erklärung</b>: Langzeitsensitivierung. Über Serotonin → cAMP → Proteinkinase → CREB wurden Gene aktiviert: dauerhaft aktive Proteinkinasen halten K⁺-Kanäle geschlossen → längere APs an der Endigung → mehr Ca²⁺ → mehr Transmitter; zusätzlich größere und neue Synapsen zum Motoneuron. → größeres PSP → mehr APs im Motoneuron → stärkerer, längerer Reflex. Das sensorische Neuron selbst feuert gleich, die Veränderung liegt an der Synapse.`},
+{id:"l5",t:"lernen",a:"II",q:"Buch S. 101, Material B: Beschreiben Sie den Prozess am NMDA-Rezeptor und erläutern Sie, inwiefern er zum Lernen beiträgt.",
+ l:`Siehe <b>Kette 7</b>. Lernen: Der NMDA-Rezeptor öffnet nur, wenn die Präsynapse Glutamat ausschüttet <b>und</b> die Postsynapse gleichzeitig stark erregt ist (z. B. durch viele Synapsen oder schnelle Reizfolge). Genau dann, also bei wiederholter/gemeinsamer Aktivität, strömt Ca²⁺ ein und löst über Proteinkinasen dauerhafte Veränderungen aus: mehr und leitfähigere Rezeptoren, neue Synapsen, retrograder Botenstoff → mehr Transmitter. Die Synapse überträgt künftig stärker = LTP = Gedächtnisspur.`},
+{id:"l6",t:"lernen",a:"I",q:"Ordnen Sie den Gedächtnissystemen zu: Fahrrad fahren · Hauptstadt von Frankreich · erste Klavierstunde · Angst vor Spinnen · Begrüßung per Handschlag.",
+ l:`Fahrrad fahren: prozedural (Fähigkeit) · Hauptstadt: deklarativ (Fakt) · erste Klavierstunde: deklarativ (autobiografisch), ggf. auch emotional · Spinnenangst: emotional (negativ) · Handschlag: prozedural (Regel/Gewohnheit).`},
+{id:"l7",t:"lernen",a:"III",q:"Buch S. 91, Nr. 1: Erläutern Sie das Experiment zur Klärung der Wirkung des THC auf den Hippocampus.",
+ l:`Frage: Wirkt THC über Neuronen oder über Astrocyten? Mäuse, denen THC-Rezeptoren an <b>Neuronen</b> fehlten (an Astrocyten aber vorhanden), fanden unter THC den Weg nicht. Mäuse ohne Rezeptoren an <b>Astrocyten</b> erinnerten sich trotz THC. → Die Gedächtnisstörung entsteht über die Astrocyten.<br>Mechanismus: THC bindet am Astrocyten → Glutamat wird freigesetzt → bindet an postsynaptische Rezeptoren im Hippocampus → andere Rezeptoren werden zurückgebildet → dauerhafte Abschwächung (<b>LTD</b>) → Übertragung ins Langzeitgedächtnis gestört.`},
+{id:"d1",t:"drogen",a:"II",q:"Buch S. 87, Nr. 2 und 3: Erklären Sie die schmerzhemmende Wirkung des Morphins und erläutern Sie, warum eine höhere Dosis nicht zu einer gesteigerten Wirkung führt.",
+ l:`<b>Wirkung</b>: Kette 8. Morphin → Opioid-Rezeptor → G-Protein hemmt Adenylatzyklase → weniger cAMP → Ca²⁺-Kanäle werden nicht phosphoryliert und öffnen nicht → kein Ca²⁺ → keine Transmitterfreisetzung → Schmerzsignal wird nicht weitergeleitet.<br><b>Toleranz</b>: Der cAMP-Mangel löst den Transkriptionsfaktor von der DNA → Adenylatzyklase-Gen wird abgelesen → mehr Adenylatzyklase in der Membran → cAMP-Mangel wird ausgeglichen. Dieselbe Dosis wirkt schwächer; mehr Morphin gleicht das nur aus, statt die Wirkung zu steigern. Ursache der physiologischen Abhängigkeit.`},
+{id:"d2",t:"drogen",a:"II",q:"Buch S. 107, Nr. 2: Erklären Sie die Wirkung von Endorphinen auf die Weiterleitung von Schmerzsignalen.",
+ l:`Absteigende Bahnen vom Mittelhirn schütten im Rückenmark Serotonin aus → erregen ein hemmendes Interneuron → dieses schüttet Enkephalin (Endorphin) aus → bindet an Endorphin-Rezeptoren am Endknöpfchen des sensorischen Neurons → (über G-Protein, weniger cAMP, Ca²⁺-Kanäle zu) <b>keine Transmitterausschüttung</b> → das Schmerzsignal wird nicht auf die aufsteigende Bahn zum Thalamus übertragen → Schmerz wird weniger empfunden.`}
+];
+let aState = LS.get("tasks",{}), aFilter="alle";
+function renderTasks(){
+  const list = TASKS.filter(x=>aFilter==="alle"||x.t===aFilter||(aFilter==="nochmal"&&aState[x.id]==="bad"));
+  document.getElementById("tasks").innerHTML = list.map(x=>`
+   <details id="t-${x.id}"><summary>${tag(x.t)}<span class="afb">AFB ${x.a}</span> <span style="font-weight:500">${x.q.length>70?x.q.slice(0,68)+"…":x.q}</span> ${aState[x.id]==="good"?"✅":aState[x.id]==="bad"?"🔁":""}</summary>
+   <div class="dbody"><p><b>${x.q}</b></p>
+   ${x.tip?`<details style="background:var(--card2)"><summary>Tipp</summary><div class="dbody small">${x.tip}</div></details>`:""}
+   <details style="background:var(--card2)"><summary>Lösung</summary><div class="dbody small">${x.l}</div></details>
+   <div class="btnrow"><button class="btn good ${aState[x.id]==="good"?"on":""}" data-id="${x.id}" data-s="good">Gekonnt</button><button class="btn bad ${aState[x.id]==="bad"?"on":""}" data-id="${x.id}" data-s="bad">Wiederholen</button></div></div></details>`).join("");
+  const g = TASKS.filter(x=>aState[x.id]==="good").length;
+  document.getElementById("aprog").style.width = (100*g/TASKS.length)+"%";
+  document.getElementById("astat").textContent = `${g} von ${TASKS.length} gekonnt · ${TASKS.filter(x=>aState[x.id]==="bad").length} zum Wiederholen`;
+}
+function filterBar(el, cur, cb, extra){
+  const opts = [["alle","Alle"],...Object.entries(TH).map(([k,v])=>[k,v.n]),...(extra||[])];
+  el.innerHTML = opts.map(([k,n])=>`<button data-f="${k}" class="${k===cur?"on":""}">${n}</button>`).join("");
+  el.onclick = e=>{const b=e.target.closest("button"); if(!b)return; cb(b.dataset.f); filterBar(el,b.dataset.f,cb,extra)};
+}
+filterBar(document.getElementById("afilter"),"alle",f=>{aFilter=f;renderTasks()},[["nochmal","🔁 Wiederholen"]]);
+document.getElementById("tasks").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-s]"); if(!b)return;
+  const id=b.dataset.id; aState[id] = aState[id]===b.dataset.s?undefined:b.dataset.s; LS.set("tasks",aState);
+  const open=[...document.querySelectorAll("#tasks details[open]")].map(d=>d.id); renderTasks();
+  open.forEach(i=>{const d=document.getElementById(i); if(d)d.open=true});
+});
+renderTasks();
+
+/* ---------- Karten ---------- */
+const CARDS = [
+["grund","Ruhepotenzial: Wert und Ursache?","≈ −70 mV. Ungleiche Ionenverteilung (innen K⁺, außen Na⁺/Cl⁻), Membran in Ruhe v. a. für K⁺ durchlässig, Na⁺-K⁺-Pumpe."],
+["grund","Depolarisation: Definition + Ionen","Membranpotenzial wird weniger negativ. Na⁺/Ca²⁺ rein, Cl⁻ raus (Riechzelle), K⁺ rein (Haarzelle)."],
+["grund","Hyperpolarisation: Definition + Ionen","Membranpotenzial wird negativer als Ruhepotenzial. K⁺ raus oder Cl⁻ rein. → Hemmung."],
+["grund","EPSP","Erregendes postsynaptisches Potenzial: Transmitter öffnet Na⁺-Kanäle → Depolarisation."],
+["grund","IPSP","Inhibitorisches PSP: Transmitter (GABA) öffnet Cl⁻/K⁺-Kanäle → Hyperpolarisation."],
+["grund","Räumliche Summation","PSPs mehrerer Synapsen, die gleichzeitig aktiv sind, addieren sich am Axonhügel."],
+["grund","Zeitliche Summation","Eine Synapse feuert schnell hintereinander; das nächste PSP kommt, bevor das vorige abgeklungen ist."],
+["grund","Wo wird über ein AP entschieden?","Am Axonhügel: Erreichen die summierten PSPs die Schwelle (≈ −50/−55 mV) → AP."],
+["grund","Frequenz- vs. amplitudencodiert","AP: frequenzcodiert (immer gleich hoch, Info in Anzahl pro Zeit). PSP/Rezeptorpotenzial: amplitudencodiert (Höhe abgestuft)."],
+["sinn","Adäquater Reiz","Reizart, für die eine Rezeptorzelle besonders empfindlich ist (Licht → Fotorezeptor, Schall → Haarzelle)."],
+["sinn","Rezeptorpotenzial","Durch einen Reiz ausgelöste, abgestufte Änderung des Membranpotenzials einer Sinneszelle; größer bei stärkerem Reiz."],
+["sinn","Primäre Sinneszelle","Hat eigenes Axon, bildet selbst APs. Bsp.: Riechsinneszelle, Mechano-/Thermorezeptoren."],
+["sinn","Sekundäre Sinneszelle","Kein Axon; Rezeptorpotenzial → Transmitter → AP im nachgeschalteten Neuron. Bsp.: Haarzelle, Stäbchen, Zapfen."],
+["sinn","Signaltransduktion","Umwandlung eines Reizes/äußeren Signals in eine Reaktion in der Zelle bis zur Membranpotenzialänderung."],
+["sinn","Second Messenger","Intrazellulärer Botenstoff (v. a. cAMP), der ein äußeres Signal (First Messenger) in der Zelle weitergibt und verstärkt."],
+["sinn","Welches Enzym bildet cAMP – woraus?","Adenylatzyklase, aus ATP."],
+["sinn","G-Protein: wie wird es aktiviert?","Rezeptor bindet Signal → G-Protein tauscht GDP gegen GTP → Untereinheit löst sich, aktiviert Adenylatzyklase."],
+["sinn","Riechzelle: welche Ionen?","cAMP öffnet Na⁺-Ca²⁺-Kanäle (Einstrom), Ca²⁺ öffnet Cl⁻-Kanäle (Ausstrom) → Depolarisation verstärkt."],
+["sinn","Wie viele cAMP pro Duftmolekül?","Etwa 10 000 → Signalverstärkung."],
+["sinn","Haarzelle: welcher Kanal öffnet zuerst?","Mechanisch gesteuerte K⁺-Kanäle über Tip-Links → K⁺-Einstrom → Depolarisation."],
+["sinn","Wie wird Lautstärke codiert?","Stärkere Auslenkung → mehr Kanäle → größeres Rezeptorpotenzial → mehr Transmitter → höhere AP-Frequenz im Hörnerv."],
+["sinn","Otoferlin","Protein für die Ca²⁺-abhängige Vesikelverschmelzung in der Haarzelle. Mangel → kein Transmitter → Taubheit."],
+["sinn","Warum keine Unterschiede bei sehr laut?","Alle K⁺-Kanäle offen (Sättigung); Refraktärzeit begrenzt AP-Frequenz."],
+["stress","Neuronale Stressachse","Hypothalamus → Sympathikus → Nebennierenmark → Adrenalin (schnell)."],
+["stress","Hormonelle Stressachse","Hypothalamus (CRH) → Hypophyse → ACTH → Nebennierenrinde → Cortisol (langsam, lang)."],
+["stress","Adrenalin: Bildungsort, Stoffklasse","Nebennierenmark; Aminosäure-Abkömmling (aus Tyrosin)."],
+["stress","Cortisol: Bildungsort, Stoffklasse","Nebennierenrinde; Steroidhormon (aus Cholesterin), Glukokortikoid."],
+["stress","Drei Wirkungen von Adrenalin","Herzfrequenz/Blutdruck ↑, Bronchien weit, Glucose ↑ (Verdauung ↓, Pupillen weit)."],
+["stress","Drei Wirkungen von Cortisol","Blutzucker ↑, Blutdruck ↑, Immunsystem/Entzündung gehemmt (Schlaf gestört)."],
+["stress","Negative Rückkopplung","Viel Cortisol hemmt Hypothalamus und Hypophyse → weniger CRH/ACTH → Stressreaktion endet."],
+["stress","Hormon vs. Neurotransmitter: Transport","Hormon über das Blut (weit, langsam, lang); Transmitter durch den synaptischen Spalt (nah, schnell, kurz)."],
+["stress","Warum steigt Cortisol später als ACTH?","ACTH muss erst über das Blut zur Nebennierenrinde, die Cortisol erst bilden muss."],
+["stress","Cortisol und Immunsystem (Material D)","Cortisol → Transkriptionsfaktor 2 → Inhibitorprotein → hemmt TF 1 → weniger entzündungsfördernde Stoffe."],
+["lernen","Langzeitpotenzierung (LTP)","Langfristige Steigerung der Übertragungsrate an Synapsen: größere Kontaktfläche, mehr Vesikel, mehr Ionenkanäle/Rezeptoren."],
+["lernen","Neuronale Plastizität","Fähigkeit des Gehirns, durch Lernen/Erfahrung Verbindungen neu zu bilden, zu verstärken oder abzubauen; lebenslang."],
+["lernen","Bahnung","Häufig genutzte Verbindungen werden wie Trampelpfade ausgebaut, Signale laufen schneller → Gedächtnisspur."],
+["lernen","LTD","Langzeitdepression: langfristige Abschwächung einer Synapse (z. B. durch THC im Hippocampus verstärkt)."],
+["lernen","Habituation","Gewöhnung: Reaktion auf wiederholten harmlosen Reiz wird schwächer."],
+["lernen","Sensitivierung","Nach starkem/schädlichem Reiz reagiert das Tier auch auf harmlose Reize stärker."],
+["lernen","Kurzzeitsensitivierung: entscheidender Kanal","Proteinkinase schließt K⁺-Kanäle → AP länger → mehr Ca²⁺ → mehr Transmitter."],
+["lernen","CREB","cAMP response element-binding protein: Transkriptionsfaktor; bewirkt bei Langzeitsensitivierung Genexpression → Synapsenwachstum."],
+["lernen","NMDA-Rezeptor: wann offen?","Glutamat gebunden UND Membran stark depolarisiert (Mg²⁺-Block entfernt) → Ca²⁺-Einstrom."],
+["lernen","Zurückwirkender Botenstoff","Wird von der Postsynapse nach Ca²⁺-Einstrom freigesetzt → Präsynapse schüttet mehr Transmitter aus."],
+["lernen","Modell der Gedächtnisfestigung","Sensorischer Speicher → Kurzzeit → Zwischen (= Arbeitsgedächtnis) → Langzeitgedächtnis."],
+["lernen","Drei Gedächtnissysteme","Deklarativ (Fakten, autobiografisch), prozedural (Fähigkeiten, Regeln), emotional (positiv, negativ)."],
+["lernen","Rolle des Hippocampus","Bewertet Sinnesdaten und überträgt Informationen vom Arbeits- ins Langzeitgedächtnis."],
+["drogen","Wie hemmt Morphin Schmerz?","Opioid-Rezeptor → Adenylatzyklase gehemmt → cAMP ↓ → Ca²⁺-Kanäle zu → kein Transmitter."],
+["drogen","Toleranz bei Morphin (molekular)","cAMP-Mangel → mehr Adenylatzyklase-Gen abgelesen → mehr Enzym → gleiche Dosis wirkt schwächer."],
+["drogen","Endorphine im Rückenmark","Hemmendes Interneuron schüttet Enkephalin aus → sensorisches Neuron gibt keinen Transmitter ab → kein Schmerzsignal zum Thalamus."],
+["drogen","THC: körpereigener Ligand und Rezeptor","Anandamid; Anandamid-Rezeptor (v. a. präsynaptisch, Hippocampus, Großhirn, Kleinhirn)."]
+];
+let kState = LS.get("cards",{}), kFilter="alle", kOnlyBad=false, kOrder=[], kI=0;
+function kBuild(){
+  kOrder = CARDS.map((c,i)=>i).filter(i=>(kFilter==="alle"||CARDS[i][0]===kFilter)&&(!kOnlyBad||kState[i]==="bad"));
+  kI=0; kShow();
+}
+function kShow(){
+  const f=document.getElementById("flash"); f.classList.remove("flip");
+  const g=CARDS.filter((c,i)=>kState[i]==="good").length;
+  document.getElementById("kstat").textContent = `${kOrder.length?kI+1:0} / ${kOrder.length} · ${g} von ${CARDS.length} gekonnt · ${CARDS.filter((c,i)=>kState[i]==="bad").length} nochmal`;
+  if(!kOrder.length){document.getElementById("fq").textContent="Keine Karten in dieser Auswahl 🎉";document.getElementById("fa").textContent="";return}
+  const c=CARDS[kOrder[kI]];
+  document.getElementById("fq").innerHTML = tag(c[0])+"<br><br>"+c[1]+(kState[kOrder[kI]]==="good"?" ✅":kState[kOrder[kI]]==="bad"?" 🔁":"");
+  document.getElementById("fa").innerHTML = c[2];
+}
+filterBar(document.getElementById("kfilter"),"alle",f=>{kFilter=f;kBuild()});
+(function(){const f=document.getElementById("flash");let x0=null,y0=0,moved=false;
+f.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY;moved=false},{passive:true});
+f.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;
+ if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){moved=true;document.getElementById(dx<0?"knext":"kprev").click()}});
+f.onclick=()=>{if(moved){moved=false;return}f.classList.toggle("flip")};})();
+document.getElementById("knext").onclick=()=>{if(kOrder.length){kI=(kI+1)%kOrder.length;kShow()}};
+document.getElementById("kprev").onclick=()=>{if(kOrder.length){kI=(kI-1+kOrder.length)%kOrder.length;kShow()}};
+function kMark(s){ if(!kOrder.length)return; kState[kOrder[kI]]=s; LS.set("cards",kState); kI=(kI+1)%kOrder.length; kShow(); }
+document.getElementById("kgood").onclick=()=>kMark("good");
+document.getElementById("kbad").onclick=()=>kMark("bad");
+document.getElementById("konlybad").onclick=e=>{kOnlyBad=!kOnlyBad;e.target.classList.toggle("on",kOnlyBad);kBuild()};
+document.getElementById("kshuffle").onclick=()=>{for(let i=kOrder.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[kOrder[i],kOrder[j]]=[kOrder[j],kOrder[i]]}kI=0;kShow()};
+kBuild();
+
+/* ---------- Probeklausur ---------- */
+const EXAM = [
+{n:"Aufgabe 1 · Synapsen verrechnen",p:12,t:"grund",mat:`Ein Neuron im Rückenmark erhält Eingänge von drei Synapsen S1, S2 und S3. Ruhepotenzial am Axonhügel: −70 mV, Schwellenwert: −55 mV. Ein einzelnes Aktionspotenzial an S1 oder S2 erzeugt am Axonhügel jeweils eine Potenzialänderung von +8 mV, eines an S3 eine von −5 mV.<br>Versuche: (i) S1 allein · (ii) S1 und S2 gleichzeitig · (iii) S1, S2 und S3 gleichzeitig · (iv) S1 zweimal im Abstand von 2 ms.`,
+ q:[["a","Ordnen Sie S1 und S3 erregenden bzw. hemmenden Synapsen zu und erklären Sie die zugrunde liegenden Ionenbewegungen.",4],["b","Leiten Sie für die Versuche (i) bis (iv) ab, ob ein Aktionspotenzial entsteht. Benennen Sie dabei die Art der Summation.",5],["c","Erklären Sie, wie die Information beim Weg vom präsynaptischen AP bis zum AP am Axonhügel umcodiert wird.",3]],
+ eh:`<b>a (4)</b>: S1 erregend (1): Transmitter öffnet Na⁺-Kanäle, Na⁺-Einstrom, Depolarisation = EPSP (1). S3 hemmend (1): Cl⁻-Einstrom oder K⁺-Ausstrom, Hyperpolarisation = IPSP (1).<br><b>b (5)</b>: (i) −62 mV, kein AP (1). (ii) −54 mV, AP (1), räumliche Summation (1). (iii) −59 mV, kein AP, IPSP hebt Erregung teilweise auf (1). (iv) zweites EPSP vor Abklingen des ersten → bis −54 mV, AP, zeitliche Summation (1).<br><b>c (3)</b>: AP-Frequenz → Transmittermenge (1) → PSP-Amplitude (1) → Summation am Axonhügel → AP-Frequenz (1).`},
+{n:"Aufgabe 2 · Die Geschmackssinneszelle „süß“",p:18,t:"sinn",mat:`Geschmackssinneszellen auf der Zunge besitzen kein Axon. An ihrer Basis bilden sie Synapsen mit Fasern des Geschmacksnervs. Modell für „süß“: Zucker bindet an einen G-Protein-gekoppelten Rezeptor. Das aktivierte G-Protein aktiviert die Adenylatzyklase. Das gebildete cAMP aktiviert eine Proteinkinase, die Kaliumionenkanäle phosphoryliert und dadurch schließt. An der Zellbasis befinden sich spannungsgesteuerte Calciumionenkanäle.`,
+ q:[["a","Ordnen Sie die Geschmackssinneszelle begründet einem Sinneszelltyp zu.",3],["b","Stellen Sie die Vorgänge vom Zuckermolekül bis zum Aktionspotenzial im Geschmacksnerv in einem Flussdiagramm dar.",6],["c","Erklären Sie, wie eine höhere Zuckerkonzentration an das Gehirn gemeldet wird.",4],["d","Einer Zellkultur wird ein Stoff zugesetzt, der die Adenylatzyklase hemmt. Stellen Sie eine begründete Vermutung zur Wirkung auf und erläutern Sie, was das Ergebnis über die Rolle von cAMP aussagen würde.",5]],
+ eh:`<b>a (3)</b>: sekundäre Sinneszelle (1), kein Axon/keine eigenen APs (1), überträgt per Synapse/Transmitter auf Nervenfaser (1).<br><b>b (6)</b>: Zucker bindet Rezeptor → G-Protein aktiv (GDP/GTP) (1) → Adenylatzyklase → cAMP aus ATP (1) → Proteinkinase → K⁺-Kanäle geschlossen (1) → weniger K⁺-Ausstrom → Depolarisation = Rezeptorpotenzial (1) → spannungsgesteuerte Ca²⁺-Kanäle öffnen, Ca²⁺-Einstrom (1) → Vesikelverschmelzung, Transmitter → EPSP/AP in der Nervenfaser (1).<br><b>c (4)</b>: mehr Zucker → mehr Rezeptoren besetzt/mehr cAMP (1) → mehr K⁺-Kanäle zu → größeres Rezeptorpotenzial (amplitudencodiert) (1) → mehr Transmitter (1) → höhere AP-Frequenz im Nerv (frequenzcodiert) (1).<br><b>d (5)</b>: kein cAMP → Proteinkinase nicht aktiv → K⁺-Kanäle bleiben offen (1) → keine Depolarisation, kein Transmitter (1) → „süß“ wird nicht gemeldet (1). Aussage: cAMP ist als Second Messenger zwingend nötig (1); das Signal läuft indirekt über eine Enzymkaskade, nicht direkt über einen Ionenkanal (1).`},
+{n:"Aufgabe 3 · Prüfungsstress",p:14,t:"stress",mat:`Bei zwei Schülerinnen wurde die Cortisolkonzentration im Speichel (nmol/l) gemessen. A gibt an, unter starker Prüfungsangst zu leiden, B nicht. Prüfungsbeginn bei 0 min.<table><tr><th>Zeit (min)</th><th>−10</th><th>0</th><th>15</th><th>30</th><th>60</th><th>90</th></tr><tr><td>A</td><td>12</td><td>14</td><td>25</td><td>38</td><td>30</td><td>22</td></tr><tr><td>B</td><td>12</td><td>13</td><td>18</td><td>22</td><td>16</td><td>13</td></tr></table>Zusätzlich: Die Adrenalinkonzentration erreichte bei beiden bereits nach etwa 5 min ihr Maximum und lag nach 30 min wieder nahe am Ausgangswert.`,
+ q:[["a","Beschreiben und vergleichen Sie die Messwerte.",4],["b","Erklären Sie den zeitlichen Verlauf von Adrenalin und Cortisol mithilfe der beiden Stressachsen.",6],["c","A berichtet, dass sie in Prüfungsphasen häufig erkältet ist. Stellen Sie auf molekularer Ebene eine begründete Hypothese auf.",4]],
+ eh:`<b>a (4)</b>: gleicher Ausgangswert 12 (1); beide steigen nach Beginn, Maximum bei 30 min (1); A fast dreifach (38), B fast doppelt (22) (1); B nach 90 min fast wieder Ausgangswert, A noch deutlich erhöht (22) (1).<br><b>b (6)</b>: Adrenalin: neuronale Achse Hypothalamus → Sympathikus → Nebennierenmark (1), über Nerven sehr schnell, schneller Abbau (1). Cortisol: Hypothalamus → CRH → Hypophyse → ACTH → Nebennierenrinde (1); Hormonkette über das Blut, Cortisol muss gebildet werden → verzögert (1); Steroidhormon wirkt lange (1); Abfall durch negative Rückkopplung auf Hypothalamus/Hypophyse, bei A vermutlich schwächer/später (1).<br><b>c (4)</b>: dauerhaft hohes Cortisol (1) → bindet Transkriptionsfaktor → Bildung entzündungshemmender Proteine und Inhibitorprotein (1) → Inhibitor hemmt den durch Cytokine aktivierten Transkriptionsfaktor → weniger entzündungsfördernde Stoffe (1) → Immunabwehr geschwächt → Erreger schlechter bekämpft (1).`},
+{n:"Aufgabe 4 · Lernen im Wasserlabyrinth",p:16,t:"lernen",mat:`Ratten müssen in einem Wasserbecken eine versteckte Plattform finden. Gemessen wird die Suchzeit (s). Gruppe K erhält eine Kochsalzlösung, Gruppe N einen Stoff in den Hippocampus, der NMDA-Rezeptoren blockiert.<table><tr><th>Tag</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr><tr><td>K</td><td>60</td><td>42</td><td>25</td><td>15</td><td>10</td></tr><tr><td>N</td><td>60</td><td>57</td><td>55</td><td>52</td><td>50</td></tr></table>Zusatzversuch: Ratten, die die Aufgabe bereits gelernt haben, erhalten danach den Blocker. Sie finden die Plattform weiterhin nach etwa 12 s.`,
+ q:[["a","Beschreiben Sie die Ergebnisse.",3],["b","Erklären Sie die Ergebnisse von Gruppe K und N auf zellulärer und molekularer Ebene.",8],["c","Erläutern Sie das Ergebnis des Zusatzversuchs.",5]],
+ eh:`<b>a (3)</b>: K: Suchzeit sinkt stark von 60 auf 10 s (1). N: kaum Verbesserung (60 → 50 s) (1). Ab Tag 2 deutlicher Unterschied, wächst mit jedem Tag (1).<br><b>b (8)</b>: Lernen = LTP im Hippocampus (1). Glutamat → Na⁺-Kanäle → Depolarisation (1) → Mg²⁺-Block des NMDA-Rezeptors gelöst (1) → Ca²⁺-Einstrom (1) → Proteinkinasen → mehr/leitfähigere Rezeptoren, Genaktivierung, neue Synapsen (1), retrograder Botenstoff → mehr Transmitter (1). K: Weg wird so gespeichert, Bahnung → kürzere Suchzeit (1). N: Blocker verhindert Ca²⁺-Einstrom → keine LTP → kein Lernen (1).<br><b>c (5)</b>: Bereits gelernte Ratten finden die Plattform trotz Blocker (1). Der NMDA-Rezeptor wird zum <b>Einspeichern</b> (Auslösen der LTP) gebraucht, nicht zum <b>Abrufen</b> (1). Die Gedächtnisspur besteht aus bereits verstärkten Synapsen (mehr Rezeptoren, größere Kontaktfläche) (1); die normale Übertragung läuft über Glutamat und Na⁺-Kanäle, die nicht blockiert sind (1). → Lernen und Abrufen sind molekular getrennte Vorgänge (1).`}
+];
+document.getElementById("exam").innerHTML = EXAM.map((e,i)=>`
+ <div class="card ${TH[e.t].c}"><h2>${e.n} <span class="muted small">(${e.p} P)</span></h2>
+ <div class="mat"><b>Material</b><br>${e.mat}</div>
+ <ol type="a" style="padding-left:1.4em">${e.q.map(q=>`<li>${q[1]} <span class="muted small">(${q[2]} P)</span></li>`).join("")}</ol>
+ <details style="background:var(--card2)"><summary>Erwartungshorizont</summary><div class="dbody small">${e.eh}</div></details></div>`).join("");
+let pts = LS.get("pts",[0,0,0,0]);
+document.getElementById("ptsIn").innerHTML = EXAM.map((e,i)=>`<p>${e.n.split("·")[0]}: <input class="pts" type="number" min="0" max="${e.p}" value="${pts[i]||""}" data-i="${i}"> / ${e.p}</p>`).join("");
+function np(p){const r=p/60*100;const s=[95,90,85,80,75,70,65,60,55,50,45,39,33,27,20];for(let i=0;i<s.length;i++)if(r>=s[i])return 15-i;return 0}
+function calc(){const s=pts.reduce((a,b)=>a+(+b||0),0);document.getElementById("psum").textContent=s;document.getElementById("pnp").textContent=s?np(s):"–"}
+document.getElementById("ptsIn").addEventListener("input",e=>{const i=e.target.dataset.i;pts[i]=Math.min(+e.target.value||0,EXAM[i].p);LS.set("pts",pts);calc()});
+calc();
+
+/* ---------- Plan ---------- */
+// p: 1 = Pflicht, 2 = wenn Zeit, 3 = Extra. m = Grundminuten (werden auf die gewählte Zeit skaliert)
+const DAYS = [
+ {d:"Dienstag 24.11.", s:"Heute: Grundlagen + Sinneszellen", b:[
+  {id:"d1a",p:1,m:30,t:"grund",w:"<b>Grundlagen</b>: Lernzettel „Membranpotenzial“ + „Synapsen“ lesen, dann Aufgaben G1–G3 ohne Spicken. Karten Grundlagen."},
+  {id:"d1b",p:1,m:40,t:"sinn",w:"<b>Riechzelle</b> (Buch S. 60): Kette 1 dreimal aus dem Kopf aufschreiben, bis sie sitzt. Aufgaben S3, S4."},
+  {id:"d1c",p:1,m:35,t:"sinn",w:"<b>Primär/sekundär, Rezeptorpotenzial, Haarzelle</b>: Lernzettel lesen, Kette 2, Aufgaben S1, S2, S5, S6."},
+  {id:"d1d",p:2,m:25,t:"stress",w:"<b>Stress vorziehen</b>: Ketten 3 + 4 lesen, Tabelle Adrenalin/Cortisol und Hormone vs. Transmitter."},
+  {id:"d1e",p:2,m:20,t:"sinn",w:"<b>Karten</b> Grundlagen + Reize durchgehen, „Nochmal“ markieren. Aufgabe G4 (Umcodierung)."},
+  {id:"d1f",p:3,m:30,t:"drogen",w:"<b>Anwendung</b>: Morphin (S. 86–87), Kette 8, Aufgaben D1, D2, S7."}]},
+ {d:"Mittwoch 25.11.", s:"Stress + Lernen + Probeklausur", b:[
+  {id:"d2a",p:1,m:15,t:"sinn",w:"<b>Aufwärmen</b>: Ketten 1 + 2 aus dem Kopf aufschreiben (Kontrolle von gestern). Karten „Nochmal“ von gestern."},
+  {id:"d2b",p:1,m:35,t:"stress",w:"<b>Stressachsen</b>: Ketten 3 + 4, Material C (S. 85): Aufgaben St1–St3, St5."},
+  {id:"d2c",p:1,m:45,t:"lernen",w:"<b>Plastizität & Lernen</b>: Lernzettel, Ketten 5–7, Aufgaben L1, L2, L4, L5."},
+  {id:"d2d",p:2,m:20,t:"stress",w:"<b>Material D</b> chronischer Stress: Aufgabe St4 (Diskussion üben!)."},
+  {id:"d2e",p:2,m:90,t:"lernen",w:"<b>Probeklausur</b> komplett unter Zeit (90 min), danach mit Erwartungshorizont korrigieren. Bei wenig Zeit: nur Aufgabe 2 + 4."},
+  {id:"d2f",p:3,m:20,t:"lernen",w:"<b>Gedächtnis</b> S. 94–95 (Modelle), Aufgaben L3, L6, L7."},
+  {id:"d2g",p:3,m:20,t:"grund",w:"<b>Alle Aufgaben/Karten mit 🔁</b> wiederholen."}]},
+ {d:"Donnerstag 26.11.", s:"Klausurtag", fixed:true, b:[
+  {id:"d3a",p:1,m:15,t:"grund",w:"<b>15 min Spickrunde</b>: die 8 Ketten nur überfliegen, 1× Riechzelle laut aufsagen. Nichts Neues mehr anfangen."}]}
+];
+const HOURS=[1,1.5,2,3,4,5];
+let hrs = LS.get("hours",null), done = LS.get("done",{});
+function planFor(day,h){
+  if(day.fixed) return day.b.map(b=>({...b,mm:b.m}));
+  const M=h*60; let chosen=day.b.filter(b=>b.p===1), sum=chosen.reduce((a,b)=>a+b.m,0);
+  for(const p of [2,3]) for(const b of day.b.filter(x=>x.p===p)){
+    if(sum+b.m<=M*1.05){chosen.push(b);sum+=b.m}
+    else if(b.id==="d2e" && M-sum>=40){chosen.push({...b,m:M-sum,w:b.w});sum=M} }
+  chosen.sort((a,b)=>day.b.indexOf(day.b.find(x=>x.id===a.id))-day.b.indexOf(day.b.find(x=>x.id===b.id)));
+  const f=M/sum; return chosen.map(b=>({...b,mm:Math.max(10,Math.round(b.m*f/5)*5)}));
+}
+function renderPlan(){
+  const h = hrs||2;
+  document.getElementById("hours").innerHTML = HOURS.map(x=>`<button data-h="${x}" class="${x===hrs?"on":""}">${String(x).replace(".",",")} h</button>`).join("");
+  document.getElementById("hoursNote").textContent = hrs ? `Plan ist auf ${String(hrs).replace(".",",")} h pro Tag zugeschnitten. Pflichtblöcke sind immer drin, „wenn Zeit“-Blöcke kommen bei mehr Stunden dazu.` : "Noch nichts gewählt, der Plan zeigt vorerst 2 h pro Tag.";
+  document.getElementById("planDays").innerHTML = DAYS.map(day=>{
+    const bl = planFor(day,h); const tot=bl.reduce((a,b)=>a+b.mm,0);
+    return `<div><div class="day"><h2>${day.d}</h2><span class="muted small">${day.s} · ${Math.floor(tot/60)?Math.floor(tot/60)+" h ":""}${tot%60?tot%60+" min":""}</span></div>
+    <div class="card">${bl.map(b=>`<div class="block ${done[b.id]?"done":""}"><button class="chk ${done[b.id]?"on":""}" data-id="${b.id}" aria-label="erledigt"></button>
+     <div class="what"><div><span class="min">${b.mm} min</span> ${tag(b.t)}${b.p>1?`<span class="opt">${b.p===2?"wenn Zeit":"Extra"}</span>`:""}</div><div class="small" style="margin-top:3px">${b.w}</div></div></div>`).join("")}</div></div>`}).join("");
+}
+document.getElementById("hours").onclick=e=>{const b=e.target.closest("button");if(!b)return;hrs=+b.dataset.h;LS.set("hours",hrs);renderPlan()};
+document.getElementById("planDays").onclick=e=>{const b=e.target.closest(".chk");if(!b)return;done[b.dataset.id]=!done[b.dataset.id];LS.set("done",done);renderPlan()};
+renderPlan();
+(function(){const now=new Date(), k=new Date(2026,10,26); const d=Math.ceil((k-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
+ const el=document.getElementById("cd"); if(d<=0){el.textContent="0";document.getElementById("cdtxt").textContent="Heute ist Klausur – viel Erfolg!"} else {el.textContent=d;document.getElementById("cdtxt").textContent=d===1?"Tag bis zur Klausur":"Tage bis zur Klausur"}})();
+
+/* ---------- Tabs & Theme ---------- */
+(function(){const nav=document.getElementById("tabs"),bar=document.querySelector(".bar-in"),th=document.getElementById("theme"),mq=matchMedia("(max-width:699px)");
+ function place(){ if(mq.matches){ if(nav.parentNode!==document.body) document.body.appendChild(nav) } else if(nav.parentNode!==bar){ bar.insertBefore(nav,th) } }
+ place(); mq.addEventListener?mq.addEventListener("change",place):mq.addListener(place);})();
+document.getElementById("tabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;
+  document.querySelectorAll("#tabs button").forEach(x=>x.removeAttribute("aria-current"));b.setAttribute("aria-current","page");
+  document.querySelectorAll("section.view").forEach(s=>s.classList.toggle("on",s.id==="v-"+b.dataset.v));window.scrollTo(0,0);try{history.replaceState(null,"","#"+b.dataset.v)}catch(e){}};
+{const h=location.hash.slice(1);const b=document.querySelector(`#tabs button[data-v="${h}"]`);if(b)b.click()}
+const th=LS.get("theme","dark"); document.documentElement.dataset.theme=th;
+document.getElementById("theme").onclick=()=>{const n=document.documentElement.dataset.theme==="light"?"dark":"light";document.documentElement.dataset.theme=n;LS.set("theme",n)};
+</script>
+</body>
+</html>
