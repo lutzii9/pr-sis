@@ -4,7 +4,7 @@
   Deutsch Q1 · Lut & Erik
   Thema: Ein Drama, das aus dem Rahmen fällt?
          Kleists „Der zerbrochne Krug“ im Spiegel klassischer Dramentheorien
-  Stand: 2026-11-11 17:45 (Claude) · Fassung MIT der Folie zur Symbolik des Krugs (22 Folien)
+  Stand: 2026-11-11 17:45 (Claude) · Hauptfassung mit der Folie zur Symbolik des Krugs (22 Folien)
   Bedienung: Pfeiltasten / Leertaste / Klicker / Wischen
              N = Sprechernotizen · F = Vollbild · E = Text bearbeiten
   Ein Tastendruck deckt erst die nächsten Inhalte der Folie auf,
@@ -490,7 +490,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed var(--ton); outline-
   </section>
 
   <!-- ==================== 2 · LEITFRAGE ==================== -->
-  <section class="slide" data-title="Leitfrage" data-who="Lut">
+  <section class="slide" data-title="Leitfrage" data-who="Erik">
     <div class="kicker in">Unsere Leitfrage</div>
     <p class="lead in" style="--d:.15s">Wo hält sich Kleists „Krug“ an die Regeln des <span class="kob">klassischen Dramas</span> und wo <span class="ton">bricht</span> er sie?</p>
     <div class="road">
@@ -542,7 +542,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed var(--ton); outline-
   </section>
 
   <!-- ==================== 4 · HANDLUNG ==================== -->
-  <section class="slide" data-title="Handlung" data-who="Lut">
+  <section class="slide" data-title="Handlung" data-who="Erik">
     <div class="kicker in">Teil 1 · Das Stück</div>
     <h2 class="in" style="--d:.1s">Das Wichtigste passiert <span class="ton">vor</span> dem Vorhang</h2>
     <div class="tl">
@@ -608,7 +608,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed var(--ton); outline-
   </section>
 
   <!-- ==================== 7 · REGEL 1: EINHEITEN ==================== -->
-  <section class="slide" data-title="Regel 1: Drei Einheiten" data-who="Erik">
+  <section class="slide" data-title="Regel 1: Drei Einheiten" data-who="Lut">
     <div class="kicker in">Aristoteles · „Poetik“</div>
     <h2 class="in" style="--d:.1s">Regel 1: Die drei Einheiten</h2>
     <div class="tri">
@@ -654,7 +654,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed var(--ton); outline-
   </section>
 
   <!-- ==================== 9 · REGEL 3: STÄNDEKLAUSEL ==================== -->
-  <section class="slide" data-title="Regel 3: Ständeklausel" data-who="Erik">
+  <section class="slide" data-title="Regel 3: Ständeklausel" data-who="Lut">
     <div class="kicker in">Opitz · Gottsched</div>
     <h2 class="in" style="--d:.1s">Regel 3: Der Stand bestimmt die Gattung</h2>
     <div class="stand">
@@ -737,7 +737,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed var(--ton); outline-
   </section>
 
   <!-- ==================== 12 · PRÜFPUNKT 1 ==================== -->
-  <section class="slide" data-title="Prüfpunkt 1: Einheiten" data-who="Lut">
+  <section class="slide" data-title="Prüfpunkt 1: Einheiten" data-who="Erik">
     <div class="kicker in">Prüfpunkt 1 von 6</div>
     <div class="score" data-k="1"></div>
     <h2 class="in" style="--d:.1s">Ein Ort, eine Zeit, eine Handlung?</h2>
@@ -794,7 +794,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed var(--ton); outline-
   </section>
 
   <!-- ==================== 14 · PRÜFPUNKT 3 ==================== -->
-  <section class="slide" data-title="Prüfpunkt 3: analytisch" data-who="Lut">
+  <section class="slide" data-title="Prüfpunkt 3: analytisch" data-who="Erik">
     <div class="kicker in">Prüfpunkt 3 von 6</div>
     <div class="score" data-k="3"></div>
     <h2 class="in" style="--d:.1s">Läuft die Handlung nach vorn?</h2>
@@ -875,7 +875,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed var(--ton); outline-
   </section>
 
   <!-- ==================== 17 · PRÜFPUNKT 5 ==================== -->
-  <section class="slide" data-title="Prüfpunkt 5: Sprache" data-who="Erik">
+  <section class="slide" data-title="Prüfpunkt 5: Sprache" data-who="Lut">
     <div class="kicker in">Prüfpunkt 5 von 6</div>
     <div class="score" data-k="5"></div>
     <h2 class="in" style="--d:.1s">Sprechen die Figuren klassisch?</h2>
@@ -989,7 +989,7 @@ body.editing [contenteditable="true"] { outline: 2px dashed var(--ton); outline-
   </section>
 
   <!-- ==================== 22 · SCHLUSS ==================== -->
-  <section class="slide dark end" data-title="Fragen" data-who="Lut und Erik">
+  <section class="slide dark end" data-title="Fragen" data-who="Erik">
     <div class="kicker in">Danke fürs Zuhören</div>
     <h2 class="in" style="--d:.1s">Fragen?</h2>
     <p class="lede in" style="--d:.3s">Der „Krug“ hängt noch im Rahmen. Aber er hat einen Sprung.</p>
@@ -1153,7 +1153,7 @@ class SlidePresentation {
         history.replaceState(null, '', location.search + '#' + (n + 1));
         document.getElementById('progress').style.width = ((n + 1) / this.slides.length * 100) + '%';
         const note = s.querySelector('.notes');
-        document.getElementById('notesWho').textContent = `FOLIE ${n + 1} / ${this.slides.length} · ${s.dataset.title.toUpperCase()} · VORSCHLAG: ${(s.dataset.who || '').toUpperCase()}`;
+        document.getElementById('notesWho').textContent = `FOLIE ${n + 1} / ${this.slides.length} · ${s.dataset.title.toUpperCase()} · SPRICHT: ${(s.dataset.who || '').toUpperCase()}`;
         document.getElementById('notesText').textContent = note ? note.textContent : '';
     }
 }

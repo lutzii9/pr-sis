@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<!-- Lernheft für Lut: Der zerbrochne Krug. Stand: 2026-11-11 (Claude). Wird mit dem Browser als PDF gedruckt. -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lernheft Krug">
+<title>Lernheft: Der zerbrochne Krug</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;600;700&family=Gloock&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 19mm 18mm 20mm; }
+:root { --kobalt: #1B3FA0; --tief: #0F1F5C; --ton: #C5512B; --gold: #9A6F1E; --mute: #56608A; --porz: #F6F1E6; }
+* { box-sizing: border-box; }
+html { font-size: 11.6pt; }
+body { margin: 0; font-family: 'Source Serif 4', Georgia, serif; line-height: 1.5; color: #16203F; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+h1, h2, h3, .sans { font-family: 'Albert Sans', 'Segoe UI', sans-serif; }
+h1 { font-family: 'Gloock', Georgia, serif; font-weight: 400; font-size: 30pt; line-height: 1.05; margin: 0 0 6pt; color: var(--tief); }
+h2 { font-family: 'Gloock', Georgia, serif; font-weight: 400; font-size: 21pt; line-height: 1.1; color: var(--kobalt); margin: 0 0 8pt; padding-top: 4pt; break-after: avoid; }
+h2 small { display: block; font-family: 'Albert Sans', sans-serif; font-size: 8.5pt; letter-spacing: .18em; text-transform: uppercase; color: var(--mute); font-weight: 700; margin-bottom: 4pt; }
+h3 { font-size: 12.5pt; font-weight: 700; color: var(--tief); margin: 15pt 0 4pt; break-after: avoid; }
+h3 .nr { display: inline-block; min-width: 20pt; height: 20pt; line-height: 20pt; text-align: center; border-radius: 10pt; background: var(--kobalt); color: #fff; font-size: 9.5pt; margin-right: 6pt; padding: 0 5pt; }
+p { margin: 0 0 7pt; orphans: 3; widows: 3; }
+ul, ol { margin: 0 0 8pt; padding-left: 16pt; }
+li { margin-bottom: 3pt; }
+b, strong { font-weight: 600; }
+.part { break-before: page; }
+.cover { height: 250mm; display: flex; flex-direction: column; justify-content: center; border: 2.5pt solid var(--kobalt); outline: 1pt solid var(--kobalt); outline-offset: -7pt; padding: 22mm 18mm; background: var(--porz); }
+.cover .k { font-family: 'Albert Sans', sans-serif; font-size: 9pt; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--kobalt); margin-bottom: 14pt; }
+.cover h1 { font-size: 44pt; }
+.cover .sub { font-size: 14pt; margin-top: 10pt; max-width: 130mm; }
+.cover .toc { margin-top: 26pt; font-family: 'Albert Sans', sans-serif; font-size: 10.5pt; line-height: 1.75; }
+.cover .toc b { color: var(--kobalt); display: inline-block; width: 22pt; }
+.cover .toc span { color: var(--mute); }
+.box { border: 1.2pt solid var(--kobalt); border-radius: 6pt; padding: 9pt 12pt 6pt; margin: 9pt 0 11pt; background: #FBF9F3; break-inside: avoid; }
+.box.ton { border-color: var(--ton); } .box.gold { border-color: var(--gold); background: #FCF8EC; }
+.box .t { font-family: 'Albert Sans', sans-serif; font-size: 8.5pt; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--kobalt); margin-bottom: 4pt; }
+.box.ton .t { color: var(--ton); } .box.gold .t { color: var(--gold); }
+blockquote { margin: 6pt 0 9pt; padding: 2pt 0 2pt 12pt; border-left: 2.5pt solid var(--ton); font-style: italic; }
+blockquote cite { display: block; font-style: normal; font-family: 'Albert Sans', sans-serif; font-size: 9pt; color: var(--mute); margin-top: 2pt; }
+table { width: 100%; border-collapse: collapse; margin: 6pt 0 11pt; font-family: 'Albert Sans', sans-serif; font-size: 9.8pt; line-height: 1.38; break-inside: avoid; }
+th { text-align: left; background: var(--kobalt); color: #fff; padding: 5pt 7pt; font-weight: 700; }
+td { padding: 5pt 7pt; border-bottom: .7pt solid #C9CFE4; vertical-align: top; }
+td:first-child { font-weight: 700; }
+.pass { color: var(--kobalt); font-weight: 700; } .brk { color: var(--ton); font-weight: 700; }
+.slide { break-inside: avoid; margin-bottom: 11pt; padding-bottom: 5pt; border-bottom: .7pt solid #C9CFE4; }
+.slide h3 { margin-top: 8pt; }
+.slide .w { font-family: 'Albert Sans', sans-serif; font-size: 8.4pt; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--mute); }
+.qa { break-inside: avoid; margin-bottom: 9pt; }
+.qa .q { font-family: 'Albert Sans', sans-serif; font-weight: 700; color: var(--tief); margin-bottom: 2pt; }
+.qa .q::before { content: 'Frage: '; color: var(--ton); }
+.small { font-size: 9.6pt; color: var(--mute); }
+.time { font-family: 'Albert Sans', sans-serif; font-size: 9pt; color: var(--mute); margin: -3pt 0 8pt; }
+@media screen {
+  html { font-size: 17px; }
+  body { max-width: 780px; margin: 0 auto; padding: 28px 20px 60px; background: #fff; }
+  .cover { height: auto; min-height: 70vh; padding: 40px 28px; }
+  .part { margin-top: 56px; padding-top: 28px; border-top: 2px solid #1B3FA0; }
+  table { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====================== DECKBLATT ====================== -->
+<div class="cover">
+  <div class="k">Lernheft für Lut · Deutsch Q1 · Stand 25.11.2026, 10:35 Uhr · passt zur Präsentation mit 22 Folien</div>
+  <h1>Der zerbrochne Krug</h1>
+  <p class="sub">Alles, was du für den Vortrag „Ein Drama, das aus dem Rahmen fällt?“ wissen musst: das Buch, die Theorie, jede Folie und die Fragen, die kommen können.</p>
+  <div class="toc">
+    <div><b>A</b> Das Buch: Zusammenfassung und Deutung <span>· ca. 20 bis 25 Minuten Lesezeit</span></div>
+    <div><b>B</b> Die Theorie: der „klassische Rahmen“ <span>· ca. 8 Minuten</span></div>
+    <div><b>C</b> Der Vortrag: jede Folie erklärt <span>· ca. 10 Minuten</span></div>
+    <div><b>D</b> Fragen und Antworten <span>· ca. 10 Minuten</span></div>
+    <div><b>E</b> Spickzettel: das Wichtigste auf einer Seite</div>
+  </div>
+  <p class="small" style="margin-top:22pt; max-width:140mm">Hinweis: Die Nummern der Auftritte stimmen mit dem Buch überein. Verszahlen habe ich weggelassen, weil sie je nach Ausgabe leicht abweichen. Schlag die Zitate, die du im Vortrag vorliest, vorher einmal in eurer Ausgabe nach.</p>
+</div>
+
+<!-- ====================== TEIL A ====================== -->
+<section class="part">
+<h2><small>Teil A</small>Das Buch: Worum geht es?</h2>
+<p class="time">Lesezeit für Teil A: etwa 20 bis 25 Minuten</p>
+
+<h3>Das Stück in drei Sätzen</h3>
+<p>In einem holländischen Dorf wird vor Gericht gestritten, wer den Krug von Frau Marthe zerbrochen hat. Der Richter, der den Fall klären soll, ist selbst der Täter: Dorfrichter Adam hat den Krug in der Nacht zerbrochen, als er aus dem Zimmer von Marthes Tochter Eve fliehen musste. Weil ausgerechnet an diesem Tag ein Kontrolleur zuschaut, muss Adam eine Verhandlung gegen sich selbst führen und versucht mit immer neuen Lügen, die Schuld auf andere zu schieben, bis alles auffliegt.</p>
+
+<div class="box">
+<div class="t">Steckbrief</div>
+<table style="margin:0">
+<tr><td style="width:32%">Autor</td><td style="font-weight:400">Heinrich von Kleist (1777 bis 1811)</td></tr>
+<tr><td>Gattung</td><td style="font-weight:400">Lustspiel (Komödie) in einem Akt mit 13 Auftritten</td></tr>
+<tr><td>Entstehung</td><td style="font-weight:400">1802 bis 1806 geschrieben, 1808 in Weimar uraufgeführt, 1811 als Buch gedruckt</td></tr>
+<tr><td>Ort</td><td style="font-weight:400">Die Gerichtsstube in Huisum, einem Dorf in Holland bei Utrecht</td></tr>
+<tr><td>Zeit</td><td style="font-weight:400">Ein Vormittag (Gerichtstag), Ende des 17. Jahrhunderts</td></tr>
+<tr><td>Sprache</td><td style="font-weight:400">Blankvers: Verse mit fünf Betonungen, ohne Reim</td></tr>
+<tr><td>Bauweise</td><td style="font-weight:400">Analytisches Drama: Die Tat ist vor Beginn passiert und wird auf der Bühne nur aufgedeckt</td></tr>
+</table>
+</div>
+<p class="small">Aussprache: „Huisum“ ist holländisch. Das „ui“ klingt ungefähr wie „eu“, also etwa „Heusum“. Wenn euer Lehrer es anders spricht, übernimm einfach seine Aussprache.</p>
+
+<h3>Die Figuren</h3>
+<p><b>Dorfrichter Adam.</b> Die Hauptfigur. Er ist Richter in Huisum, schon älter, hat eine Glatze (deshalb trägt er eine Perücke) und einen Klumpfuß. Er ist faul, liebt Essen und Trinken, führt seine Akten schlampig und nutzt sein Amt aus. Vor allem aber ist er ein begabter Lügner: Er erfindet in jeder Lage sofort eine neue Ausrede. Das macht ihn komisch. Was er getan hat, ist aber nicht lustig: Er hat ein junges Mädchen erpresst.</p>
+<p><b>Schreiber Licht.</b> Adams Gerichtsschreiber. Klug, ruhig, ehrgeizig. Er merkt sehr früh, dass Adam etwas zu verbergen hat, sagt es aber nicht offen. Er lässt Adam in seine eigenen Lügen laufen und hilft am Ende mit, ihn zu überführen. Licht möchte selbst Richter werden und bekommt am Schluss tatsächlich Adams Amt. Sein Name passt: Er bringt Licht in die Sache. Ganz selbstlos ist er dabei nicht.</p>
+<p><b>Gerichtsrat Walter.</b> Ein hoher Beamter aus Utrecht. Er reist durch die Dörfer und kontrolliert die Gerichte. Er ist streng, aber höflich. Sein Ziel ist, dass die Justiz ordentlich arbeitet und angesehen bleibt. Als er merkt, dass der Richter selbst der Täter ist, will er vor allem die Würde des Gerichts retten. Der Name erinnert an „walten“ und „verwalten“.</p>
+<p><b>Frau Marthe Rull.</b> Eine Witwe, Besitzerin des Krugs und Klägerin. Sie ist laut, hartnäckig und redet sehr viel. Sie glaubt, dass Ruprecht den Krug zerbrochen hat. Eigentlich geht es ihr nicht um das Geschirr, sondern um den guten Ruf ihrer Tochter.</p>
+<p><b>Eve.</b> Marthes Tochter, mit Ruprecht verlobt. Sie ist die einzige außer Adam, die die ganze Wahrheit kennt. Sie schweigt, weil Adam sie erpresst: Wenn sie ihn verrät, so glaubt sie, muss Ruprecht als Soldat nach Ostindien und kommt vielleicht nie zurück. Sie erwartet von Ruprecht, dass er ihr vertraut, auch wenn der Schein gegen sie spricht.</p>
+<p><b>Ruprecht.</b> Ein junger Bauer, Eves Verlobter, Sohn von Veit Tümpel. Er ist ehrlich, aber hitzig und eifersüchtig. Er hat in der Nacht einen Mann bei Eve gesehen, hält sie deshalb für untreu und beschimpft sie. Vor Gericht ist er der Angeklagte.</p>
+<p><b>Veit Tümpel.</b> Ruprechts Vater, ein Bauer. Er hält zu seinem Sohn, ist aber unsicher, ob der nicht doch etwas angestellt hat.</p>
+<p><b>Frau Brigitte.</b> Eine Verwandte von Ruprecht und die entscheidende Zeugin. Sie bringt Adams Perücke mit, die sie unter Eves Fenster gefunden hat, und berichtet von einer Spur im Schnee. Sie ist abergläubisch und glaubt, sie habe den Teufel gesehen.</p>
+<p><b>Dazu:</b> ein Bedienter von Walter, zwei Mägde von Adam, ein Büttel (Gerichtsdiener).</p>
+
+<h3>Was in der Nacht davor geschah (die Vorgeschichte)</h3>
+<p>Das Wichtigste passiert, bevor das Stück beginnt. Auf der Bühne sieht man es nie. Die Zuschauer setzen es Stück für Stück aus den Aussagen zusammen. Damit du den Überblick hast, hier die Nacht in der richtigen Reihenfolge:</p>
+<ol>
+<li><b>Die Lüge.</b> In Holland werden junge Männer für das Militär eingezogen. Richter Adam erzählt Eve heimlich, Ruprecht solle nicht im Land bleiben, sondern nach Ostindien verschifft werden. Von dort komme nur jeder Dritte zurück. Als Beweis zeigt er ihr einen Brief. Der Brief ist gefälscht.</li>
+<li><b>Die Erpressung.</b> Adam bietet an, Ruprecht mit einem Attest zu retten, also einer Bescheinigung, dass er für den Dienst untauglich ist. Unter dem Vorwand, das Papier auszufüllen, kommt er spät am Abend zu Eve und geht mit ihr in ihre Kammer. Dort verlangt er von ihr als Gegenleistung etwas, das sie vor Gericht nicht aussprechen mag. Gemeint ist: Er bedrängt sie.</li>
+<li><b>Ruprecht kommt dazu.</b> Ruprecht will Eve besuchen. Er hört Stimmen, sieht einen Mann bei ihr und glaubt, es sei sein Rivale Lebrecht, ein Flickschuster. Er tritt die Tür ein.</li>
+<li><b>Die Flucht.</b> Adam springt aus dem Fenster. Dabei fällt der Krug herunter und zerbricht. Adam bleibt im Weinspalier unter dem Fenster hängen. Ruprecht schlägt ihm mit der abgerissenen Türklinke zweimal auf den Kopf. Adam wirft ihm Sand in die Augen und entkommt. Ruprecht hat ihn nicht erkannt.</li>
+<li><b>Die Spuren.</b> Adams Perücke bleibt im Spalier hängen. Er läuft mit kahlem, blutendem Kopf durch den Schnee nach Hause. Sein Klumpfuß hinterlässt eine auffällige Spur.</li>
+<li><b>Der Streit.</b> Frau Marthe kommt mit der Lampe dazu, findet den zerbrochenen Krug, ihre weinende Tochter und den tobenden Ruprecht. Für sie ist klar: Ruprecht war es. Sie zieht vor Gericht.</li>
+</ol>
+
+<h3>Die Handlung, Auftritt für Auftritt</h3>
+
+<p><b>1. Auftritt: Adam und Licht.</b> Es ist Morgen. Der Schreiber Licht findet Richter Adam in der Gerichtsstube, wie er sich das Bein verbindet. Adam sieht schlimm aus: zerkratztes Gesicht, ein blaues Auge, zwei Wunden am Kopf. Er behauptet, er sei beim Aufstehen aus dem Bett gefallen und gegen den Ofen geschlagen. Schon hier spielt Kleist mit dem Wort „Fall“. Licht spottet, Adam stamme ja von einem „lockern Ältervater“ ab, der gleich am Anfang der Welt gefallen sei. Gemeint ist der Adam aus der Bibel und der Sündenfall. Dann bringt Licht eine schlechte Nachricht: Gerichtsrat Walter aus Utrecht ist auf Kontrollreise und wird gleich hier sein. Im Nachbardorf Holla hat er den Richter abgesetzt, der hat danach versucht, sich zu erhängen. Adam gerät in Panik, denn seine Akten und Kassen sind in schlechtem Zustand. Er bittet Licht, heute zu ihm zu halten.</p>
+<blockquote>„Zum Straucheln brauchts doch nichts, als Füße.“ <cite>Adam im 1. Auftritt, als Ausrede für seine Wunden</cite></blockquote>
+
+<p><b>2. Auftritt: Die Perücke fehlt.</b> Ein Bedienter meldet, dass der Gerichtsrat gleich da ist. Adam ruft nach seiner Amtskleidung. Dabei stellt sich heraus: Seine Perücke ist weg. Die Mägde sagen, er sei gestern Abend ohne Perücke und mit blutendem Kopf nach Hause gekommen. Das passt nicht zu seiner Geschichte vom Sturz aus dem Bett am Morgen. Adam streitet es ab und erfindet sofort die nächste Ausrede: Die Katze habe in der Perücke ihre Jungen bekommen. Er schickt eine Magd los, um beim Küster eine Perücke zu leihen.</p>
+
+<p><b>3. Auftritt: Adams Traum.</b> Adam erzählt Licht von einem Traum: Ein Kläger habe ihn gepackt und vor den Richterstuhl geschleppt. Gleichzeitig habe er selbst auf dem Richterstuhl gesessen und sich selbst verurteilt. Dieser Traum sagt genau voraus, was im Stück passiert: Adam ist Angeklagter und Richter in einer Person.</p>
+<blockquote>„Mir träumt', es hätt ein Kläger mich ergriffen, und schleppte vor den Richtstuhl mich; und ich, ich säße gleichwohl auf dem Richtstuhl dort“ <cite>Adam im 3. Auftritt</cite></blockquote>
+
+<p><b>4. Auftritt: Walter kommt.</b> Gerichtsrat Walter tritt auf. Er ist freundlich und erklärt, er wolle die Rechtspflege auf dem Land verbessern. Er wundert sich über Adams Wunden und die fehlende Perücke. Weil heute Gerichtstag ist und draußen schon Leute warten, will er bei der Verhandlung zusehen. Danach will er Kassen und Akten prüfen. Für Adam ist das die schlimmste denkbare Lage: Er muss unter Beobachtung richten.</p>
+
+<p><b>5. Auftritt: Keine Perücke.</b> Die Magd kommt zurück: Vom Küster gibt es keine Perücke. Adam muss also mit kahlem Kopf Gericht halten. Für einen Richter war das damals peinlich und unwürdig. Auf der Bühne erinnert der kahle, verletzte Kopf die ganze Zeit an die Nacht.</p>
+
+<p><b>6. Auftritt: Die Parteien treten auf.</b> Frau Marthe, Eve, Ruprecht und sein Vater Veit kommen herein und streiten. Marthe schimpft auf das „krugzertrümmernde Gesindel“. Veit bietet an, den Krug zu ersetzen, falls Ruprecht schuld ist. Marthe will davon nichts hören. Ruprecht will mit Eve nichts mehr zu tun haben und beschimpft sie. Er sagt auch, worum es Marthe wirklich geht: Nicht der Krug habe ein Loch, sondern die Hochzeit. Eve bittet ihre Mutter, die Klage fallen zu lassen. Marthe antwortet mit dem Satz, der zeigt, was der Krug bedeutet:</p>
+<blockquote>„Dein guter Name lag in diesem Topfe“ <cite>Frau Marthe zu Eve im 6. Auftritt</cite></blockquote>
+
+<p><b>7. Auftritt: Die Verhandlung beginnt.</b> Das ist der längste Auftritt. Adam kommt im Richtergewand, aber ohne Perücke. Als er sieht, wer da vor ihm steht, erschrickt er. Er flüstert sofort mit Eve und deutet ihr an, dass er das Papier für Ruprecht in der Tasche hat. Das ist eine Drohung: Wenn du redest, ist Ruprecht verloren. Walter ermahnt ihn mehrmals, sich an die Regeln zu halten, und droht sogar, die Verhandlung dem Schreiber zu übergeben.</p>
+<p>Adam macht dabei einen Fehler nach dem anderen. Er will die Sache möglichst schnell und ohne genaue Fragen erledigen, er legt den Leuten Antworten in den Mund, und er redet immer dann dazwischen, wenn es für ihn gefährlich wird. Walter wird dadurch erst richtig aufmerksam. Je mehr Adam die Verhandlung abkürzen will, desto genauer besteht Walter darauf, dass alles ordentlich abläuft. Adam bringt sich also durch seine eigene Hast in Schwierigkeiten.</p>
+<p>Dann spricht Frau Marthe. Statt kurz zu sagen, was passiert ist, beschreibt sie lang und breit den Krug. Auf ihm war ein Stück Geschichte der Niederlande abgebildet: wie die Provinzen feierlich an den spanischen König Philipp übergeben wurden. Marthe zählt auf, welche Figur wo zu sehen war und wo jetzt nur noch ein Loch ist. Danach erzählt sie, was der Krug schon alles überstanden hat: Ein Kesselflicker erbeutete ihn im Krieg gegen die Spanier, ein späterer Besitzer warf ihn bei einer Plünderung aus dem Fenster, und der Krug blieb heil. Sogar einen Hausbrand hat er überlebt. Und nun hat ihn, so Marthe, dieser Bengel zerschlagen. Adam ruft ungeduldig dazwischen, sie solle zur Sache kommen. Diese Rede ist eine berühmte komische Stelle. Sie zeigt aber auch: Für Marthe ist der Krug ein Stück heile Welt. Schließlich klagt sie Ruprecht an: Sie habe gegen elf Uhr nachts Lärm in Eves Kammer gehört, die Tür sei eingetreten gewesen, der Krug habe in Scherben gelegen, und Ruprecht habe mitten im Zimmer gestanden.</p>
+<p>Ruprecht erzählt seine Sicht: Er habe einen Mann bei Eve gesehen, die Tür eingetreten, da sei jemand aus dem Fenster gesprungen. Dem habe er im Spalier noch zweimal mit der Türklinke auf den Kopf geschlagen, dann habe er Sand in die Augen bekommen. Er vermutet, es war der Flickschuster Lebrecht. Adam greift das sofort gierig auf: Jeder ist ihm als Täter recht, nur nicht er selbst. Achte auf das Detail mit den zwei Schlägen: Adam hat genau zwei Wunden am Kopf. Die Zuschauer können hier schon alles zusammensetzen. Die Figuren auf der Bühne können es noch nicht, weil niemand auf die Idee kommt, den Richter selbst zu verdächtigen.</p>
+<p>Wichtig ist auch, wie unterschiedlich Marthe und Ruprecht dieselbe Nacht erzählen. Beide sagen, was sie gesehen haben, und beide ziehen daraus einen falschen Schluss: Marthe hält Ruprecht für den Täter, Ruprecht hält Eve für untreu. Keiner lügt, und trotzdem liegen beide daneben. Das ist typisch für Kleist: Der Schein trügt, und aus dem, was man sieht, folgt noch lange nicht die Wahrheit.</p>
+
+<p><b>8. Auftritt: Kurze Unterbrechung.</b> Ein sehr kurzer Auftritt. Adam ist nervös und versucht, Zeit zu gewinnen und Walter abzulenken, unter anderem mit dem Angebot, etwas zu trinken. Walter besteht darauf, dass es weitergeht.</p>
+
+<p><b>9. Auftritt: Eve soll aussagen.</b> Jetzt soll Eve sagen, wer es war. Adam redet auf sie ein und setzt sie mit versteckten Andeutungen unter Druck. Eve steckt in der Klemme: Sagt sie die Wahrheit, glaubt sie Ruprecht zu verlieren. Lügt sie, wird Ruprecht verurteilt. Sie sagt deshalb nur die halbe Wahrheit: Ruprecht war es nicht. Wer es war, will sie hier nicht sagen. Zu Ruprecht sagt sie, er hätte ihr vertrauen müssen:</p>
+<blockquote>„Pfui, Ruprecht, pfui, o schäme dich, daß du mir nicht in meiner Tat vertrauen kannst.“ <cite>Eve im 9. Auftritt</cite></blockquote>
+<p>Frau Marthe ist empört über das Schweigen ihrer Tochter und nennt eine Zeugin: Frau Brigitte habe Eve in der Nacht im Garten mit einem Mann gesehen. Schreiber Licht wird losgeschickt, um Brigitte zu holen.</p>
+
+<p><b>10. Auftritt: Die Weinpause.</b> Während alle auf die Zeugin warten, lässt Adam Wein und Essen bringen und will Walter gut stimmen. Walter trinkt mit, nutzt die Pause aber für Fragen: Woher hat Adam die Wunden? Wie hoch ist Eves Fenster? Geht der Richter oft bei Frau Marthe ein und aus? Walter hat einen Verdacht. Marthes Antworten scheinen Adam aber zu entlasten, und für einen Moment sieht es so aus, als käme er davon. In Freytags Sprache ist das das <b>retardierende Moment</b>: Die Auflösung wird noch einmal hinausgezögert.</p>
+
+<p><b>11. Auftritt: Die Perücke kommt zurück.</b> Der Höhepunkt. Licht kommt mit Frau Brigitte zurück, und Brigitte hält eine Perücke in der Hand. Sie hat sie im Spalier unter Eves Fenster gefunden. Sie erzählt, in der Nacht sei eine kahlköpfige Gestalt mit einem Pferdefuß an ihr vorbeigerannt, und es habe nach Pech und Schwefel gestunken. Sie hält das für den Teufel. Am Morgen ist sie mit Licht der Spur im Schnee gefolgt: abwechselnd ein Menschenfuß und ein Pferdefuß, vom Spalier quer durchs Dorf, direkt bis zum Haus des Dorfrichters.</p>
+<p>Adam versucht es mit immer neuen, immer verrückteren Ausreden: Der Teufel sei eben durch sein Haus gelaufen. Die Perücke habe er Ruprecht mitgegeben, damit er sie zum Perückenmacher bringt. Doch die Perücke passt genau auf seinen Kopf, und alle schauen auf seinen Fuß. Walter will die Würde des Gerichts retten und drängt Adam leise, die Sitzung zu beenden. Adam nutzt das für einen letzten Trick: Er verurteilt Ruprecht zu Gefängnis. Da bricht Eve ihr Schweigen:</p>
+<blockquote>„Der Richter Adam hat den Krug zerbrochen!“ <cite>Eve im 11. Auftritt</cite></blockquote>
+<p>Ruprecht stürzt sich auf Adam. Der flieht, Ruprecht erwischt nur noch seinen Mantel.</p>
+
+<p><b>12. Auftritt: Die Wahrheit.</b> Ruprecht bittet Eve um Verzeihung. Eve wirft sich vor Walter auf die Knie und bittet ihn, Ruprecht vor Ostindien zu retten. Jetzt erfahren alle, womit Adam sie erpresst hat. Walter erklärt, dass der Brief gefälscht ist: Die Soldaten bleiben im Land. Eve und Ruprecht versöhnen sich, die Hochzeit kann stattfinden. Durchs Fenster sieht man Adam über die Felder davonrennen. Walter schickt Licht hinterher, um ihn zurückzuholen. Adam ist seines Amtes enthoben, Licht soll es vorläufig führen. Walter sagt aber auch: Wenn die Kassen stimmen, will er Adam nicht zur Flucht zwingen. Adam wird also nicht hart bestraft.</p>
+
+<p><b>Letzter Auftritt: Und der Krug?</b> Frau Marthe ist noch nicht zufrieden. Der Täter ist gefunden, aber ihr Krug ist immer noch kaputt. Sie fragt Walter, wo in Utrecht das höhere Gericht sitzt, und kündigt an, dort weiterzuklagen:</p>
+<blockquote>„Soll hier dem Kruge nicht sein Recht geschehn?“ <cite>Frau Marthe im letzten Auftritt</cite></blockquote>
+<p>Mit dieser Frage endet das Stück. Das ist komisch, weil Marthe stur bei ihrem Krug bleibt. Es ist aber auch ernst gemeint: Volle Gerechtigkeit hat es nicht gegeben.</p>
+
+<h3>Adams Lügen im Überblick</h3>
+<p>Adam erfindet für jedes Problem eine Ausrede. Wenn du diese Liste kennst, kannst du die Komik des Stücks jederzeit an Beispielen zeigen.</p>
+<table>
+<tr><th style="width:30%">Das Problem</th><th>Adams Ausrede</th></tr>
+<tr><td>Wunden an Kopf und Gesicht</td><td style="font-weight:400">Er sei am Morgen aus dem Bett gefallen und gegen den Ofen geschlagen.</td></tr>
+<tr><td>Die Perücke fehlt</td><td style="font-weight:400">Die Katze habe darin ihre Jungen bekommen. Später: Er habe sie Ruprecht mitgegeben, damit der sie zum Perückenmacher bringt.</td></tr>
+<tr><td>Wer war der Mann bei Eve?</td><td style="font-weight:400">Erst soll es Ruprecht selbst gewesen sein, dann der Flickschuster Lebrecht.</td></tr>
+<tr><td>Die Spur im Schnee führt zu seinem Haus</td><td style="font-weight:400">Der Teufel sei eben dort durchgelaufen.</td></tr>
+<tr><td>Es wird eng</td><td style="font-weight:400">Er verurteilt kurzerhand Ruprecht und will die Sitzung schließen.</td></tr>
+</table>
+
+<h3>Die Beweise gegen Adam</h3>
+<p>Auf der anderen Seite stehen die Hinweise, die sich nach und nach zu einem Bild zusammenfügen. Im Vortrag sind das die roten Pfeile auf Folie 14.</p>
+<ol>
+<li><b>Die Wunden</b> (1. Auftritt): zwei Wunden am Kopf. Ruprecht sagt später, er habe dem Fremden zweimal auf den Kopf geschlagen.</li>
+<li><b>Die fehlende Perücke</b> (2. und 5. Auftritt): Die Mägde sagen, er sei schon am Abend ohne Perücke heimgekommen.</li>
+<li><b>Der Traum</b> (3. Auftritt): Adam sieht sich selbst als Angeklagten. Sein schlechtes Gewissen spricht.</li>
+<li><b>Sein Verhalten</b> (7. bis 9. Auftritt): Er flüstert mit Eve, unterbricht, drängt und will jeden anderen als Täter.</li>
+<li><b>Walters Fragen</b> (10. Auftritt): Die Höhe des Fensters, das Spalier und die Wunden passen zusammen.</li>
+<li><b>Die Perücke im Spalier</b> (11. Auftritt): Sie passt genau auf Adams Kopf.</li>
+<li><b>Die Spur im Schnee</b> (11. Auftritt): ein normaler Fuß und ein Klumpfuß, bis zu Adams Haus.</li>
+<li><b>Eves Aussage</b> (11. und 12. Auftritt): Sie nennt den Täter und erklärt die Erpressung.</li>
+</ol>
+
+<h3>Wer weiß wann was?</h3>
+<p>Das Stück lebt davon, dass nicht alle gleich viel wissen. Diese Übersicht hilft dir, die Spannung zu erklären.</p>
+<table>
+<tr><th style="width:26%">Wer</th><th>Was er oder sie weiß</th></tr>
+<tr><td>Adam</td><td style="font-weight:400">Alles, von Anfang an. Er will es verbergen.</td></tr>
+<tr><td>Eve</td><td style="font-weight:400">Alles, von Anfang an. Sie schweigt aus Angst um Ruprecht.</td></tr>
+<tr><td>Licht</td><td style="font-weight:400">Ahnt schon im 1. Auftritt, dass etwas nicht stimmt, und sammelt still Beweise.</td></tr>
+<tr><td>Walter</td><td style="font-weight:400">Wird im Lauf der Verhandlung misstrauisch, fragt im 10. Auftritt gezielt nach, ist im 11. sicher.</td></tr>
+<tr><td>Marthe, Ruprecht, Veit</td><td style="font-weight:400">Glauben bis zum Schluss an einen falschen Täter. Erst Eves Ausruf öffnet ihnen die Augen.</td></tr>
+<tr><td>Die Zuschauer</td><td style="font-weight:400">Ahnen es nach wenigen Minuten und wissen es spätestens im 7. Auftritt.</td></tr>
+</table>
+
+<h3>Drei Figuren genauer betrachtet</h3>
+<p><b>Adam: lustig und gefährlich zugleich.</b> Man lacht über Adam, weil er so schamlos und einfallsreich lügt und weil er trotzdem immer tiefer in die Falle gerät. Manche Zuschauer mögen ihn deshalb fast. Man darf aber nicht vergessen, was er getan hat: Er hat die Angst eines Mädchens ausgenutzt, einen amtlichen Brief gefälscht und war bereit, einen Unschuldigen ins Gefängnis zu schicken. Kleist zeigt also einen Menschen, der komisch wirkt und trotzdem schuldig ist. Genau deshalb ist das Stück mehr als ein Schwank.</p>
+<p><b>Eve: die Mutigste im Stück.</b> Eve hat am meisten zu verlieren. Schweigt sie, verliert sie ihren Ruf und ihren Verlobten. Redet sie, verliert sie (wie sie glaubt) Ruprechts Leben. Sie entscheidet sich für Ruprecht und nimmt die Schande auf sich. Dass sie am Ende doch spricht, ist kein Einknicken, sondern Mut: Sie stellt sich vor allen Leuten gegen den Richter.</p>
+<p><b>Walter: gerechter Aufseher oder Vertuscher?</b> Man kann Walter auf zwei Arten sehen. Die freundliche Sicht: Er ist der Einzige, der auf ein ordentliches Verfahren achtet, und ohne ihn käme die Wahrheit nicht heraus. Die kritische Sicht: Als er merkt, dass der Richter der Täter ist, will er die Sitzung schnell beenden, damit das Gericht nicht blamiert wird. Erst Eves Ausruf erzwingt die volle Wahrheit. Und Adam wird am Ende geschont. Beide Sichtweisen kannst du im Vortrag oder in der Klausur vertreten, wenn du sie begründest.</p>
+
+<h3>Wie das Stück entstanden ist</h3>
+<p><b>Ein Bild als Vorlage.</b> Kleist sah 1802 in der Schweiz einen Kupferstich mit dem französischen Titel „Der Richter oder der zerbrochene Krug“. Darauf: ein Richter auf dem Richterstuhl, eine alte Frau mit einem kaputten Krug, ein junger Bauer als Angeklagter, ein Mädchen und ein Schreiber, der den Richter misstrauisch anschaut. Kleist und zwei Freunde machten daraus einen Wettstreit: Jeder sollte zu dem Bild etwas schreiben. Kleist schrieb das Lustspiel. Das passt übrigens schön zu eurem Titel: Das Stück stammt wörtlich aus einem Bild im Rahmen.</p>
+<p><b>Ödipus in der Vorrede.</b> In seiner Vorrede beschreibt Kleist das Bild und schreibt, der Schreiber habe den Richter so angeschaut wie Kreon den Ödipus. Er weist also selbst darauf hin, dass sein Stück mit der antiken Tragödie „König Ödipus“ verwandt ist. Mehr dazu in Teil B.</p>
+<p><b>Die Uraufführung.</b> Am 2. März 1808 wurde das Stück in Weimar uraufgeführt. Regie führte Goethe. Er teilte den einen Akt in drei Akte auf, und die Aufführung zog sich sehr in die Länge. Das Publikum war gelangweilt, die Aufführung fiel durch. Kleist war tief gekränkt. Heute gilt das Stück als eine der besten deutschen Komödien.</p>
+<p><b>Der „Variant“.</b> Ursprünglich war der 12. Auftritt viel länger: Eve erzählte dort ausführlich, was in der Nacht passiert ist, und Walter musste erst ihr Vertrauen gewinnen. Nach dem Misserfolg kürzte Kleist diese Stelle. Die lange Fassung ließ er als Anhang mit der Überschrift „Variant“ drucken. Wenn im Unterricht davon die Rede ist, weißt du jetzt, was gemeint ist.</p>
+<p><b>Kleist selbst.</b> Heinrich von Kleist lebte von 1777 bis 1811. Er schrieb zur selben Zeit wie Goethe und Schiller, gehört aber nicht zur Weimarer Klassik. Er ist ein Einzelgänger. Ein wichtiges Thema bei ihm: Kann der Mensch die Wahrheit überhaupt sicher erkennen? Kann man dem Schein und den Worten trauen? Genau darum geht es auch im „Krug“. Weitere bekannte Werke: „Michael Kohlhaas“, „Die Marquise von O….“, „Prinz Friedrich von Homburg“.</p>
+
+<h3>Deutung: Worum geht es wirklich?</h3>
+<p><b>Der Krug als Symbol (Folie 5).</b> Der Krug steht für mehr als Geschirr. Erstens für <b>Eves guten Ruf</b>: Ein Mann nachts in der Kammer eines unverheirateten Mädchens bedeutete damals, dass ihre Ehre beschädigt ist. Deshalb sagt die Mutter, Eves guter Name habe „in diesem Topfe“ gelegen. Zweitens für das <b>Recht</b>: Der Richter, der das Recht schützen soll, bricht es selbst. Drittens für das <b>Vertrauen</b> zwischen Eve und Ruprecht. Und man kann noch weiter gehen: Auf dem Krug war die Geschichte des Landes abgebildet, eine heile, geordnete Welt. Diese Ordnung hat jetzt einen Sprung.</p>
+<p><b>Die sprechenden Namen.</b> Adam und Eve erinnern an Adam und Eva im Paradies und an den Sündenfall. Auch hier gibt es einen „Fall“: Adam fällt aus dem Fenster, behauptet, aus dem Bett gefallen zu sein, und fällt am Ende aus seinem Amt. Anders als in der Bibel ist hier aber nicht Eva die Verführerin. Adam ist der Schuldige, Eve bleibt unschuldig. Licht bringt Licht ins Dunkel. Walter waltet und verwaltet. Der Pferdefuß, von dem Brigitte spricht, gehört in alten Vorstellungen zum Teufel. Adam ist also Adam und Teufel zugleich.</p>
+<p><b>Kritik an der Justiz.</b> Das Stück zeigt einen Richter, der seine Macht missbraucht, um ein Mädchen zu erpressen, und der dann seine Macht benutzt, um einen Unschuldigen zu verurteilen. Auch Walter kommt nicht nur gut weg: Ihm ist der Ruf des Gerichts wichtiger als eine harte Strafe für Adam. Die einfachen Leute haben vor der Obrigkeit Angst. Eve glaubt die Lüge mit Ostindien sofort, weil sie dem Staat so etwas zutraut.</p>
+<p><b>Wahrheit und Sprache.</b> Vor Gericht soll durch Reden die Wahrheit ans Licht kommen. Bei Kleist passiert das Gegenteil: Adam benutzt die Sprache, um zu lügen, abzulenken und einzuschüchtern. Marthe redet viel und sagt wenig. Eve schweigt. Die Wahrheit kommt am Ende nicht durch Worte heraus, sondern durch Dinge: Wunden, eine Perücke, eine Spur im Schnee.</p>
+<p><b>Vertrauen.</b> Eve verlangt von Ruprecht, dass er ihr glaubt, obwohl alles gegen sie spricht. Ruprecht schafft das nicht. Er glaubt seinen Augen mehr als ihr. Das Stück fragt also auch: Wem kann man vertrauen, wenn der Schein trügt?</p>
+<p><b>Warum es trotzdem komisch ist.</b> Erstens die <b>Situation</b>: Ein Richter muss über sich selbst richten. Zweitens <b>Adams Ausreden</b>, die immer absurder werden: Katze in der Perücke, Teufel im Dorf. Drittens der <b>Wissensvorsprung</b> der Zuschauer: Wir ahnen sehr früh, dass Adam der Täter ist. Die Figuren auf der Bühne wissen es noch nicht. Wir sehen ihm also beim Zappeln zu. Das nennt man dramatische Ironie. Viertens die <b>Wortspiele</b>, zum Beispiel mit „Fall“ und „straucheln“.</p>
+
+<div class="box gold">
+<div class="t">Merke dir für den Vortrag</div>
+<p>Wenn dich jemand fragt, worum es im Stück geht, reicht dieser Satz: „Ein Richter muss einen Fall aufklären, in dem er selbst der Täter ist, und versucht mit allen Mitteln, die Wahrheit zu verstecken.“</p>
+</div>
+</section>
+
+<!-- ====================== TEIL B ====================== -->
+<section class="part">
+<h2><small>Teil B</small>Die Theorie: Was ist der „klassische Rahmen“?</h2>
+<p class="time">Lesezeit für Teil B: etwa 8 Minuten</p>
+<p>Euer Thema fragt, ob das Stück den „Merkmalen des klassischen Dramas“ entspricht. Damit ist kein einzelnes Buch gemeint, sondern ein Bündel von Regeln, das über 2000 Jahre entstanden ist. Auf den Folien heißt das „der Rahmen“. Hier steht, was dahintersteckt.</p>
+
+<h3><span class="nr">1</span>Aristoteles: die Grundregeln</h3>
+<p>Aristoteles war ein griechischer Philosoph. Um 335 vor Christus schrieb er die „Poetik“, das erste große Buch darüber, wie gute Dichtung gemacht ist. Vier Punkte daraus sind wichtig:</p>
+<ul>
+<li><b>Mimesis (Nachahmung).</b> Ein Drama ahmt handelnde Menschen nach. Es zeigt eine Handlung, es erzählt sie nicht.</li>
+<li><b>Einheit der Handlung.</b> Die Handlung soll ein Ganzes sein, mit Anfang, Mitte und Ende. Kein Teil darf fehlen oder überflüssig sein. Zur Zeit sagt Aristoteles nur nebenbei, die Tragödie versuche, sich innerhalb eines Sonnenumlaufs zu halten. Über den Ort sagt er nichts.</li>
+<li><b>Katharsis (Reinigung).</b> Die Tragödie soll beim Zuschauer starke Gefühle auslösen: griechisch <i>eleos</i> und <i>phobos</i>. Heute übersetzt man das mit „Jammer und Schaudern“, Lessing übersetzte es mit „Mitleid und Furcht“. Durch das Miterleben wird der Zuschauer von diesen Gefühlen gereinigt.</li>
+<li><b>Wendepunkt und Erkennen.</b> Zwei Fachwörter: <b>Peripetie</b> ist der Umschlag der Handlung ins Gegenteil. <b>Anagnorisis</b> ist das Wiedererkennen, also der Moment, in dem jemand die Wahrheit erkennt. Am besten ist es laut Aristoteles, wenn beides zusammenfällt. Sein Musterbeispiel dafür ist „König Ödipus“.</li>
+</ul>
+<p>Außerdem unterscheidet Aristoteles: Die Tragödie zeigt bessere Menschen, als wir es sind, die Komödie schlechtere. Mit „schlechter“ meint er nicht böse, sondern lächerlich: Fehler, die niemandem wirklich wehtun.</p>
+<div class="box">
+<div class="t">Die drei Einheiten</div>
+<p>Aus Aristoteles haben spätere Gelehrte in Italien und Frankreich im 16. und 17. Jahrhundert eine strenge Regel gemacht: <b>Einheit des Ortes</b> (ein Schauplatz), <b>Einheit der Zeit</b> (höchstens ein Tag) und <b>Einheit der Handlung</b> (ein Strang ohne Nebenhandlungen). Wenn dich jemand fragt: „Stammen die drei Einheiten von Aristoteles?“, ist die genaue Antwort: Die Idee ja, die strenge Dreier-Regel nein. Die kam später.</p>
+</div>
+
+<h3><span class="nr">2</span>Ständeklausel und Fallhöhe</h3>
+<p>Die <b>Ständeklausel</b> ist die Vorschrift, dass der gesellschaftliche Stand der Figuren zur Gattung passen muss. In der Tragödie treten Könige, Fürsten und Helden auf, in der Komödie Bürger und Bauern. In Deutschland haben das vor allem Martin Opitz (1624) und Johann Christoph Gottsched (1730) festgeschrieben.</p>
+<p>Die Begründung nennt man <b>Fallhöhe</b>: Je höher jemand steht, desto tiefer kann er fallen und desto stärker wirkt sein Unglück auf die Zuschauer. Das Unglück eines Königs trifft ein ganzes Land. Das Unglück eines Bauern galt als nicht bedeutend genug für eine Tragödie.</p>
+<p><b>Lessing</b> hat diese Regel im 18. Jahrhundert angegriffen. Er meinte: Wir fühlen am stärksten mit Menschen mit, die so sind wie wir. Deshalb schrieb er Tragödien mit bürgerlichen Figuren, das „bürgerliche Trauerspiel“, zum Beispiel „Emilia Galotti“. Zu Kleists Zeit war die Ständeklausel also schon umstritten, aber noch im Kopf der Leute.</p>
+
+<h3><span class="nr">3</span>Die Weimarer Klassik</h3>
+<p>Um 1800 arbeiteten Goethe und Schiller in Weimar zusammen. Diese Zeit heißt Weimarer Klassik. Ihre Dramen gelten als Musterbeispiele für das klassische Drama: streng gebaut, mit wenigen Figuren, in feierlicher Verssprache (Blankvers), und mit dem Glauben, dass der Mensch durch Vernunft und Wahrhaftigkeit zu Ordnung und Menschlichkeit finden kann. Das bekannteste Beispiel ist Goethes „Iphigenie auf Tauris“. Dort löst die Hauptfigur den Konflikt, indem sie mutig die Wahrheit sagt. Merke dir diesen Gegensatz: Bei Goethe rettet die Wahrheit, bei Kleist wird sie mit allen Mitteln versteckt.</p>
+
+<h3><span class="nr">4</span>Gustav Freytag: die Pyramide</h3>
+<p>Das ist der Text aus eurer Hausaufgabe (Buch S. 88 bis 90). Gustav Freytag schrieb 1863 „Die Technik des Dramas“. Er hat sich die klassischen Dramen angeschaut und beschrieben, wie sie gebaut sind. Wichtig: Freytag kam <b>nach</b> Kleist. Er hat die Regeln nicht erfunden, sondern im Nachhinein zusammengefasst.</p>
+<p>Seine Kernidee: Im Drama kämpfen zwei Kräfte gegeneinander, <b>Spiel und Gegenspiel</b>. Die Handlung steigt bis zu einem Höhepunkt in der Mitte und fällt dann bis zum Ende. So entsteht ein <b>pyramidaler Bau</b> aus fünf Teilen, die den fünf Akten entsprechen:</p>
+<table>
+<tr><th style="width:8%">Akt</th><th style="width:30%">Teil</th><th>Was passiert</th></tr>
+<tr><td>I</td><td>Einleitung (Exposition)</td><td style="font-weight:400">Ort, Zeit, Figuren und Stimmung werden vorgestellt.</td></tr>
+<tr><td>II</td><td>Steigerung (steigende Handlung)</td><td style="font-weight:400">Das <b>erregende Moment</b> setzt den Konflikt in Gang. Die Spannung wächst.</td></tr>
+<tr><td>III</td><td>Höhepunkt (Klimax, Peripetie)</td><td style="font-weight:400">Die wichtigste Stelle. Ab hier wendet sich das Geschehen. Oft tritt hier das <b>tragische Moment</b> ein.</td></tr>
+<tr><td>IV</td><td>Fall oder Umkehr (fallende Handlung)</td><td style="font-weight:400">Es geht auf das Ende zu. Das <b>Moment der letzten Spannung</b> (retardierendes Moment) lässt noch einmal kurz hoffen.</td></tr>
+<tr><td>V</td><td>Katastrophe</td><td style="font-weight:400">Die Schlusshandlung. In der Tragödie der Untergang des Helden, in der Komödie die glückliche Lösung.</td></tr>
+</table>
+<p>Freytag nennt also fünf Teile und drei besondere Momente (erregendes Moment, tragisches Moment, Moment der letzten Spannung), zusammen acht Bestandteile. Genau so steht es im Buch.</p>
+
+<h3><span class="nr">5</span>Geschlossene und offene Form</h3>
+<p>Diese Begriffe stammen von dem Literaturwissenschaftler Volker Klotz (1960). Sie fassen zusammen, was ihr sonst einzeln aufzählen müsstet.</p>
+<table>
+<tr><th style="width:22%"></th><th>Geschlossene Form</th><th>Offene Form</th></tr>
+<tr><td>Handlung</td><td style="font-weight:400">ein Strang, jede Szene folgt aus der davor</td><td style="font-weight:400">mehrere Stränge, Szenen stehen fast für sich</td></tr>
+<tr><td>Ort und Zeit</td><td style="font-weight:400">wenige Orte, kurze Zeit</td><td style="font-weight:400">viele Orte, große Zeitsprünge</td></tr>
+<tr><td>Figuren</td><td style="font-weight:400">wenige, meist hoher Stand</td><td style="font-weight:400">viele, aus allen Schichten</td></tr>
+<tr><td>Sprache</td><td style="font-weight:400">einheitlich, hoher Stil, Vers</td><td style="font-weight:400">gemischt, Alltagssprache, Prosa</td></tr>
+<tr><td>Schluss</td><td style="font-weight:400">alles ist gelöst</td><td style="font-weight:400">vieles bleibt offen</td></tr>
+<tr><td>Beispiel</td><td style="font-weight:400">Goethe: „Iphigenie auf Tauris“</td><td style="font-weight:400">Büchner: „Woyzeck“</td></tr>
+</table>
+
+<h3><span class="nr">6</span>Analytisch und synthetisch</h3>
+<p>Das ist das Thema von Seite 91 in eurem Buch und der wichtigste Punkt eures Vortrags.</p>
+<ul>
+<li><b>Synthetisches Drama (Zieldrama).</b> Die entscheidenden Ereignisse geschehen während des Stücks auf der Bühne. Die Handlung baut sich Schritt für Schritt auf und läuft auf ein Ziel zu, die Katastrophe. „Synthese“ heißt Zusammensetzung. So ein Stück beschreibt Freytags Pyramide.</li>
+<li><b>Analytisches Drama (Enthüllungsdrama).</b> Das entscheidende Ereignis liegt vor dem Beginn des Stücks. Auf der Bühne wird nur noch Schritt für Schritt aufgedeckt, was geschehen ist. „Analyse“ heißt Zerlegung. Die Handlung schaut also zurück. Eine Gerichtsverhandlung ist dafür die perfekte Form, denn vor Gericht wird immer etwas Vergangenes aufgeklärt.</li>
+</ul>
+<div class="box ton">
+<div class="t">Das Vorbild: König Ödipus</div>
+<p>Die berühmteste Tragödie der Antike, von Sophokles (um 429 v. Chr.). In Theben wütet die Pest. Das Orakel sagt: Sie endet erst, wenn der Mörder des früheren Königs Laios gefunden ist. König Ödipus leitet die Suche selbst und findet nach und nach heraus, dass er selbst der Mörder ist. Ohne es zu wissen, hat er seinen Vater getötet und seine Mutter geheiratet. Als er die Wahrheit erkennt, sticht er sich die Augen aus.</p>
+<p>Die Gemeinsamkeit mit dem „Krug“: Derjenige, der den Täter sucht, ist selbst der Täter, und alles Entscheidende ist vor Beginn passiert. Der Unterschied: Ödipus weiß es nicht und will die Wahrheit finden. Adam weiß es genau und will sie verstecken. Aus der Tragödie wird so eine Komödie. Sogar der Fuß passt: „Ödipus“ bedeutet „Schwellfuß“, Adam hat einen Klumpfuß.</p>
+</div>
+<p>Wichtig für eure Argumentation: Das analytische Drama ist kein moderner Regelbruch. Es ist uralt, und Aristoteles hielt gerade „König Ödipus“ für ein Musterbeispiel einer Tragödie. Kleist bricht hier also mit dem Schema von Freytag (fünf Akte, Zieldrama), greift aber gleichzeitig auf ein antikes Vorbild zurück. Das ist der Punkt, mit dem ihr zeigen könnt, dass ihr das Thema wirklich verstanden habt.</p>
+</section>
+
+<!-- ====================== TEIL C ====================== -->
+<section class="part">
+<h2><small>Teil C</small>Der Vortrag: jede Folie erklärt</h2>
+<p class="time">22 Folien, etwa 18 bis 20 Minuten. Kurzfassung (ca. 16 Minuten): Folien 10 und 20 weglassen.</p>
+<p>So ist der Vortrag gebaut: <b>Teil 1</b> das Stück, nur so viel wie nötig (Folien 3 bis 5), <b>Teil 2</b> der Rahmen, also vier Regeln (Folien 6 bis 10), <b>Teil 3</b> der Test mit sechs Prüfpunkten (Folien 11 bis 18), dann Ergebnis, Quiz und Werkzeug für die Klausur (Folien 19 bis 22). Alles dreht sich nur um die Aufgabenstellung: Wo entspricht das Stück dem klassischen Drama, wo weicht es ab? Die Farben bedeuten immer dasselbe: <span class="pass">Blau = passt in den Rahmen</span>, <span class="brk">Rot = fällt heraus</span>, Gold = Merkhilfe.</p>
+<p>Bedienung: Ein Druck auf die Pfeiltaste oder den Klicker deckt erst die nächsten Inhalte der Folie auf, danach kommt die nächste Folie. Mit der Taste N siehst du den ausformulierten Sprechtext zu jeder Folie. Aufteilung: <b>Du sprichst alle ungeraden Folien (1, 3, 5 … 21), Erik alle geraden (2, 4, 6 … 22).</b> Ihr wechselt also nach jeder Folie. Bereite dich trotzdem auf alle Folien vor, Fragen können zu allem kommen.</p>
+
+<div class="slide"><div class="w">Folie 1 · Lut</div><h3>Titel</h3>
+<p><b>Kernsatz:</b> Unser Thema ist eine Frage: Fällt dieses Drama aus dem Rahmen? Der Rahmen sind die Regeln des klassischen Dramas.</p>
+<p><b>Dazu wissen:</b> Der Krug fällt auf der Folie aus dem Bilderrahmen und bekommt einen Sprung. Das Bild zieht sich durch den ganzen Vortrag. Der Titel schreibt sich wie bei Kleist: „zerbrochne“, ohne e.</p></div>
+
+<div class="slide"><div class="w">Folie 2 · Erik</div><h3>Leitfrage und Fahrplan</h3>
+<p><b>Kernsatz:</b> Wo hält sich der „Krug“ an die klassischen Regeln, wo bricht er sie?</p>
+<p><b>Dazu wissen:</b> Das ist eure Aufgabenstellung in einfachen Worten („Inwiefern entspricht … und an welchen Stellen weicht das Stück ab?“). Sag der Klasse gleich am Anfang, dass sie am Ende ein Werkzeug für die Klausur bekommt. Dann hören sie besser zu.</p></div>
+
+<div class="slide"><div class="w">Folie 3 · Lut</div><h3>Wer ist wer in Huisum?</h3>
+<p><b>Kernsatz:</b> In der Mitte steht Richter Adam. Er soll den Fall klären und ist selbst der Täter.</p>
+<p><b>Dazu wissen:</b> Erster Klick: die Seite des Gerichts (Walter kontrolliert, Licht durchschaut). Zweiter Klick: die Leute vor Gericht (Marthe verklagt Ruprecht, Ruprecht und Eve sind verlobt, Brigitte ist Zeugin). Dritter Klick: Adam erpresst Eve, und die sprechenden Namen. Alles Nötige zu den Figuren steht in Teil A.</p></div>
+
+<div class="slide"><div class="w">Folie 4 · Erik</div><h3>Das Wichtigste passiert vor dem Vorhang</h3>
+<p><b>Kernsatz:</b> Die Tat geschieht in der Nacht vor dem Stück. Auf der Bühne sehen wir nur den Morgen im Gericht.</p>
+<p><b>Dazu wissen:</b> Diese Folie bereitet Prüfpunkt 3 vor (analytisches Drama). Links dunkel die Nacht, in der Mitte der Vorhang, rechts hell der Morgen. Erzähl die Nacht ruhig und in der richtigen Reihenfolge: Lüge mit Ostindien, Ruprecht tritt die Tür ein, Sprung aus dem Fenster, zwei Schläge, Perücke bleibt hängen.</p></div>
+
+<div class="slide"><div class="w">Folie 5 · Lut</div><h3>Der Krug ist mehr als ein Krug</h3>
+<p><b>Kernsatz:</b> Der Krug ist ein Symbol für Eves guten Ruf, für das Recht und für das Vertrauen. Zerbrochen ist nicht nur Ton.</p>
+<p><b>Dazu wissen:</b> Drei Klicks, drei Bedeutungen. Das Zitat „Dein guter Name lag in diesem Topfe“ sagt Frau Marthe zu Eve im 6. Auftritt. Die Folie hilft dir auch beim Fazit: So wie der Krug bekommt bei Kleist auch die klassische Ordnung einen Sprung. Auf diesen Gedanken kommst du auf Folie 19 zurück. Mehr dazu steht in Teil A unter „Deutung“.</p></div>
+
+<div class="slide"><div class="w">Folie 6 · Erik</div><h3>Der Rahmen (Zeitleiste)</h3>
+<p><b>Kernsatz:</b> „Klassisches Drama“ heißt: ein Stück nach festen Regeln. Diese Regeln stammen von mehreren Leuten aus über 2000 Jahren.</p>
+<p><b>Dazu wissen:</b> Aristoteles (Grundregeln), Opitz und Gottsched (Ständeklausel), Goethe und Schiller (Weimarer Klassik, Musterstücke), Freytag (fasst 1863 alles zusammen). Der rote Zettel zeigt: Kleist schreibt mitten in der Zeit der Weimarer Klassik. Er kennt die Regeln also. Und Freytag kommt erst 55 Jahre nach Kleist.</p></div>
+
+<div class="slide"><div class="w">Folie 7 · Lut</div><h3>Regel 1: Die drei Einheiten</h3>
+<p><b>Kernsatz:</b> Ein Ort, höchstens ein Tag, eine Handlung. Ziel der Tragödie ist die Katharsis.</p>
+<p><b>Dazu wissen:</b> Katharsis = Reinigung durch Jammer und Schaudern (Mitleid und Furcht). Die kleine Zeile unten schützt euch vor einer Fangfrage: Streng fordert Aristoteles nur die Einheit der Handlung.</p></div>
+
+<div class="slide"><div class="w">Folie 8 · Erik</div><h3>Regel 2: Fünf Akte wie eine Pyramide</h3>
+<p><b>Kernsatz:</b> Exposition, steigende Handlung, Höhepunkt mit Wendepunkt, fallende Handlung, Katastrophe.</p>
+<p><b>Dazu wissen:</b> Das kennt die Klasse aus der Hausaufgabe, also zügig. Sag am Ende einen Satz, den ihr später braucht: Bei so einem Stück passiert alles vor unseren Augen und läuft auf das Ende zu. Das ist ein Zieldrama (synthetisch).</p></div>
+
+<div class="slide"><div class="w">Folie 9 · Lut</div><h3>Regel 3: Der Stand bestimmt die Gattung</h3>
+<p><b>Kernsatz:</b> Tragödie für Könige und Adlige, Komödie für Bürger und Bauern. Das ist die Ständeklausel. Begründung: die Fallhöhe.</p>
+<p><b>Dazu wissen:</b> Beim Klick stürzt der König von der hohen Säule, der Bauer hüpft vom Hocker. So merkt sich jeder, was Fallhöhe bedeutet.</p></div>
+
+<div class="slide"><div class="w">Folie 10 · Erik</div><h3>Regel 4: Feste Form, hohe Sprache</h3>
+<p><b>Kernsatz:</b> Geschlossene Form heißt: Alles greift ineinander und wird am Ende gelöst. Gesprochen wird im Blankvers.</p>
+<p><b>Dazu wissen:</b> Blankvers = fünf Betonungen pro Vers, kein Reim. Der Beispielvers ist der erste Vers von Goethes „Iphigenie“: „Heraus in eure Schatten, rege Wipfel“. Sprich ihn einmal laut und klopfe die fünf Betonungen mit. Gegenteil: offene Form, zum Beispiel „Woyzeck“.</p></div>
+
+<div class="slide"><div class="w">Folie 11 · Lut</div><h3>Der Test</h3>
+<p><b>Kernsatz:</b> Sechs Prüfpunkte. Die Klasse stimmt mit dem Daumen ab.</p>
+<p><b>Dazu wissen:</b> Stellt bei jedem Prüfpunkt erst die Frage, wartet zwei Sekunden auf die Daumen, löst dann auf. Das hält alle wach und zeigt eurem Lehrer, dass ihr die Klasse einbindet.</p></div>
+
+<div class="slide"><div class="w">Folie 12 · Erik</div><h3>Prüfpunkt 1: Ort, Zeit, Handlung · <span class="pass">PASST</span></h3>
+<p><b>Kernsatz:</b> Ein Raum, ein Vormittag, eine Frage. Kleist hält die drei Einheiten strenger ein als viele klassische Stücke.</p>
+<p><b>Dazu wissen:</b> Der Fachausdruck für „Das Stück dauert so lange wie die Verhandlung“: Die Spielzeit entspricht der gespielten Zeit. Die Nacht wird nie gezeigt, nur erzählt. Dadurch bleibt die Einheit des Ortes erhalten.</p></div>
+
+<div class="slide"><div class="w">Folie 13 · Lut</div><h3>Prüfpunkt 2: Aufbau · <span class="pass">TE</span><span class="brk">ILS</span></h3>
+<p><b>Kernsatz:</b> Ein Akt mit 13 Auftritten statt fünf Akten. Die Stationen der Pyramide findet man trotzdem, aber der Höhepunkt liegt fast am Ende.</p>
+<p><b>Dazu wissen:</b> Zuordnung: Auftritte 1 bis 5 Exposition. Auftritt 6 erregendes Moment (die Kläger kommen). Auftritte 7 bis 9 steigende Handlung (Verhör). Auftritt 10 retardierendes Moment (Weinpause, Adam scheint davonzukommen). Auftritt 11 Höhepunkt und Wende (Perücke, Eves Ausruf). Auftritte 12 und 13 Lösung. Die blaue gestrichelte Linie ist die klassische Pyramide, die rote Linie der Spannungsverlauf im „Krug“. Dazu die Geschichte von Goethe und den drei Akten.</p></div>
+
+<div class="slide"><div class="w">Folie 14 · Erik</div><h3>Prüfpunkt 3: Richtung der Handlung · <span class="brk">BRUCH</span></h3>
+<p><b>Kernsatz:</b> Der „Krug“ ist ein analytisches Drama: Die Tat liegt vor dem Stück, auf der Bühne wird nur aufgedeckt. Freytags Pyramide beschreibt aber ein Zieldrama.</p>
+<p><b>Dazu wissen:</b> Das ist eure wichtigste Folie und passt genau zu Buch S. 91. Oben der blaue Pfeil nach vorn (synthetisch). Unten zeigen rote Pfeile von jedem Hinweis zurück auf die Tat: Wunden, fehlende Perücke, zwei Schläge, Spur im Schnee, Eves Aussage. Der Satz für die Klasse: Die Frage ist nicht „Was passiert?“, sondern „Wann fliegt er auf?“</p></div>
+
+<div class="slide"><div class="w">Folie 15 · Lut</div><h3>Das Vorbild: König Ödipus</h3>
+<p><b>Kernsatz:</b> Der Sucher ist selbst der Täter, wie bei Ödipus. Kleist dreht die berühmteste Tragödie der Antike zur Komödie um.</p>
+<p><b>Dazu wissen:</b> Ödipus weiß es nicht und sucht die Wahrheit, Adam weiß es und versteckt sie. Daraus folgt: Der Bruch mit Freytag ist zugleich ein Rückgriff auf die Antike. Kleist nennt Ödipus selbst in seiner Vorrede. Inhalt von „König Ödipus“: siehe Teil B.</p></div>
+
+<div class="slide"><div class="w">Folie 16 · Erik</div><h3>Prüfpunkt 4: Figuren und Gattung · <span class="pass">TE</span><span class="brk">ILS</span></h3>
+<p><b>Kernsatz:</b> Einfache Leute in einer Komödie: Das passt zur Ständeklausel. Aber der Stoff ist ernst: Machtmissbrauch und Erpressung.</p>
+<p><b>Dazu wissen:</b> Beim zweiten Klick kippt die lachende Maske zur traurigen. Der Fachbegriff für die Mischung ist „tragikomisch“. Die Fallhöhe wird wörtlich genommen: Adam fällt aus dem Fenster, aus seinen Ausreden und aus dem Amt.</p></div>
+
+<div class="slide"><div class="w">Folie 17 · Lut</div><h3>Prüfpunkt 5: Sprache · <span class="pass">TE</span><span class="brk">ILS</span></h3>
+<p><b>Kernsatz:</b> Kleist schreibt im Blankvers wie Goethe und Schiller. Aber der Vers zerbricht, und die Sprache dient dem Verstecken.</p>
+<p><b>Dazu wissen:</b> Das Beispiel stammt aus dem 1. Auftritt. Adam: „Ja, in sich selbst!“ Licht: „Verflucht das!“ Adam: „Was beliebt?“ Zusammen ergibt das genau einen Vers mit fünf Betonungen, verteilt auf drei Wortmeldungen. Der Fachbegriff heißt <b>Antilabe</b>. Schöner Schlusssatz: Auch die Sprache ist ein zerbrochener Krug.</p></div>
+
+<div class="slide"><div class="w">Folie 18 · Erik</div><h3>Prüfpunkt 6: Schluss · <span class="pass">TE</span><span class="brk">ILS</span></h3>
+<p><b>Kernsatz:</b> Der Täter ist enttarnt und das Paar versöhnt. Aber Adam kommt glimpflich davon, und der Krug bleibt kaputt.</p>
+<p><b>Dazu wissen:</b> Walter enthebt Adam des Amtes, will ihn aber nicht zur Flucht zwingen, solange die Kassen stimmen. Frau Marthe will in Utrecht weiterklagen. Ein geschlossenes Drama lässt nichts offen. Hier bleibt ein Riss.</p></div>
+
+<div class="slide"><div class="w">Folie 19 · Lut</div><h3>Das Ergebnis</h3>
+<p><b>Kernsatz:</b> Kleist bleibt im Rahmen und zerbricht ihn von innen.</p>
+<p><b>Dazu wissen:</b> Das ist die Antwort auf die Leitfrage. Drei Schritte: außen klassisch, innen anders, und zwar mit Absicht. Sprich diesen Teil langsam, das ist der Satz, den euer Lehrer hören will. Den Schlussgedanken kannst du frei formulieren: Die heile Ordnung, an die die Klassik glaubt, hat bei Kleist Sprünge, genau wie der Krug.</p></div>
+
+<div class="slide"><div class="w">Folie 20 · Erik</div><h3>Quiz: Klassisch oder Kleist?</h3>
+<p><b>Kernsatz:</b> Fünf Aussagen, die Klasse ruft rein: klassisch, Kleist oder beides.</p>
+<p><b>Dazu wissen:</b> Lösungen: 1 beides, 2 Kleist, 3 klassisch, 4 beides, 5 Kleist. Jede Lösung erscheint erst beim Klick. Wenn die Zeit knapp wird, lasst das Quiz weg oder macht nur drei Aussagen.</p></div>
+
+<div class="slide"><div class="w">Folie 21 · Lut</div><h3>Euer Werkzeug für die Klausur</h3>
+<p><b>Kernsatz:</b> Fünf Fragen, die man an jedes Drama stellen kann, und drei Satzbausteine.</p>
+<p><b>Dazu wissen:</b> Das ist der Mehrwert, den euer Lehrer sehen will. Sag ausdrücklich: Das funktioniert nicht nur beim „Krug“, sondern bei jedem Drama, das in der Klausur drankommt. Das Handout enthält dasselbe zum Mitnehmen.</p></div>
+
+<div class="slide" style="border-bottom:0"><div class="w">Folie 22 · Erik</div><h3>Fragen?</h3>
+<p><b>Kernsatz:</b> Der „Krug“ hängt noch im Rahmen. Aber er hat einen Sprung.</p>
+<p><b>Dazu wissen:</b> Unten stehen die Quellen. Für die Fragerunde: Teil D.</p></div>
+</section>
+
+<!-- ====================== TEIL D ====================== -->
+<section class="part">
+<h2><small>Teil D</small>Fragen, die kommen können</h2>
+<p class="time">Lies die Antworten laut. Wenn du sie in eigenen Worten wiedergeben kannst, bist du vorbereitet.</p>
+
+<h3>Zum Stück</h3>
+<div class="qa"><div class="q">Warum sagt Eve nicht einfach sofort die Wahrheit?</div><p>Weil Adam sie erpresst. Er hat ihr eingeredet, Ruprecht müsse als Soldat nach Ostindien, und nur er könne ihn mit einem Attest retten. Eve glaubt: Wenn sie den Richter verrät, ist Ruprecht verloren. Erst als Adam Ruprecht trotzdem verurteilt, hat sie nichts mehr zu verlieren und redet.</p></div>
+<div class="qa"><div class="q">Wann wissen die Zuschauer, dass Adam der Täter ist?</div><p>Sehr früh. Schon im ersten Auftritt machen ihn die Wunden und die schlechten Ausreden verdächtig, im zweiten kommt die fehlende Perücke dazu, im dritten der Traum. Spätestens als er im siebten Auftritt heimlich mit Eve flüstert, ist es klar. Die Figuren auf der Bühne brauchen viel länger.</p></div>
+<div class="qa"><div class="q">Wenn man den Täter schon kennt, warum ist das Stück dann spannend?</div><p>Weil die Spannung eine andere ist. Man fragt nicht „Wer war es?“, sondern „Wie redet er sich heraus und wann fliegt er auf?“. Dazu kommt die Komik: Adams Ausreden werden immer verrückter.</p></div>
+<div class="qa"><div class="q">Welche Rolle spielt Licht? Ist er ein Guter?</div><p>Er hilft, die Wahrheit aufzudecken, zum Beispiel indem er mit Brigitte der Spur folgt. Er tut das aber auch aus Eigennutz, denn er will Adams Amt und bekommt es am Ende. Er ist also kein Held, sondern ein kluger Aufsteiger.</p></div>
+<div class="qa"><div class="q">Wird Adam am Ende bestraft?</div><p>Nur halb. Er verliert sein Amt. Walter lässt ihn aber zurückholen und will ihn nicht zur Flucht zwingen, wenn die Kassen stimmen. Walter ist das Ansehen des Gerichts wichtiger als eine harte Strafe. Das kann man als Kritik an der Obrigkeit lesen.</p></div>
+<div class="qa"><div class="q">Warum beschreibt Frau Marthe den Krug so lange?</div><p>Erstens ist es komisch: Sie soll sagen, was passiert ist, und hält stattdessen einen Vortrag über ein Stück Geschirr. Zweitens zeigt die Rede, wie viel der Krug ihr bedeutet. Auf ihm war die Geschichte des Landes abgebildet, eine heile Ordnung. Drittens bremst die Rede die Handlung, während Adam schwitzt.</p></div>
+<div class="qa"><div class="q">Was ist der „Variant“?</div><p>Die ursprüngliche, viel längere Fassung des 12. Auftritts. Darin erzählt Eve ausführlich, was in der Nacht geschah. Kleist kürzte die Stelle nach der misslungenen Uraufführung und druckte die lange Fassung als Anhang.</p></div>
+<div class="qa"><div class="q">Was hat das Stück mit der Bibel zu tun?</div><p>Die Namen Adam und Eve erinnern an den Sündenfall. Auch hier „fällt“ Adam, sogar wörtlich. Anders als in der Bibel ist hier aber Adam der Verführer und Eve unschuldig. Brigittes Bericht vom Pferdefuß und Schwefelgestank macht Adam zusätzlich zu einer Art Teufel.</p></div>
+
+<h3>Zur Theorie</h3>
+<div class="qa"><div class="q">Was genau meint ihr mit „klassischem Drama“?</div><p>Ein Drama der geschlossenen Form nach den Regeln, die von Aristoteles bis Freytag beschrieben wurden: drei Einheiten, fünf Akte, Ständeklausel, Verssprache, alles am Ende gelöst. Musterbeispiele sind die Dramen der Weimarer Klassik, etwa Goethes „Iphigenie auf Tauris“.</p></div>
+<div class="qa"><div class="q">Was ist der Unterschied zwischen analytisch und synthetisch?</div><p>Im synthetischen Drama (Zieldrama) passiert das Entscheidende auf der Bühne und läuft auf ein Ziel zu. Im analytischen Drama (Enthüllungsdrama) ist das Entscheidende vor Beginn passiert und wird nur aufgedeckt. Der „Krug“ ist analytisch.</p></div>
+<div class="qa"><div class="q">Kann ein analytisches Drama überhaupt „klassisch“ sein?</div><p>Ja. Das berühmteste analytische Drama ist „König Ödipus“ aus der Antike, das Aristoteles als Musterbeispiel lobt. Kleist bricht also mit dem Schema von Freytag, greift aber auf ein antikes Vorbild zurück. Deshalb sagen wir: Bruch mit der Pyramide, aber kein Bruch mit der Tradition.</p></div>
+<div class="qa"><div class="q">Freytag hat sein Buch 1863 geschrieben, Kleist starb 1811. Wie kann Kleist gegen Freytag verstoßen?</div><p>Gar nicht, und das behaupten wir auch nicht. Freytag hat keine neuen Regeln erfunden, sondern beschrieben, wie die klassischen Dramen vor ihm gebaut waren. Wir benutzen seine Pyramide als Messlatte, um zu zeigen, wo der „Krug“ vom üblichen Bau abweicht.</p></div>
+<div class="qa"><div class="q">Was bedeutet Katharsis, und gibt es sie im „Krug“?</div><p>Katharsis ist die Reinigung der Zuschauer durch Jammer und Schaudern in der Tragödie. Im „Krug“ wird vor allem gelacht, eine tragische Katharsis gibt es nicht. Man kann aber sagen: Das Lachen über Adam befreit auch, und bei Eves Not bleibt einem das Lachen kurz im Hals stecken.</p></div>
+<div class="qa"><div class="q">Verstößt das Stück gegen die Ständeklausel?</div><p>Nein, streng genommen erfüllt es sie: einfache Leute in einer Komödie. Ungewöhnlich ist etwas anderes: Lächerlich gemacht wird ausgerechnet ein Vertreter der Obrigkeit, und der Stoff (Machtmissbrauch, Erpressung) wäre eigentlich ernst genug für eine Tragödie.</p></div>
+<div class="qa"><div class="q">Was ist ein Blankvers?</div><p>Ein Vers mit fünf Betonungen ohne Reim. Unbetonte und betonte Silben wechseln sich ab (fünfhebiger Jambus). Es ist der typische Vers der deutschen Klassik.</p></div>
+<div class="qa"><div class="q">Was ist eine Antilabe?</div><p>Ein Vers, der auf mehrere Sprecher verteilt ist. Die Figuren fallen sich ins Wort, zusammen ergeben ihre Sätze aber einen vollständigen Vers. Bei Kleist kommt das sehr oft vor und macht die Dialoge schnell und nervös.</p></div>
+<div class="qa"><div class="q">Wo liegt im „Krug“ die Peripetie?</div><p>Im 11. Auftritt. Mit der Perücke und der Spur im Schnee kippt die Lage endgültig gegen Adam. Kurz danach folgt mit Eves Ausruf das Erkennen (Anagnorisis): Alle wissen jetzt, wer der Täter ist. Wendepunkt und Erkennen liegen also dicht beieinander, wie Aristoteles es an „König Ödipus“ lobt.</p></div>
+<div class="qa"><div class="q">Ist der „Krug“ nun ein Drama der geschlossenen oder der offenen Form?</div><p>Überwiegend geschlossen: ein Ort, kurze Zeit, eine Handlung, wenige Figuren, Verse, lückenlose Verkettung. Offen sind nur einzelne Züge: der Alltagston, die zerhackten Verse und der Schluss, bei dem Adams Strafe und Marthes Klage nicht ganz erledigt sind.</p></div>
+<div class="qa"><div class="q">War Kleist ein Klassiker?</div><p>Nein. Er schrieb zur Zeit der Weimarer Klassik, wird aber keiner Epoche fest zugeordnet. Von der Klassik übernimmt er die strenge Form, ihren Glauben an Ordnung und klare Wahrheit teilt er nicht.</p></div>
+<div class="qa"><div class="q">Warum fiel die Uraufführung durch?</div><p>Goethe hatte den einen Akt in drei Akte geteilt, das Tempo war langsam, und das Publikum in Weimar erwartete etwas anderes. Die lange Erzählung am Schluss ermüdete zusätzlich. Die Bauweise des Stücks passte nicht zu den Gewohnheiten des klassischen Theaters. Das ist für euer Thema ein schöner Beleg.</p></div>
+
+<h3>Zu eurer These</h3>
+<div class="qa"><div class="q">Fällt das Stück nun aus dem Rahmen oder nicht? Entscheidet euch.</div><p>Unsere Antwort: halb. Äußerlich bleibt Kleist im Rahmen und hält manche Regeln sogar strenger ein als die Klassiker (drei Einheiten). Innerlich bricht er ihn auf: ein Akt, Enthüllung statt Zieldrama, ernster Kern in der Komödie, zerbrochene Verse, ein Schluss mit Riss. Der Krug hängt noch im Rahmen, hat aber einen Sprung.</p></div>
+<div class="qa"><div class="q">Hat Kleist die Regeln absichtlich gebrochen?</div><p>Beweisen kann man das nicht, aber vieles spricht dafür: Er kannte die Regeln genau, er hält einige übergenau ein, und er nennt in der Vorrede selbst das antike Vorbild Ödipus. Wer so genau arbeitet, weicht nicht aus Versehen ab.</p></div>
+<div class="qa"><div class="q">Was bringt uns das für die Klausur?</div><p>Fünf Fragen, mit denen man jedes Drama untersuchen kann (Einheiten, Aufbau, Richtung der Handlung, Figuren und Gattung, Sprache und Schluss), und die Begriffe, die man dafür braucht. Wer diese fünf Fragen der Reihe nach beantwortet, hat eine fertige Gliederung.</p></div>
+
+<div class="box gold">
+<div class="t">Wenn du eine Frage nicht beantworten kannst</div>
+<p>Sag ruhig: „Das weiß ich nicht sicher. Ich würde vermuten, dass …“ und begründe deine Vermutung mit dem, was du weißt. Oder gib die Frage an die Klasse oder an euren Lehrer weiter. Das wirkt besser als zu raten.</p>
+</div>
+</section>
+
+<!-- ====================== TEIL E ====================== -->
+<section class="part">
+<h2><small>Teil E</small>Spickzettel: das Wichtigste auf einer Seite</h2>
+
+<h3>Zehn Sätze, die du im Schlaf können solltest</h3>
+<ol>
+<li>„Der zerbrochne Krug“ ist ein Lustspiel von Heinrich von Kleist, uraufgeführt 1808 in Weimar.</li>
+<li>Ein Dorfrichter muss einen Fall aufklären, in dem er selbst der Täter ist.</li>
+<li>Das Stück hat einen Akt mit 13 Auftritten und spielt an einem Vormittag in einem Raum.</li>
+<li>Es hält die drei Einheiten von Ort, Zeit und Handlung streng ein.</li>
+<li>Es ist ein analytisches Drama: Die Tat liegt vor Beginn und wird nur aufgedeckt.</li>
+<li>Das Vorbild dafür ist „König Ödipus“ von Sophokles. Kleist macht aus der Tragödie eine Komödie.</li>
+<li>Freytags Pyramide mit fünf Akten beschreibt ein Zieldrama und passt deshalb nur teilweise.</li>
+<li>Die Figuren sind einfache Leute, wie es die Ständeklausel für die Komödie verlangt, aber der Stoff ist ernst.</li>
+<li>Geschrieben ist das Stück im Blankvers, der durch Antilaben und Alltagston aufgebrochen wird.</li>
+<li>Fazit: Kleist bleibt im klassischen Rahmen und zerbricht ihn von innen.</li>
+</ol>
+
+<h3>Die sechs Prüfpunkte</h3>
+<table>
+<tr><th style="width:24%">Prüfpunkt</th><th style="width:29%">Klassische Regel</th><th style="width:33%">Im „Krug“</th><th>Urteil</th></tr>
+<tr><td>Ort, Zeit, Handlung</td><td style="font-weight:400">drei Einheiten</td><td style="font-weight:400">ein Raum, ein Vormittag, ein Fall</td><td class="pass">passt</td></tr>
+<tr><td>Aufbau</td><td style="font-weight:400">fünf Akte, Pyramide</td><td style="font-weight:400">ein Akt, 13 Auftritte, Höhepunkt spät</td><td>teils</td></tr>
+<tr><td>Richtung der Handlung</td><td style="font-weight:400">Zieldrama (synthetisch)</td><td style="font-weight:400">Enthüllungsdrama (analytisch)</td><td class="brk">Bruch</td></tr>
+<tr><td>Figuren und Gattung</td><td style="font-weight:400">Ständeklausel</td><td style="font-weight:400">einfache Leute, aber ernster Stoff</td><td>teils</td></tr>
+<tr><td>Sprache</td><td style="font-weight:400">Blankvers, hoher Stil</td><td style="font-weight:400">Blankvers, aber zerhackt und derb</td><td>teils</td></tr>
+<tr><td>Schluss</td><td style="font-weight:400">alles gelöst</td><td style="font-weight:400">Lösung mit Riss</td><td>teils</td></tr>
+</table>
+
+<h3>Begriffe</h3>
+<table>
+<tr><td style="width:27%">Analytisches Drama</td><td style="font-weight:400">Enthüllungsdrama: Das Entscheidende ist vor Beginn passiert und wird aufgedeckt.</td></tr>
+<tr><td>Synthetisches Drama</td><td style="font-weight:400">Zieldrama: Das Entscheidende passiert auf der Bühne und läuft auf das Ende zu.</td></tr>
+<tr><td>Drei Einheiten</td><td style="font-weight:400">Ort, Zeit, Handlung: ein Schauplatz, höchstens ein Tag, ein Strang.</td></tr>
+<tr><td>Katharsis</td><td style="font-weight:400">Reinigung der Zuschauer durch Jammer und Schaudern (Mitleid und Furcht).</td></tr>
+<tr><td>Peripetie</td><td style="font-weight:400">Wendepunkt: Die Handlung schlägt ins Gegenteil um.</td></tr>
+<tr><td>Anagnorisis</td><td style="font-weight:400">Erkennen: Der Moment, in dem die Wahrheit erkannt wird.</td></tr>
+<tr><td>Exposition</td><td style="font-weight:400">Einleitung: Figuren, Ort, Zeit und Ausgangslage werden vorgestellt.</td></tr>
+<tr><td>Erregendes Moment</td><td style="font-weight:400">Der Auslöser, der den Konflikt in Gang setzt.</td></tr>
+<tr><td>Retardierendes Moment</td><td style="font-weight:400">Verzögerung vor dem Ende, die noch einmal einen anderen Ausgang möglich scheinen lässt.</td></tr>
+<tr><td>Ständeklausel</td><td style="font-weight:400">Tragödie für hohe Stände, Komödie für niedere Stände.</td></tr>
+<tr><td>Fallhöhe</td><td style="font-weight:400">Je höher der Stand, desto tiefer und wirkungsvoller der Sturz.</td></tr>
+<tr><td>Geschlossene Form</td><td style="font-weight:400">Streng gebautes Drama: einheitlich, lückenlos verkettet, am Ende alles gelöst.</td></tr>
+<tr><td>Offene Form</td><td style="font-weight:400">Locker gebautes Drama: viele Orte, Zeitsprünge, lose Szenen, offenes Ende.</td></tr>
+<tr><td>Blankvers</td><td style="font-weight:400">Vers mit fünf Betonungen ohne Reim.</td></tr>
+<tr><td>Antilabe</td><td style="font-weight:400">Ein Vers wird auf mehrere Sprecher verteilt.</td></tr>
+<tr><td>Dramatische Ironie</td><td style="font-weight:400">Die Zuschauer wissen mehr als die Figuren.</td></tr>
+<tr><td>Tragikomisch</td><td style="font-weight:400">Komisches und Ernstes sind gemischt.</td></tr>
+</table>
+
+<div class="box">
+<div class="t">Bezug zur Hausaufgabe (Buch S. 91, Aufgabe 2)</div>
+<p><b>2a:</b> Der „Krug“ gehört zu Schaubild A, dem analytischen Drama (Enthüllungsdrama). Begründung mit den Begriffen aus dem Schaubild: Das „Ereignis“ (Adams Besuch bei Eve und der zerbrochene Krug) liegt in der „Vorgeschichte“. Die Verhandlung deckt es Schritt für Schritt auf, bis zur „(Auf-)Lösung“ im 11. und 12. Auftritt.</p>
+<p><b>2b:</b> Der Aufbau ist eher ungewöhnlich: ein Akt statt fünf, Enthüllung statt Zieldrama, Höhepunkt kurz vor Schluss. Klassisch sind dagegen die drei Einheiten und der Vers. Vergleichsstücke: „König Ödipus“ (ebenfalls analytisch) und als Gegenbeispiel ein Zieldrama in fünf Akten, das ihr im Unterricht gelesen habt.</p>
+</div>
+</section>
+
+</body>
+</html>
